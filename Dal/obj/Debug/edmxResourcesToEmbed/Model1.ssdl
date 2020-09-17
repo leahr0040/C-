@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArgamanExpressModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ArgamanExpress.dbo.city' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="CityId" />
+      <PropertyRef Name="CityName" />
+    </Key>
+    <Property Name="CityId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ArgamanExpress.dbo.city1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="city1">
+    <Key>
+      <PropertyRef Name="column1" />
+      <PropertyRef Name="column2" />
+      <PropertyRef Name="column3" />
+      <PropertyRef Name="column7" />
+      <PropertyRef Name="column9" />
+    </Key>
+    <Property Name="column1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="column2" Type="int" Nullable="false" />
+    <Property Name="column3" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="column4" Type="nvarchar" MaxLength="50" />
+    <Property Name="column5" Type="int" />
+    <Property Name="column6" Type="nvarchar" MaxLength="50" />
+    <Property Name="column7" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="column8" Type="nvarchar" MaxLength="50" />
+    <Property Name="column9" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="column10" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Classifications">
+    <Key>
+      <PropertyRef Name="ClassificationID" />
+    </Key>
+    <Property Name="ClassificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClassificationName" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Exclusivitys">
+    <Key>
+      <PropertyRef Name="ExclusivityID" />
+    </Key>
+    <Property Name="ExclusivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExclusivityName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentTypes">
+    <Key>
+      <PropertyRef Name="PaymentTypeID" />
+    </Key>
+    <Property Name="PaymentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PaymentTypeName" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Properties">
+    <Key>
+      <PropertyRef Name="PropertyID" />
+    </Key>
+    <Property Name="PropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerID" Type="int" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StreetID" Type="int" Nullable="false" />
+    <Property Name="StreetName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" MaxLength="5" Nullable="false" />
+    <Property Name="Size" Type="float" />
+    <Property Name="Floor" Type="int" />
+    <Property Name="IsDivided" Type="bit" Nullable="false" />
+    <Property Name="ManagmentPayment" Type="float" />
+    <Property Name="IsPaid" Type="bit" Nullable="false" />
+    <Property Name="IsRented" Type="bit" Nullable="false" />
+    <Property Name="IsExclusivity" Type="bit" Nullable="false" />
+    <Property Name="ExclusivityID" Type="int" />
+    <Property Name="IsWarranty" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PropertiesOwners">
+    <Key>
+      <PropertyRef Name="OwnerID" />
+    </Key>
+    <Property Name="OwnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerName" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="10" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Rentals">
+    <Key>
+      <PropertyRef Name="RentalID" />
+    </Key>
+    <Property Name="RentalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PropertyID" Type="int" Nullable="false" />
+    <Property Name="SubPropertyID" Type="int" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="RentPayment" Type="float" />
+    <Property Name="PaymentTypeID" Type="int" />
+    <Property Name="EnteryDate" Type="datetime" />
+    <Property Name="EndDate" Type="datetime" />
+    <Property Name="ContactRenew" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Streets">
+    <Key>
+      <PropertyRef Name="CityId" />
+      <PropertyRef Name="StreetID" />
+      <PropertyRef Name="StreetName" />
+    </Key>
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="StreetID" Type="int" Nullable="false" />
+    <Property Name="StreetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SubProperties">
+    <Key>
+      <PropertyRef Name="SubPropertyID" />
+    </Key>
+    <Property Name="SubPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PropertyID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tasks">
+    <Key>
+      <PropertyRef Name="TaskID" />
+    </Key>
+    <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskTypeId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="PropertyID" Type="int" />
+    <Property Name="SubPropertyID" Type="int" />
+    <Property Name="ClassificationID" Type="int" />
+    <Property Name="ClientClassificationID" Type="int" />
+    <Property Name="ReportDate" Type="datetime" />
+    <Property Name="DateForHandling" Type="datetime" Nullable="false" />
+    <Property Name="IsHandled" Type="bit" />
+    <Property Name="HandlingDate" Type="datetime" />
+    <Property Name="HandlingWay" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="TaskTypes">
+    <Key>
+      <PropertyRef Name="TaskTypeId" />
+    </Key>
+    <Property Name="TaskTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaskTypeName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="SMS" Type="nvarchar" MaxLength="10" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Phone" Type="nvarchar" MaxLength="10" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+    <Property Name="Password" Type="nvarchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Properties_Exclusivitys">
+    <End Role="Exclusivitys" Type="Self.Exclusivitys" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exclusivitys">
+        <PropertyRef Name="ExclusivityID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="ExclusivityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_PropertiesOwners">
+    <End Role="PropertiesOwners" Type="Self.PropertiesOwners" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertiesOwners">
+        <PropertyRef Name="OwnerID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_PaymentTypes">
+    <End Role="PaymentTypes" Type="Self.PaymentTypes" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentTypes">
+        <PropertyRef Name="PaymentTypeID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="PaymentTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_Properties">
+    <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+    <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_SubProperties">
+    <End Role="SubProperties" Type="Self.SubProperties" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubProperties">
+        <PropertyRef Name="SubPropertyID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="SubPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Classifications">
+    <End Role="Classifications" Type="Self.Classifications" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classifications">
+        <PropertyRef Name="ClassificationID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="ClassificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Classifications_client">
+    <End Role="Classifications" Type="Self.Classifications" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classifications">
+        <PropertyRef Name="ClassificationID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="ClientClassificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Properties">
+    <End Role="Properties" Type="Self.Properties" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_SubProperties">
+    <End Role="SubProperties" Type="Self.SubProperties" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubProperties">
+        <PropertyRef Name="SubPropertyID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="SubPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_TaskTypes">
+    <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="1" />
+    <End Role="Tasks" Type="Self.Tasks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskTypes">
+        <PropertyRef Name="TaskTypeId" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="TaskTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_UserRoles">
+    <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="ArgamanExpressModelStoreContainer">
+    <EntitySet Name="Classifications" EntityType="Self.Classifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivitys" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PaymentTypes" EntityType="Self.PaymentTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Properties" EntityType="Self.Properties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertiesOwners" EntityType="Self.PropertiesOwners" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubProperties" EntityType="Self.SubProperties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="city" EntityType="Self.city" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [city].[CityId] AS [CityId], 
+    [city].[CityName] AS [CityName]
+    FROM [dbo].[city] AS [city]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="city1" EntityType="Self.city1" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [city1].[column1] AS [column1], 
+    [city1].[column2] AS [column2], 
+    [city1].[column3] AS [column3], 
+    [city1].[column4] AS [column4], 
+    [city1].[column5] AS [column5], 
+    [city1].[column6] AS [column6], 
+    [city1].[column7] AS [column7], 
+    [city1].[column8] AS [column8], 
+    [city1].[column9] AS [column9], 
+    [city1].[column10] AS [column10]
+    FROM [dbo].[city1] AS [city1]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Streets" EntityType="Self.Streets" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Streets].[CityId] AS [CityId], 
+    [Streets].[StreetID] AS [StreetID], 
+    [Streets].[StreetName] AS [StreetName]
+    FROM [dbo].[Streets] AS [Streets]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Properties_Exclusivitys" Association="Self.FK_Properties_Exclusivitys">
+      <End Role="Exclusivitys" EntitySet="Exclusivitys" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_PropertiesOwners" Association="Self.FK_Properties_PropertiesOwners">
+      <End Role="PropertiesOwners" EntitySet="PropertiesOwners" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_PaymentTypes" Association="Self.FK_Rentals_PaymentTypes">
+      <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_Properties" Association="Self.FK_Rentals_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_SubProperties" Association="Self.FK_Rentals_SubProperties">
+      <End Role="SubProperties" EntitySet="SubProperties" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_Users" Association="Self.FK_Rentals_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Classifications" Association="Self.FK_Tasks_Classifications">
+      <End Role="Classifications" EntitySet="Classifications" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Classifications_client" Association="Self.FK_Tasks_Classifications_client">
+      <End Role="Classifications" EntitySet="Classifications" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Properties" Association="Self.FK_Tasks_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_SubProperties" Association="Self.FK_Tasks_SubProperties">
+      <End Role="SubProperties" EntitySet="SubProperties" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_TaskTypes" Association="Self.FK_Tasks_TaskTypes">
+      <End Role="TaskTypes" EntitySet="TaskTypes" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_UserRoles" Association="Self.FK_Users_UserRoles">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
