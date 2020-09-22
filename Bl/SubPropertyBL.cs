@@ -8,6 +8,7 @@ using Dto;
 
 namespace Bl
 {
+    
     public class SubPropertyBL
     {
         public static bool AddSubProperty(SubPropertyDTO spd)
@@ -20,7 +21,7 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 SubProperty sp = db.SubProperties.Find(spd.SubPropertyID);
-                sp.SubPropertyID = sp.SubPropertyID;
+                
                 sp.PropertyID = sp.PropertyID;
                 sp.num = sp.num;
                 sp.IsRented = sp.IsRented;

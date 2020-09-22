@@ -22,7 +22,7 @@ namespace Bl
             {
                 Dal.Task t = db.Tasks.Find(td.TaskID);
 
-                t.TaskID = td.TaskID;
+               
                 t.TaskTypeId = td.TaskTypeId;
                 t.Description = td.Description;
                 t.PropertyID = td.PropertyID;

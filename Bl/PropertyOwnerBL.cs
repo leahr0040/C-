@@ -8,9 +8,14 @@ using Dto;
 
 namespace Bl
 {
-    class PropertyOwnerBL
+    public class PropertyOwnerBL
     {
+        public static bool AddPropertyOwner(PropertyOwnerDTO pod)
+        {
 
+            PropertiesOwner poDal = PropertyOwnerDTO.ToDal(pod);
+            return PropertyOwnerDAL.AddPropertyOwner(poDal);
+        }
         public static bool UpdatePropertyOwner(PropertyOwnerDTO po)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())

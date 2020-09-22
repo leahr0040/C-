@@ -9,6 +9,7 @@ using Dto;
 
 namespace Bl
 {
+
     public class RenterBL
     {
         public static bool AddRenter(UserDTO ud)
