@@ -33,5 +33,17 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyOwnerBL.Search(OwnerFirstName, OwnerLastName, Phone, Email));
         }
+        [Route("getPropertiesbyOwnerID")]
+        public IHttpActionResult getPropertiesbyOwnerID(int id)//דירות ששוכר לפי איידי
+        {
+            return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id));
+        }
+        [Route("getRentalsbyOwnerID")]
+        public IHttpActionResult getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
+        {
+
+            return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id));
+        }
+        
     }
 }

@@ -32,5 +32,26 @@ namespace Dal
             }
             return null;
         }
+        public static List<Rental> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Rental> rentals = (from r in db.Rentals where r.UserID == id select r).ToList();
+                return rentals;
+            }
+            return null;
+        }
+
+        public static List<Property> getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Property> properties = new List<Property>();
+                foreach (Rental r in getRentalsbyRenterID(id))
+                    properties.Add((from p in db.Properties where r.PropertyID == p.PropertyID select p).FirstOrDefault());
+                return properties;
+            }
+            return null;
+        }
     }
 }

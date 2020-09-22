@@ -32,5 +32,6 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.RentalBL.Search(propertyID, subPropertyID, user, rentPayment, paymentTypeID, enteryDate, endDate, contactRenew));
         }
+       
     }
 }

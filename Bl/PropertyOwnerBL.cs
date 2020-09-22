@@ -41,5 +41,24 @@ namespace Bl
                 return podto;
            
         }
+        public static List<PropertyDTO> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
+        {
+            List<Property> properties = PropertyOwnerDAL.getPropertiesbyOwnerID(id);
+            List<PropertyDTO> pdto = new List<PropertyDTO>();
+            foreach (Property p in properties)
+                pdto.Add(new PropertyDTO(p));
+            return pdto;
+
+        }
+        public static List<RentalDTO> getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
+        {
+            List<Rental> renters = PropertyOwnerDAL.getRentalsbyOwnerID(id);
+            List<RentalDTO> rdto = new List<RentalDTO>();
+            foreach (Rental r in renters)
+                rdto.Add(new RentalDTO(r));
+            return rdto;
+        }
+
+        
     }
 }
