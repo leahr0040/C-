@@ -12,11 +12,11 @@ namespace Dal
     public class Class1
     {
         static ArgamanExpressEntities db = new ArgamanExpressEntities();
-        public static List<Rental> Return_Details_user(string userNam, string Passwor)
-        {
-            User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault;
-          return getRentalsbyOwnerID(u.UserID);
-        }
+        //public static List<Rental> Return_Details_user(string userNam, string Passwor)
+        //{
+        //    User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
+        //  return getRentalsbyOwnerID(u.UserID);
+        //}
         public static List<Rental> getRentalsbyOwnerID(int id)//פרטי השכרה לפי id
         {
             List<Rental> rentals = (from r in db.Rentals where r.UserID == id select r).ToList();

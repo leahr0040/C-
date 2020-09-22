@@ -16,3 +16,21 @@ C:\Users\אסתר אליאב\Desktop\project\ArgemanExpress\Bl\bin\Debug\Dal.dll
 C:\Users\אסתר אליאב\Desktop\project\ArgemanExpress\Bl\bin\Debug\Dto.dll.config
 C:\Users\אסתר אליאב\Desktop\project\ArgemanExpress\Bl\bin\Debug\EntityFramework.xml
 C:\Users\אסתר אליאב\Desktop\project\ArgemanExpress\Bl\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\obj\Debug\Bl.csprojAssemblyReference.cache
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\obj\Debug\Bl.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\obj\Debug\Bl.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\obj\Debug\Bl.pdb
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Bl.dll.config
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Bl.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Bl.pdb
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dal.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dto.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\EntityFramework.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dal.pdb
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dal.dll.config
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dto.pdb
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\Dto.dll.config
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\EntityFramework.xml
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Bl\obj\Debug\Bl.csproj.CopyComplete

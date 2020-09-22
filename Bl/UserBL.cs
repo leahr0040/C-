@@ -22,8 +22,8 @@ namespace Bl
                User u = db.Users.Find(ud.UserID);
 
                
-                u.FirstName = ud.FirstName;
-                u.LastName = ud.LastName;
+                //u.FirstName = ud.FirstName;
+                //u.LastName = ud.LastName;
                 u.SMS = ud.SMS;
                 u.Email = ud.Email;
                 u.Phone = ud.Phone;

@@ -22,8 +22,8 @@ namespace Dto
         public PropertyOwnerDTO(PropertiesOwner po)
         {
             OwnerID = po.OwnerID;
-            OwnerFirstName = po.OwnerFirstName;
-            OwnerLastName = po.OwnerLastName;
+           // OwnerFirstName = po.OwnerFirstName;
+           // OwnerLastName = po.OwnerLastName;
             Phone = po.Phone;
             Email = po.Email;
         }
@@ -31,8 +31,8 @@ namespace Dto
         {
             return new PropertiesOwner
             {
-                OwnerFirstName = po.OwnerFirstName,
-                OwnerLastName = po.OwnerLastName,
+               // OwnerFirstName = po.OwnerFirstName,
+               // OwnerLastName = po.OwnerLastName,
                 Phone = po.Phone,
                 Email = po.Email
 

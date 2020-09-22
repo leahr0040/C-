@@ -28,8 +28,8 @@ namespace Dal
                     rentals = (from r in rentals where r.PropertyID == propertyID select r).ToList();
                 if (subPropertyID != null)
                     rentals = (from r in rentals where r.SubPropertyID != null select r).ToList();
-                if (user != null)
-                    rentals = (from r in rentals where (r.User.FirstName + ' ' + r.User.FirstName).Contains(user.Trim()) select r).ToList();
+                //if (user != null)
+                //    rentals = (from r in rentals where (r.User.FirstName + ' ' + r.User.FirstName).Contains(user.Trim()) select r).ToList();
                 if (rentPayment != null)
                     rentals = (from r in rentals where r.RentPayment >= rentPayment select r).ToList();
                 if (paymentTypeID != null)

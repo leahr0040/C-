@@ -20,10 +20,10 @@ namespace Dto
         {
             this.SubPropertyID =sp.SubPropertyID;
             this.PropertyID =sp.PropertyID;
-            this.num = sp.num;
-            this.IsRented = sp.IsRented;
-            this.Size = sp.Size;
-            this.RoomsNum = sp.RoomsNum;
+            //this.num = sp.num;
+            //this.IsRented = sp.IsRented;
+            //this.Size = sp.Size;
+            //this.RoomsNum = sp.RoomsNum;
         }
         public static SubProperty ToDal(SubPropertyDTO sp)
         {
@@ -31,10 +31,10 @@ namespace Dto
             {
                 SubPropertyID = sp.SubPropertyID,
                 PropertyID = sp.PropertyID,
-                num = sp.num,
-                IsRented = sp.IsRented,
-                Size = sp.Size,
-                RoomsNum = sp.RoomsNum
+                //num = sp.num,
+                //IsRented = sp.IsRented,
+                //Size = sp.Size,
+                //RoomsNum = sp.RoomsNum
             };
         }
     }

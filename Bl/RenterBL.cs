@@ -16,7 +16,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                ud.RoleID = (from r in db.UserRoles where r.RoleName == 'שוכר' select r.RoleID).FirstOrDefault();
+                ud.RoleID = (from r in db.UserRoles where r.RoleName == "שוכר" select r.RoleID).FirstOrDefault();
             }
             User u = UserDTO.ToDal(ud);
             return UserDAL.AddUser(u);

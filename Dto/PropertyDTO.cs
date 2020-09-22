@@ -52,8 +52,8 @@ namespace Dto
             this.ExclusivityID = p.ExclusivityID;
             this.IsWarranty = p.IsWarranty;
             this.IsRented = p.IsRented;
-            this.RoomsNum = p.RoomsNum;
-            this.ApartmentNum = p.ApartmentNum;
+           // this.RoomsNum = p.RoomsNum;
+           // this.ApartmentNum = p.ApartmentNum;
         }
         public static Property Todal(PropertyDTO dd)
         {
@@ -74,8 +74,8 @@ namespace Dto
                 IsExclusivity = dd.IsExclusivity,
                 ExclusivityID = dd.ExclusivityID,
                 IsWarranty = dd.IsWarranty,
-                RoomsNum = dd.RoomsNum,
-                ApartmentNum = dd.ApartmentNum
+               // RoomsNum = dd.RoomsNum,
+               // ApartmentNum = dd.ApartmentNum
         };
 
         }

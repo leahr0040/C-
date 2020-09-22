@@ -37,10 +37,10 @@ namespace Dal
             {
                 List<PropertiesOwner> po;
                 po = (from p in db.PropertiesOwners select p).ToList();
-                if (OwnerFirstName != null)
-                    po = (from p in po where p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
-                if (OwnerLastName != null)
-                    po = (from p in po where p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
+                //if (OwnerFirstName != null)
+                //    po = (from p in po where p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
+                //if (OwnerLastName != null)
+                //    po = (from p in po where p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
                 if (Phone != null)
                     po = (from p in po where p.Phone.Contains(Phone) select p).ToList();
                 if (Email != null)

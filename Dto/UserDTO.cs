@@ -25,8 +25,8 @@ namespace Dto
         public UserDTO(User u)
         {
             this.UserID = u.UserID;
-            this.FirstName = u.FirstName;
-            this.LastName = u.LastName;
+            //this.FirstName = u.FirstName;
+            //this.LastName = u.LastName;
             this.SMS = u.SMS;
             this.Email = u.Email;
             this.Phone = u.Phone;
@@ -39,8 +39,8 @@ namespace Dto
             return new User
             {
                 UserID = u.UserID,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
+                //FirstName = u.FirstName,
+                //LastName = u.LastName,
                 SMS = u.SMS,
                 Email = u.Email,
                 Phone = u.Phone,
