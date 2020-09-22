@@ -63,7 +63,7 @@
     <Compile Include="Classification.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Dalproperties.cs" />
+    <Compile Include="propertyDAL.cs" />
     <Compile Include="Exclusivity.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -92,9 +92,12 @@
     <Compile Include="Property.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PropertyOwnerDAL.cs" />
     <Compile Include="Rental.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RentalDAL.cs" />
+    <Compile Include="RenterDAL.cs" />
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -107,18 +110,21 @@
     <Compile Include="SubProperty.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SubPropertyDAL.cs" />
     <Compile Include="sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Task.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="TaskDAL.cs" />
     <Compile Include="TaskType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserDAL.cs" />
     <Compile Include="UserRole.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

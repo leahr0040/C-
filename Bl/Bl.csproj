@@ -51,9 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddProperties.cs" />
+    <Compile Include="PropertyBL.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyOwnerBL.cs" />
+    <Compile Include="RentalBL.cs" />
+    <Compile Include="RenterBL.cs" />
+    <Compile Include="SubPropertyBL.cs" />
+    <Compile Include="TaskBL.cs" />
+    <Compile Include="UserBL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj">

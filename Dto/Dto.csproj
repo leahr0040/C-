@@ -52,8 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="DtoProperties.cs" />
+    <Compile Include="PropertyDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyOwnerDTO.cs" />
+    <Compile Include="RentalDTO.cs" />
+    <Compile Include="SubPropertyDTO.cs" />
+    <Compile Include="TaskDTO.cs" />
+    <Compile Include="UserDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj">

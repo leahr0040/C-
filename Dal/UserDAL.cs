@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-   public class DalProperties
+    public class UserDAL
     {
-        public static bool ReProperties(Property pe)
+        public static bool AddUser(User u)
         {
-            using (ArgamanExpressEntities dbb = new ArgamanExpressEntities())
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                dbb.Properties.Add(pe);
-                dbb.SaveChanges();
+                db.Users.Add(u);
+                db.SaveChanges();
                 return true;
             }
             return false;
-
         }
+        
     }
 }
