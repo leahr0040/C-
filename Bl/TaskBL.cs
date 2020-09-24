@@ -9,9 +9,9 @@ using Dto;
 
 namespace Bl
 {
-    class TaskBL
+    public class TaskBL
     {
-        public static bool Task(TaskDTO td)
+        public static bool AddTask(TaskDTO td)
         {
             Dal.Task t = TaskDTO.ToDal(td);
             return TaskDAL.AddTask(t);
@@ -40,13 +40,29 @@ namespace Bl
             }
             return false;
         }
+        public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<TaskDTO> tdto = new List<TaskDTO>();
+                foreach (Dal.Task t in tasks)
+                    tdto.Add(new TaskDTO(t));
+                return tdto;
+            }
+            return null;
+        }
         public static List<TaskDTO> Search(Nullable<int> TaskTypeId, Nullable<int> PropertyID, Nullable<int> ClassificationID, Nullable<System.DateTime> ReportDate, System.DateTime DateForHandling, Nullable<bool> IsHandled, Nullable<System.DateTime> HandlingDate)
         {
             List<Dal.Task> tasks = TaskDAL.Search(TaskTypeId, PropertyID, ClassificationID,  ReportDate,  DateForHandling, IsHandled, HandlingDate);
-            List<TaskDTO> tdto = new List<TaskDTO>();
-            foreach (Dal.Task t in tasks)
-                tdto.Add(new TaskDTO(t));
-            return tdto;
+            return ConvertListToDTO(tasks);
+        }
+        public static List<TaskDTO> GetAllTasks()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Dal.Task> tasks = db.Tasks.ToList();
+                return ConvertListToDTO(tasks);
+            }
         }
     }
 }

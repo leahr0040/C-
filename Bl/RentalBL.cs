@@ -33,14 +33,30 @@ namespace Bl
             }
             return false;
         }
-            public static List<RentalDTO> Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
+        public static List<RentalDTO> ConvertListToDTO(List<Rental> rentals)
         {
-            
-                List<Rental> rentals=RentalDAL.Search(propertyID,subPropertyID, user, rentPayment, paymentTypeID, enteryDate,  endDate,  contactRenew);
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
                 List<RentalDTO> redto = new List<RentalDTO>();
                 foreach (Rental r in rentals)
                     redto.Add(new RentalDTO(r));
                 return redto;
+            }
+            return null;
+        }
+        public static List<RentalDTO> Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
+        {
+            
+            List<Rental> rentals=RentalDAL.Search(propertyID,subPropertyID, user, rentPayment, paymentTypeID, enteryDate,  endDate,  contactRenew);
+            return ConvertListToDTO(rentals);
+        }
+        public static List<RentalDTO> GetAllRentals()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Rental> pro = db.Rentals.ToList();
+                return ConvertListToDTO(pro);
+            }
         }
     }
 }

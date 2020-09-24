@@ -4,10 +4,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+
 using Dto;
 
 namespace ArgemanExpress.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/PropertyOwner")]
     public class PropertyOwnerController : ApiController
     {
@@ -33,6 +36,14 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyOwnerBL.Search(OwnerFirstName, OwnerLastName, Phone, Email));
         }
+        public IHttpActionResult getAllOwners()
+        {
+            return Ok(Bl.PropertyOwnerBL.getAllOwners());
+        }
+        public IHttpActionResult getAllOwners(int id)
+        {
+            return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id));
+        }
         [Route("getPropertiesbyOwnerID")]
         public IHttpActionResult getPropertiesbyOwnerID(int id)//דירות ששוכר לפי איידי
         {
@@ -41,7 +52,6 @@ namespace ArgemanExpress.Controllers
         [Route("getRentalsbyOwnerID")]
         public IHttpActionResult getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
         {
-
             return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id));
         }
         

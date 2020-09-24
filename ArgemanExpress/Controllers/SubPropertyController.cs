@@ -4,10 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+
 using Dto;
 
 namespace ArgemanExpress.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+
     [RoutePrefix("api/SubProperty")]
     public class SubPropertyController : ApiController
     {
@@ -31,6 +35,9 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum, IsRented));
         }
-       
+        public IHttpActionResult GetAllSubProperties()
+        {
+            return Ok(Bl.SubPropertyBL.GetAllSubProperties());
+        }
     }
 }

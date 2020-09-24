@@ -4,10 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+
 using Dto;
 
 namespace ArgemanExpress.Controllers
-{   [RoutePrefix("api/Rental")]
+{
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+   [RoutePrefix("api/Rental")]
     public class RentalController : ApiController
     {
         [Route("AddRental")]
@@ -32,6 +37,9 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.RentalBL.Search(propertyID, subPropertyID, user, rentPayment, paymentTypeID, enteryDate, endDate, contactRenew));
         }
-       
+        public IHttpActionResult GetAllProperties()
+        {
+            return Ok(Bl.RentalBL.GetAllRentals());
+        }
     }
 }

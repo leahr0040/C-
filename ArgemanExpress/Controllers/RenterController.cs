@@ -4,10 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+
 using Dto;
 
 namespace ArgemanExpress.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+
     [RoutePrefix("api/Renter")]
     public class RenterController : ApiController
     {
@@ -33,6 +37,10 @@ namespace ArgemanExpress.Controllers
         public IHttpActionResult Search(string FirstName, string LastName, string SMS, string Email, string Phone, string UserName, string Password)
         {
             return Ok(Bl.RenterBL.Search(FirstName, LastName, SMS, Email, Phone, UserName, Password));
+        }
+        public IHttpActionResult GetAllRenters()
+        {
+            return Ok(Bl.RentalBL.GetAllRentals());
         }
         [Route("getRentalsbyRenterID")]
         public IHttpActionResult getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
