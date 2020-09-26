@@ -69,11 +69,27 @@ namespace Bl
                 return ConvertListToDTO(pro);
             }
         }
+        public static PropertyDTO GetPropertyByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Property property = db.Properties.Find(id);
+                return new PropertyDTO(property);
+            }
+        }
         public static RentalDTO GetRentalByPropertyID(int id)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Rental rental = db.Rentals.FirstOrDefault(r => r.PropertyID == id);
+                return new RentalDTO(rental);
+            }
+        }
+        public static RentalDTO GetRentalBySubPropertyID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Rental rental = db.Rentals.FirstOrDefault(r => r.SubPropertyID == id);
                 return new RentalDTO(rental);
             }
         }

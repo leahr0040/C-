@@ -36,11 +36,13 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyOwnerBL.Search(OwnerFirstName, OwnerLastName, Phone, Email));
         }
-        public IHttpActionResult getAllOwners()
+        [Route("GetAllOwners")]
+        public IHttpActionResult GetAllOwners()
         {
             return Ok(Bl.PropertyOwnerBL.getAllOwners());
         }
-        public IHttpActionResult getAllOwners(int id)
+        [Route("GetOwnerByID")]
+        public IHttpActionResult GetOwnerByID(int id)
         {
             return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id));
         }

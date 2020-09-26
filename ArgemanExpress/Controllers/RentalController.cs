@@ -37,7 +37,8 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.RentalBL.Search(propertyID, subPropertyID, user, rentPayment, paymentTypeID, enteryDate, endDate, contactRenew));
         }
-        public IHttpActionResult GetAllProperties()
+        [Route("GetAllRentals")]
+        public IHttpActionResult GetAllRentals()
         {
             return Ok(Bl.RentalBL.GetAllRentals());
         }

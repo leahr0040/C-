@@ -38,5 +38,22 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetAllTasks());
         }
+        [Route("GetTypeName")]
+        public IHttpActionResult GetTypeName(int id)
+        {
+            return Ok(Bl.TaskBL.GetTypeName(id));
+        }
+        
+        [Route("IsTakala")]
+        public IHttpActionResult IsTakala(int id)
+        {
+            return Ok(Bl.TaskBL.IsTakala(id));
+        }
+        [Route("GetClassificationName")]
+        public IHttpActionResult GetClassificationName(int id)
+        {
+            return Ok(Bl.TaskBL.GetClassificationName(id));
+        }
+        
     }
 }

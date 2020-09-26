@@ -35,9 +35,20 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum, IsRented));
         }
+        [Route("GetAllSubProperties")]
         public IHttpActionResult GetAllSubProperties()
         {
             return Ok(Bl.SubPropertyBL.GetAllSubProperties());
         }
+        [Route("GetSubPropertyByID")]
+        public IHttpActionResult GetSubPropertyByID(int id)
+        {
+            return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id));
+        }
+        public IHttpActionResult GetSubPropertiesOfParentProperty(int id)
+        {
+            return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id));
+        }
+        
     }
 }

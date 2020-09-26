@@ -64,5 +64,30 @@ namespace Bl
                 return ConvertListToDTO(tasks);
             }
         }
+        public static string GetTypeName(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                return db.TaskTypes.Find(id).TaskTypeName;
+            }
+            return null;
+        }
+        public static bool? IsTakala(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                return db.TaskTypes.Find(id).TaskTypeName == "תקלה";
+            }
+            return null;
+        }
+        public static string GetClassificationName(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                return db.Classifications.Find(id).ClassificationName;
+            }
+            return null;
+        }
+        
     }
 }

@@ -55,5 +55,22 @@ namespace Bl
                 return ConvertListToDTO(subProperties);
             }
         }
+        public static SubPropertyDTO GetSubPropertyByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+               SubProperty subProperty = db.SubProperties.Find(id);
+                return new SubPropertyDTO(subProperty);
+            }
+        }
+        public static List<SubPropertyDTO> GetSubPropertiesOfParentProperty(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<SubProperty> subProperties = (from sp in db.SubProperties where sp.PropertyID == id select sp).ToList();
+                return ConvertListToDTO(subProperties);
+            }
+            return null;
+        }
     }
 }
