@@ -38,10 +38,17 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.RenterBL.Search(FirstName, LastName, SMS, Email, Phone, UserName, Password));
         }
+        [Route("GetAllRenters")]
         public IHttpActionResult GetAllRenters()
         {
-            return Ok(Bl.RentalBL.GetAllRentals());
+            return Ok(Bl.RenterBL.GetAllRenters());
         }
+        [Route("GetRenterByID")]
+        public IHttpActionResult GetRenterByID(int id)
+        {
+            return Ok(Bl.RenterBL.GetRenterByID(id));
+        }
+        
         [Route("getRentalsbyRenterID")]
         public IHttpActionResult getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
         {

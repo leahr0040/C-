@@ -49,6 +49,14 @@ namespace Bl
                 return ConvertListToDTO(renters);
             }
         }
+        public static UserDTO GetRenterByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                User renter = db.Users.Find(id );
+                return new UserDTO(renter);
+            }
+        }
         public static List<RentalDTO> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
         {
             List<Rental> rentals = RenterDAL.getRentalsbyRenterID(id);

@@ -45,6 +45,7 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id));
         }
+        [Route("GetSubPropertiesOfParentProperty")]
         public IHttpActionResult GetSubPropertiesOfParentProperty(int id)
         {
             return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id));

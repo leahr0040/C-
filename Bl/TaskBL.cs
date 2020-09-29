@@ -72,22 +72,47 @@ namespace Bl
             }
             return null;
         }
-        public static bool? IsTakala(int id)
+        //public static bool? IsTakala(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.TaskTypes.Find(id).TaskTypeName == "תקלה";
+        //    }
+        //    return null;
+        //}
+        //public static string GetClassificationName(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.Classifications.Find(id).ClassificationName;
+        //    }
+        //    return null;
+        //}
+        public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                return db.TaskTypes.Find(id).TaskTypeName == "תקלה";
+                List<Classification> classifications= db.Classifications.ToList();
+                List<TaskClassificationDTO> taskClassifications = new List<TaskClassificationDTO>();
+                foreach (Classification classif in classifications)
+                    taskClassifications.Add(new TaskClassificationDTO(classif));
+                return taskClassifications;
+                
             }
             return null;
         }
-        public static string GetClassificationName(int id)
+        public static List<TaskTypeDTO> GetAllTaskTypes()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                return db.Classifications.Find(id).ClassificationName;
+                List<TaskType> taskTypes = db.TaskTypes.ToList();
+                List<TaskTypeDTO> typesDTO= new List<TaskTypeDTO>();
+                foreach (TaskType type in taskTypes)
+                    typesDTO.Add(new TaskTypeDTO(type));
+                return typesDTO;
+
             }
             return null;
         }
-        
     }
 }
