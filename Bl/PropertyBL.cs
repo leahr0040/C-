@@ -55,10 +55,10 @@ namespace Bl
             }
             return null;
         }
-        public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<double> roomsNum, Nullable<bool> isRented)
+        public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
 
-            List<Property> pro = PropertyDAL.Search(cityName, streetName, number, floor, roomsNum,isRented);
+            List<Property> pro = PropertyDAL.Search(cityName, streetName, number, floor, isRented);
             return ConvertListToDTO(pro);
         }
         public static List<PropertyDTO> GetAllProperties()

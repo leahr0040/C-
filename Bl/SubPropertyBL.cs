@@ -42,9 +42,9 @@ namespace Bl
             }
             return null;
         }
-        public static List<SubPropertyDTO> Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum, Nullable<bool> IsRented)
+        public static List<SubPropertyDTO> Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum)
         {
-            List<SubProperty> subProperties = SubPropertyDAL.Search(PropertyID, num, Size, RoomsNum, IsRented);
+            List<SubProperty> subProperties = SubPropertyDAL.Search(PropertyID, num, Size, RoomsNum);
             return ConvertListToDTO(subProperties);
         }
         public static List<SubPropertyDTO> GetAllSubProperties()

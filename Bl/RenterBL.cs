@@ -36,9 +36,9 @@ namespace Bl
             }
             return null;
         }
-        public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone, string UserName, string Password)
+        public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
-            List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone, UserName, Password);
+            List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone);
             return ConvertListToDTO(users);
         }
         public static List<UserDTO> GetAllRenters()

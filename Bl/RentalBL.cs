@@ -44,10 +44,10 @@ namespace Bl
             }
             return null;
         }
-        public static List<RentalDTO> Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
+        public static List<RentalDTO> Search(Nullable<int> propertyID, String user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
-            
-            List<Rental> rentals=RentalDAL.Search(propertyID,subPropertyID, user, rentPayment, paymentTypeID, enteryDate,  endDate,  contactRenew);
+
+            List<Rental> rentals = RentalDAL.Search(propertyID, user, enteryDate, endDate);
             return ConvertListToDTO(rentals);
         }
         public static List<RentalDTO> GetAllRentals()

@@ -8,7 +8,7 @@ namespace Dal
 {
     public class RenterDAL
     {
-        public static List<User> Search(string FirstName, string LastName, string SMS, string Email, string Phone, string UserName, string Password)
+        public static List<User> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -23,10 +23,6 @@ namespace Dal
                     users = (from u in users where u.Email.Contains(Email) select u).ToList();
                 if (Phone != null)
                     users = (from u in users where u.Phone.Contains(Phone) select u).ToList();
-                if (UserName != null)
-                    users = (from u in users where u.UserName.Contains(UserName) select u).ToList();
-                if (Password != null)
-                    users = (from u in users where u.Password.Contains(Password) select u).ToList();
 
                 return users;
             }

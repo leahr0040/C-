@@ -18,7 +18,7 @@ namespace Dal
             }
             return false;
         }
-        public static List<SubProperty> Search(Nullable<int> PropertyID,Nullable<int> num,Nullable<double> Size,Nullable<double> RoomsNum,Nullable<bool> IsRented)
+        public static List<SubProperty> Search(Nullable<int> PropertyID,Nullable<int> num,Nullable<double> Size,Nullable<double> RoomsNum)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {

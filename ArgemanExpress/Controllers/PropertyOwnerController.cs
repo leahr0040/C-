@@ -17,10 +17,10 @@ namespace ArgemanExpress.Controllers
         [Route("AddPropertyOwner")]
         public IHttpActionResult AddPropertyOwner([FromBody]PropertyOwnerDTO po)
         {
-            //bool b = Bl.PropertyOwnerBL.AddPropertyOwner(po);
-            //if (b)
+            bool b = Bl.PropertyOwnerBL.AddPropertyOwner(po);
+            if (b)
                 return Ok("aaa");
-          //  return BadRequest();
+            return BadRequest();
 
         }
         [Route("UpdatePropertyOwner")]

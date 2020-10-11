@@ -8,9 +8,9 @@ using System.Web.Http.Cors;
 using Dto;
 
 namespace ArgemanExpress.Controllers
-{[EnableCors(origins: "*", headers: "*", methods: "*")]
+{   [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Task")]
-    
+    //[Authorize(Roles =]
     public class TaskController : ApiController
     {
         [Route("AddTask")]// לבדוק איך קוראים בר
