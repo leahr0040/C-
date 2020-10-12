@@ -28,3 +28,18 @@ C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Dto\bin\Debug\Dal.dll.conf
 C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Dto\bin\Debug\EntityFramework.xml
 C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Dto\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\user\Documents\Handesaut\ההפרויקט\c-\Dto\obj\Debug\Dto.csproj.CopyComplete
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dto.dll.config
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dto.dll
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dto.pdb
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dal.dll
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\EntityFramework.dll
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dal.pdb
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\Dal.dll.config
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\EntityFramework.xml
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\obj\Debug\Dto.csprojAssemblyReference.cache
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\obj\Debug\Dto.csproj.CoreCompileInputs.cache
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\obj\Debug\Dto.csproj.CopyComplete
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\obj\Debug\Dto.dll
+C:\Users\אסתר אליאב\Desktop\project\proj\c-\Dto\obj\Debug\Dto.pdb

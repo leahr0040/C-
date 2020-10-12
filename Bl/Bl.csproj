@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PropertyBL.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Mailsend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyOwnerBL.cs" />
     <Compile Include="RentalBL.cs" />
