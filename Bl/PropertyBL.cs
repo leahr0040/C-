@@ -44,15 +44,54 @@ namespace Bl
             }
             return false;
         }
-        public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<double> roomsNum, Nullable<bool> isRented)
+        public static List<PropertyDTO> ConvertListToDTO(List<Property> pro)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<PropertyDTO> prodto = new List<PropertyDTO>();
+                foreach (Property p in db.Properties)
+                    prodto.Add(new PropertyDTO(p));
+                return prodto;
+            }
+            return null;
+        }
+        public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
 
-            List<Property> pro = PropertyDAL.Search(cityName, streetName, number, floor, roomsNum,isRented);
-
-            List<PropertyDTO> prodto = new List<PropertyDTO>();
-            foreach (Property p in pro)
-                prodto.Add(new PropertyDTO(p));
-            return prodto;
+            List<Property> pro = PropertyDAL.Search(cityName, streetName, number, floor, isRented);
+            return ConvertListToDTO(pro);
+        }
+        public static List<PropertyDTO> GetAllProperties()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Property> pro = db.Properties.ToList();
+                return ConvertListToDTO(pro);
+            }
+        }
+        public static PropertyDTO GetPropertyByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Property property = db.Properties.Find(id);
+                return new PropertyDTO(property);
+            }
+        }
+        public static RentalDTO GetRentalByPropertyID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Rental rental = db.Rentals.FirstOrDefault(r => r.PropertyID == id);
+                return new RentalDTO(rental);
+            }
+        }
+        public static RentalDTO GetRentalBySubPropertyID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Rental rental = db.Rentals.FirstOrDefault(r => r.SubPropertyID == id);
+                return new RentalDTO(rental);
+            }
         }
         //public static List<PropertyDTO> AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
         //{

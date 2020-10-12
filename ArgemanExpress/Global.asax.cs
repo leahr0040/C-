@@ -18,6 +18,7 @@ namespace ArgemanExpress
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Bl.TaskBL.RunPrepareDaily(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 6, 0, 0));//קריאה לפונקציה שתעיר פונקציה כל יום ב 23:45
         }
     }
 }

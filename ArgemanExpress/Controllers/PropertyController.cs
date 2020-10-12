@@ -4,9 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
+
 using Dto;
 namespace ArgemanExpress.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Property")]//לכאן להוסיף את הניתוב לריאקט
 
     public class PropertyController : ApiController
@@ -29,7 +32,27 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<double> roomsNum, Nullable<bool> isRented)
         {
-            return Ok(Bl.PropertyBL.Search(cityName, streetName, number, floor, roomsNum, isRented));
+            return Ok(Bl.PropertyBL.Search(cityName, streetName, number, floor, isRented));
+        }
+        [Route("GetAllProperties")]
+        public IHttpActionResult GetAllProperties()
+        {
+            return Ok(Bl.PropertyBL.GetAllProperties());
+        }
+        [Route("GetPropertyByID")]
+        public IHttpActionResult GetPropertyByID(int id)
+        {
+            return Ok(Bl.PropertyBL.GetPropertyByID(id));
+        }
+        [Route("GetRentalByPropertyID")]
+        public IHttpActionResult GetRentalByPropertyID(int id)
+        {
+            return Ok(Bl.PropertyBL.GetRentalByPropertyID(id));
+        }
+        [Route("GetRentalBySubPropertyID")]
+        public IHttpActionResult GetRentalBySubPropertyID(int id)
+        {
+            return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id));
         }
         //[Route("AdvancedSearch")]
         //public IHttpActionResult AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)

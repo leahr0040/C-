@@ -25,30 +25,48 @@ namespace Bl
         {
             return UserBL.UpdateUser(ud);
         }
-        public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone, string UserName, string Password)
+        public static List<UserDTO> ConvertListToDTO(List<User> renters)
         {
-            List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone, UserName, Password);
-            List<UserDTO> udto = new List<UserDTO>();
-            foreach (User u in users)
-                udto.Add(new UserDTO(u));
-            return udto;
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<UserDTO> udto = new List<UserDTO>();
+                foreach (User u in renters)
+                    udto.Add(new UserDTO(u));
+                return udto;
+            }
+            return null;
+        }
+        public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
+        {
+            List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone);
+            return ConvertListToDTO(users);
+        }
+        public static List<UserDTO> GetAllRenters()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<User> renters = (from r in db.Users where r.UserRole.RoleName == "שוכר" select r).ToList();
+                return ConvertListToDTO(renters);
+            }
+        }
+        public static UserDTO GetRenterByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                User renter = db.Users.Find(id );
+                return new UserDTO(renter);
+            }
         }
         public static List<RentalDTO> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
         {
-            List<Rental> renters = RenterDAL.getRentalsbyRenterID(id);
-            List<RentalDTO> rdto = new List<RentalDTO>();
-            foreach (Rental r in renters)
-                rdto.Add(new RentalDTO(r));
-            return rdto;
+            List<Rental> rentals = RenterDAL.getRentalsbyRenterID(id);
+            return Bl.RentalBL.ConvertListToDTO(rentals);
         }
 
         public static List<PropertyDTO> getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
         {
             List<Property> properties = RenterDAL.getPropertiesbyRenterID(id);
-            List<PropertyDTO> pdto = new List<PropertyDTO>();
-            foreach (Property p in properties)
-                pdto.Add(new PropertyDTO(p));
-            return pdto;
+            return Bl.PropertyBL.ConvertListToDTO(properties);
             
         }
     }

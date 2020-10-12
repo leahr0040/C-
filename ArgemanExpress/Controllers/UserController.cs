@@ -9,8 +9,13 @@ using Dto;
 
 namespace ArgemanExpress.Controllers
 {
-    [RoutePrefix("api/users")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+
+    [RoutePrefix("api/users")]
+    
+    
 
     public class UserController : ApiController
     {

@@ -52,13 +52,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ExclusivityPersonDTO.cs" />
+    <Compile Include="PaymentTypeDTO.cs" />
     <Compile Include="PropertyDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyOwnerDTO.cs" />
     <Compile Include="RentalDTO.cs" />
     <Compile Include="SubPropertyDTO.cs" />
+    <Compile Include="TaskClassificationDTO.cs" />
     <Compile Include="TaskDTO.cs" />
+    <Compile Include="TaskTypeDTO.cs" />
     <Compile Include="UserDTO.cs" />
+    <Compile Include="UserRoleDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dal\Dal.csproj">

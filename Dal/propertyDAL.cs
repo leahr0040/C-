@@ -21,7 +21,7 @@ namespace Dal
 
         }
         
-        public static List<Property> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<double> roomsNum, Nullable<bool> isRented)
+        public static List<Property> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
