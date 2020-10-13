@@ -13,8 +13,29 @@ namespace Bl
         public static bool AddRental(RentalDTO rd)
         {
             Rental r = RentalDTO.ToDal(rd);
-           return RentalDAL.AddRental(r);
+           int id= RentalDAL.AddRental(r);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = rd.Dock;
+                doc.DocUser = id;
+                //doc.type=3
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
 
+        }
+        public static bool DeleteRental(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Rental p = db.Rentals.Find(id);
+                p.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
         public static bool UpdateRental(RentalDTO rd)
         {
@@ -54,7 +75,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Rental> pro = db.Rentals.ToList();
+                List<Rental> pro = (from r in  db.Rentals where r.status==true select r).ToList();
                 return ConvertListToDTO(pro);
             }
         }

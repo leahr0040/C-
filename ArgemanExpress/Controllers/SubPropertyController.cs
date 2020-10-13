@@ -30,6 +30,13 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [Route("DeleteSubProperty")]
+        public IHttpActionResult DeleteSubProperty(int id)
+        {
+            if (Bl.SubPropertyBL.DeleteSubProperty(id))
+                return Ok();
+            return BadRequest();
+        }
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum, Nullable<bool> IsRented)
         {

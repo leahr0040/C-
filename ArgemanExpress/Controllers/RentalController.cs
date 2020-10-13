@@ -24,6 +24,15 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [Route("AddRental")]
+        public IHttpActionResult AddRental(int id)
+        {
+            bool b = Bl.RentalBL.DeleteRental(id);
+            if (b)
+                return Ok();
+            return BadRequest();
+
+        }
         [Route("UpdateRental")]
         public IHttpActionResult UpdateRental([FromBody]RentalDTO rd)
         {

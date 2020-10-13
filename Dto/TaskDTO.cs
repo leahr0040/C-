@@ -21,7 +21,7 @@ namespace Dto
         public Nullable<bool> IsHandled { get; set; }
         public Nullable<System.DateTime> HandlingDate { get; set; }
         public string HandlingWay { get; set; }
-
+        public string Dock { get; set; }
         public TaskDTO()
         {
 

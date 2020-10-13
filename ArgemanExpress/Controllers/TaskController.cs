@@ -21,6 +21,14 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [Route("DeleteTask")]
+        public IHttpActionResult DeleteTask(int id)
+        {
+            bool b = Bl.TaskBL.DeleteTask(id);
+            if (b == true)
+                return Ok();
+            return BadRequest();
+        }
         [Route("UpdateTask")]
         public IHttpActionResult UpdateTask([FromBody]TaskDTO pd)
         {

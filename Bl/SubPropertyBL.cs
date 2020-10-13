@@ -14,7 +14,28 @@ namespace Bl
         public static bool AddSubProperty(SubPropertyDTO spd)
         {
             SubProperty sp = SubPropertyDTO.ToDal(spd);
-            return SubPropertyDAL.AddSubProperty(sp);
+            int id= SubPropertyDAL.AddSubProperty(sp);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = spd.Dock;
+                doc.DocUser = id;
+                //doc.type=5
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
+        }
+        public static bool DeleteSubProperty(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                SubProperty p =db.SubProperties.Find(id);
+                p.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
         public static bool UpdateSubProperty(SubPropertyDTO spd)
         {
@@ -51,7 +72,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<SubProperty> subProperties = db.SubProperties.ToList();
+                List<SubProperty> subProperties =(from sp in db.SubProperties where sp.status==true select sp).ToList();
                 return ConvertListToDTO(subProperties);
             }
         }

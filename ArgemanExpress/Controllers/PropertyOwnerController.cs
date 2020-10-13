@@ -19,9 +19,17 @@ namespace ArgemanExpress.Controllers
         {
           //  bool b = Bl.PropertyOwnerBL.AddPropertyOwner(po);
            // if (b)
-           //     return Ok("aaa");
+           //     return Ok();
             return BadRequest();
 
+        }
+        [Route("DeletePropertyOwner")]
+        public IHttpActionResult DeletePropertyOwner(int id)
+        {
+            bool b = Bl.PropertyOwnerBL.DeletePropertyOwner(id);
+            if (b)
+                return Ok();
+            return BadRequest();
         }
         [Route("UpdatePropertyOwner")]
         public IHttpActionResult UpdatePropertyOwner([FromBody]PropertyOwnerDTO po)
@@ -46,8 +54,8 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id));
         }
-        [Route("getPropertiesbyOwnerID")]
-        public IHttpActionResult getPropertiesbyOwnerID(int id)//דירות ששוכר לפי איידי
+        [Route("GetPropertiesbyOwnerID")]
+        public IHttpActionResult GetPropertiesbyOwnerID(int id)//דירות ששוכר לפי איידי
         {
             return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id));
         }

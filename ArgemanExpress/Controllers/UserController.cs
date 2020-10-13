@@ -29,6 +29,15 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [Route("DeleteUser")]
+        public IHttpActionResult DeleteUser(int id)
+        {
+            bool b = Bl.UserBL.DeleteUser(id);
+            if (b)
+                return Ok();
+            return BadRequest();
+
+        }
         [Route("UpdateUser")]
         public IHttpActionResult UpdateRental([FromBody] UserDTO ud)
         {
@@ -50,6 +59,17 @@ namespace ArgemanExpress.Controllers
             return Ok(Bl.UserBL.Return_Details_user(username,password));
 
         }
+        [Route("GetUserDocuments")]
+        public IHttpActionResult GetUserDocuments(int id)
+        {
+            return Ok(Bl.DocumentBL.GetUserDocuments(id));
+        }
+        [Route("AddUserDocuments")]
+        public IHttpActionResult AddUserDocuments([FromBody] DocumentDTO doc)
+        {
+            return Ok(Bl.DocumentBL.AddUserDocuments(doc));
+        }
+
     } 
 
 }

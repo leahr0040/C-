@@ -28,7 +28,7 @@ namespace Dto
         public Nullable<bool> IsRented { get; set; }
         public Nullable<double> RoomsNum { get; set; }
         public Nullable<int> ApartmentNum { get; set; }
-
+        public string Dock { get; set; }
         public PropertyDTO()
         {
 

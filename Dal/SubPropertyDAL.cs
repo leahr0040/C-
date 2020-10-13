@@ -8,22 +8,23 @@ namespace Dal
 {
      public class SubPropertyDAL
     {
-        public static bool AddSubProperty(SubProperty sp)
+        public static int AddSubProperty(SubProperty sp)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                sp.status = true;
                 db.SubProperties.Add(sp);
                 db.SaveChanges();
-                return true;
+                return (from sup in db.SubProperties where sup.PropertyID==sp.PropertyID && sup.num==sp.num select sup.SubPropertyID).FirstOrDefault();
             }
-            return false;
+            return 0;
         }
         public static List<SubProperty> Search(Nullable<int> PropertyID,Nullable<int> num,Nullable<double> Size,Nullable<double> RoomsNum)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<SubProperty> sp = new List<SubProperty>();
-                sp = db.SubProperties.ToList();
+                sp = (from sup in db.SubProperties where sup.status == true select sup).ToList();
                 if (PropertyID != null)
                     sp = (from s in sp where s.PropertyID == PropertyID select s).ToList();
                 if (num != null)

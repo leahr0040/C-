@@ -22,6 +22,14 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [Route("DeleteProperty")]// לבדוק איך קוראים בר
+        public IHttpActionResult DeleteProperty(int id)
+        {
+            bool b = Bl.PropertyBL.DeleteProperty(id);
+            if (b == true)
+                return Ok();
+            return BadRequest();
+        }
         [Route("UpdateProperty")]
         public IHttpActionResult UpdateProperty([FromBody]PropertyDTO pd)
         {

@@ -15,7 +15,28 @@ namespace Bl
         public static bool AddTask(TaskDTO td)
         {
             Dal.Task t = TaskDTO.ToDal(td);
-            return TaskDAL.AddTask(t);
+            int id= TaskDAL.AddTask(t);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = td.Dock;
+                doc.DocUser = id;
+                //doc.type=6
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
+        }
+        public static bool DeleteTask(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Dal.Task t = db.Tasks.Find(id);
+                t.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
         public static bool UpdateTask(TaskDTO td)
         {
@@ -34,7 +55,11 @@ namespace Bl
                 t.DateForHandling = td.DateForHandling;
                 t.IsHandled = td.IsHandled;
                 t.HandlingDate = td.HandlingDate;
-                t.HandlingWay = td.HandlingWay;
+                if (t.HandlingWay != td.HandlingWay)
+                {
+                    t.HandlingWay = td.HandlingWay;
+                    t.status = false;
+                }
 
                 db.SaveChanges();
                 return true;
@@ -106,7 +131,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                return db.Tasks.Count(t => (t.IsHandled != true && t.HandlingDate.Value.Date < DateTime.Today));
+                return db.Tasks.Count(t => (t.status == false && t.HandlingDate.Value.Date < DateTime.Today));
             }
             return null;
         }
@@ -114,7 +139,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                return db.Tasks.Count(t => t.IsHandled != true);
+                return db.Tasks.Count(t => t.status == false);
             }
             return null;
         }
@@ -146,7 +171,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks = db.Tasks.ToList();
+                List<Dal.Task> tasks =(from t in db.Tasks where t.status==true select t).ToList();
                 return ConvertListToDTO(tasks);
             }
         }

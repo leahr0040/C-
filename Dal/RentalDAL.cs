@@ -8,22 +8,23 @@ namespace Dal
 {
     public class RentalDAL
     {
-        public static bool AddRental(Rental r)
+        public static int AddRental(Rental r)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                r.status = true;
                 db.Rentals.Add(r);
                 db.SaveChanges();
-                return true;
+                return (from ren in db.Rentals where ren.PropertyID==r.PropertyID && ren.UserID==r.UserID && ren.EnteryDate==ren.EnteryDate select ren.RentalID).FirstOrDefault();
             }
-            return false;
+            return 0;
         }
         public static List<Rental> Search(Nullable<int> propertyID,  String user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Rental> rentals;
-                rentals = (from r in db.Rentals select r).ToList();
+                rentals = (from r in db.Rentals where r.status == true select r).ToList();
                 if (propertyID != null)
                     rentals = (from r in rentals where r.PropertyID == propertyID select r).ToList();            
                 if (user != null)

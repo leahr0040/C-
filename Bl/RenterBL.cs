@@ -14,12 +14,23 @@ namespace Bl
     {
         public static bool AddRenter(UserDTO ud)
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                ud.RoleID = (from r in db.UserRoles where r.RoleName == "שוכר" select r.RoleID).FirstOrDefault();
-            }
+            ud.RoleID = 3;
             User u = UserDTO.ToDal(ud);
-            return UserDAL.AddUser(u);
+            int id= UserDAL.AddUser(u);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = ud.Dock;
+                doc.DocUser = id;
+                //doc.type=4
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
+        }
+        public static bool DeleteRenter(int id)
+        {
+            return UserBL.DeleteUser(id);
         }
         public static bool UpdateRenter(UserDTO ud)
         {
@@ -45,7 +56,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> renters = (from r in db.Users where r.UserRole.RoleName == "שוכר" select r).ToList();
+                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).ToList();
                 return ConvertListToDTO(renters);
             }
         }

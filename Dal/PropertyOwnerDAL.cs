@@ -9,15 +9,16 @@ namespace Dal
 {
     public class PropertyOwnerDAL
     {
-        public static bool AddPropertyOwner(PropertiesOwner po)
+        public static int AddPropertyOwner(PropertiesOwner po)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                po.status = true;
                 db.PropertiesOwners.Add(po);
-                db.SaveChanges();
-                return true;
+                db.SaveChanges(); 
+                return (from p in db.PropertiesOwners where p.OwnerFirstName==po.OwnerFirstName && p.OwnerLastName==po.OwnerLastName && p.Phone==po.Phone && p.Email==po.Email select p.OwnerID).FirstOrDefault();
             }
-            return false;
+            return 0;
         }
 
         
@@ -36,7 +37,7 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertiesOwner> po;
-                po = (from p in db.PropertiesOwners select p).ToList();
+                po = (from p in db.PropertiesOwners where p.status == true select p).ToList();
                 if (OwnerFirstName != null)
                     po = (from p in po where p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
                 if (OwnerLastName != null)

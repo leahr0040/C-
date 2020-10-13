@@ -9,24 +9,25 @@ namespace Dal
 {
     public class PropertyDAL
     {
-        public static bool AddProperty(Property pe)
+        public static int AddProperty(Property pe)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Properties.Add(pe);
                 db.SaveChanges();
-                return true;
+
+                return (from p in db.Properties where p.OwnerID == pe.OwnerID && p.CityID == pe.CityID && p.StreetID == pe.StreetID && p.Number == pe.Number && p.Floor == pe.Floor && p.ApartmentNum == p.ApartmentNum select p.PropertyID).FirstOrDefault();
             }
-            return false;
+            return 0;
 
         }
-        
+
         public static List<Property> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Property> pro;
-                pro = (from p in db.Properties select p).ToList();
+                pro = (from p in db.Properties where p.status==true select p).ToList();
                 if (cityName != null)
                     pro = (from p in pro where p.CityName.Contains(cityName) select p).ToList();
                 if (streetName != null)

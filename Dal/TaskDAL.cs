@@ -8,21 +8,22 @@ namespace Dal
 {
     public class TaskDAL
     {
-        public static bool AddTask(Task t)
+        public static int AddTask(Task t)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                t.status = true;
                 db.Tasks.Add(t);
                 db.SaveChanges();
-                return true;
+                return (from ta in db.Tasks where ta.PropertyID==t.PropertyID && ta.ReportDate==t.ReportDate && ta.DateForHandling==t.DateForHandling && ta.Description==t.Description select ta.TaskID).FirstOrDefault();
             }
-            return false;
+            return 0;
         }
         public static List<Task> Search(Nullable<int> TaskTypeId ,Nullable<int> ClassificationID,System.DateTime DateForHandling,Nullable<bool> IsHandled)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Task> tasks = tasks = db.Tasks.ToList();
+                List<Task> tasks  = (from t in  db.Tasks where t.status == true select t).ToList();
                 if (TaskTypeId != null)
                     tasks = (from t in tasks where t.TaskTypeId == TaskTypeId select t).ToList();            
                 if (ClassificationID != null)

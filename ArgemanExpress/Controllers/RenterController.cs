@@ -25,6 +25,15 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [Route("DeleteRenter")]
+        public IHttpActionResult DeleteRenter(int id)
+        {
+            bool b = Bl.RenterBL.DeleteRenter(id);
+            if (b)
+                return Ok();
+            return BadRequest();
+
+        }
         [Route("UpdateRenter")]
         public IHttpActionResult UpdateRental([FromBody]UserDTO rd)
         {

@@ -14,7 +14,28 @@ namespace Bl
         {
 
             PropertiesOwner poDal = PropertyOwnerDTO.ToDal(pod);
-            return PropertyOwnerDAL.AddPropertyOwner(poDal);
+            int id=PropertyOwnerDAL.AddPropertyOwner(poDal);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = pod.Dock;
+                doc.DocUser = id;
+                //doc.type=2
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
+        }
+        public static bool DeletePropertyOwner(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                PropertiesOwner p = db.PropertiesOwners.Find(id);
+                p.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
         public static bool UpdatePropertyOwner(PropertyOwnerDTO po)
         {
@@ -52,7 +73,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<PropertiesOwner> owners = db.PropertiesOwners.ToList();
+                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).ToList();
                return ConvertListToDTO(owners);
             }
         }
@@ -76,6 +97,7 @@ namespace Bl
             List<Rental> renters = PropertyOwnerDAL.getRentalsbyOwnerID(id);
             return Bl.RentalBL.ConvertListToDTO(renters);
         }
+
 
 
     }

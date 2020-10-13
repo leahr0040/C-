@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocumentBL.cs" />
     <Compile Include="PropertyBL.cs" />
     <Compile Include="Mailsend.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

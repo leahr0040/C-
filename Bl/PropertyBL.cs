@@ -12,10 +12,30 @@ namespace Bl
         public static bool AddProperty(PropertyDTO d)
         {
             Property p = PropertyDTO.Todal(d);
-            return PropertyDAL.AddProperty(p);
+            int id = PropertyDAL.AddProperty(p);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = d.Dock;
+                doc.DocUser = id;
+                //doc.type=1
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
         }
-
-        public static bool UpdateProperty(PropertyDTO pd)
+        public static bool DeleteProperty(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Property p = db.Properties.Find(id);
+                p.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+            public static bool UpdateProperty(PropertyDTO pd)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -36,8 +56,8 @@ namespace Bl
                 p.ExclusivityID = pd.ExclusivityID;
                 p.IsWarranty = pd.IsWarranty;
                 p.IsRented = pd.IsRented;
-                //p.RoomsNum = pd.RoomsNum;
-                //p.ApartmentNum = pd.ApartmentNum;
+                p.RoomsNum = pd.RoomsNum;
+                p.ApartmentNum = pd.ApartmentNum;
 
                 db.SaveChanges();
                 return true;
@@ -65,7 +85,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Property> pro = db.Properties.ToList();
+                List<Property> pro =(from p in  db.Properties where p.status==true select p).ToList();
                 return ConvertListToDTO(pro);
             }
         }
@@ -93,6 +113,7 @@ namespace Bl
                 return new RentalDTO(rental);
             }
         }
+        
         //public static List<PropertyDTO> AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
         //{
         //    List<Property> pro = PropertyDAL.AdvancedSearch(propertyID, owner, cityName, streetName, number, apartmentNum, roomsNum, size, floor, isDivided, managmentPayment, isPaid, isExclusivity, exclusivity, isWarranty, isRented);

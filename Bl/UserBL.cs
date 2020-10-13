@@ -21,7 +21,28 @@ namespace Bl
             Mailsend.Mailnewuser(ud.Email,ud.Password,ud.UserName);
            // else
            //sms
-            return UserDAL.AddUser(u);
+            int id= UserDAL.AddUser(u);
+            if (id != 0)
+            {
+                Document doc = new Document();
+                doc.DocCoding = ud.Dock;
+                doc.DocUser = id;
+                //doc.type=7
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                return true;
+            }
+            return false;
+        }
+        public static bool DeleteUser(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                User t = db.Users.Find(id);
+                t.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
         static ArgamanExpressEntities db = new ArgamanExpressEntities();
         public static List<PropertyDTO> Return_Details_user(string userNam, string Passwor)
@@ -49,6 +70,8 @@ namespace Bl
                 return true;
             }
         }
+       
+        
         public static bool UpdateUser(UserDTO ud)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -58,8 +81,8 @@ namespace Bl
                 if ((u.SMS != ud.SMS) || (u.Email != ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
                     b = true;
 
-                //u.FirstName = ud.FirstName;
-                //u.LastName = ud.LastName;
+                u.FirstName = ud.FirstName;
+                u.LastName = ud.LastName;
                 u.SMS = ud.SMS;
                 u.Email = ud.Email;
                 u.Phone = ud.Phone;

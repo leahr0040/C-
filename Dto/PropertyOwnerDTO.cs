@@ -14,6 +14,9 @@ namespace Dto
         public string OwnerLastName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public Nullable<bool> status { get; set; }
+        public string Dock { get; set; }
+
 
         public PropertyOwnerDTO()
         {
@@ -26,6 +29,7 @@ namespace Dto
             OwnerLastName = po.OwnerLastName;
             Phone = po.Phone;
             Email = po.Email;
+           
         }
         public static PropertiesOwner ToDal(PropertyOwnerDTO po)
         {
