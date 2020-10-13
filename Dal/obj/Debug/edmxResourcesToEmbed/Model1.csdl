@@ -9,6 +9,14 @@
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Classifications" FromRole="Classifications" ToRole="Tasks" />
     <NavigationProperty Name="Tasks1" Relationship="Self.FK_Tasks_Classifications_client" FromRole="Classifications" ToRole="Tasks" />
   </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="DocID" />
+    </Key>
+    <Property Name="DocID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocUser" Type="Int32" Nullable="false" />
+    <Property Name="DocCoding" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
   <EntityType Name="Exclusivity">
     <Key>
       <PropertyRef Name="ExclusivityID" />
@@ -41,13 +49,17 @@
     <Property Name="IsDivided" Type="Boolean" Nullable="false" />
     <Property Name="ManagmentPayment" Type="Double" />
     <Property Name="IsPaid" Type="Boolean" Nullable="false" />
-    <Property Name="IsRented" Type="Boolean" Nullable="false" />
     <Property Name="IsExclusivity" Type="Boolean" Nullable="false" />
     <Property Name="ExclusivityID" Type="Int32" />
     <Property Name="IsWarranty" Type="Boolean" Nullable="false" />
+    <Property Name="IsRented" Type="Boolean" />
+    <Property Name="RoomsNum" Type="Double" />
+    <Property Name="ApartmentNum" Type="Int32" />
+    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="Exclusivity" Relationship="Self.FK_Properties_Exclusivitys" FromRole="Properties" ToRole="Exclusivitys" />
     <NavigationProperty Name="PropertiesOwner" Relationship="Self.FK_Properties_PropertiesOwners" FromRole="Properties" ToRole="PropertiesOwners" />
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Properties" FromRole="Properties" ToRole="Rentals" />
+    <NavigationProperty Name="SubProperties" Relationship="Self.FK_SubProperties_Properties" FromRole="Properties" ToRole="SubProperties" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Properties" FromRole="Properties" ToRole="Tasks" />
   </EntityType>
   <EntityType Name="PropertiesOwner">
@@ -55,9 +67,11 @@
       <PropertyRef Name="OwnerID" />
     </Key>
     <Property Name="OwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OwnerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_PropertiesOwners" FromRole="PropertiesOwners" ToRole="Properties" />
   </EntityType>
   <EntityType Name="Rental">
@@ -73,6 +87,7 @@
     <Property Name="EnteryDate" Type="DateTime" Precision="3" />
     <Property Name="EndDate" Type="DateTime" Precision="3" />
     <Property Name="ContactRenew" Type="Boolean" />
+    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="PaymentType" Relationship="Self.FK_Rentals_PaymentTypes" FromRole="Rentals" ToRole="PaymentTypes" />
     <NavigationProperty Name="Property" Relationship="Self.FK_Rentals_Properties" FromRole="Rentals" ToRole="Properties" />
     <NavigationProperty Name="SubProperty" Relationship="Self.FK_Rentals_SubProperties" FromRole="Rentals" ToRole="SubProperties" />
@@ -84,6 +99,12 @@
     </Key>
     <Property Name="SubPropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PropertyID" Type="Int32" Nullable="false" />
+    <Property Name="num" Type="Int32" Nullable="false" />
+    <Property Name="IsRented" Type="Boolean" Nullable="false" />
+    <Property Name="Size" Type="Double" />
+    <Property Name="RoomsNum" Type="Double" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Property" Relationship="Self.FK_SubProperties_Properties" FromRole="SubProperties" ToRole="Properties" />
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_SubProperties" FromRole="SubProperties" ToRole="Rentals" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_SubProperties" FromRole="SubProperties" ToRole="Tasks" />
   </EntityType>
@@ -113,6 +134,7 @@
     <Property Name="IsHandled" Type="Boolean" />
     <Property Name="HandlingDate" Type="DateTime" Precision="3" />
     <Property Name="HandlingWay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="Classification" Relationship="Self.FK_Tasks_Classifications" FromRole="Tasks" ToRole="Classifications" />
     <NavigationProperty Name="Classification1" Relationship="Self.FK_Tasks_Classifications_client" FromRole="Tasks" ToRole="Classifications" />
     <NavigationProperty Name="Property" Relationship="Self.FK_Tasks_Properties" FromRole="Tasks" ToRole="Properties" />
@@ -133,20 +155,22 @@
     </Key>
     <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RoleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="User" Relationship="Self.FK_Users_UserRoles" FromRole="UserRoles" ToRole="Users" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_UserRoles" FromRole="UserRoles" ToRole="Users" />
   </EntityType>
   <EntityType Name="User">
     <Key>
-      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="SMS" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="RoleID" Type="Int32" Nullable="false" />
     <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
     <NavigationProperty Name="UserRole" Relationship="Self.FK_Users_UserRoles" FromRole="Users" ToRole="UserRoles" />
   </EntityType>
@@ -157,25 +181,6 @@
     </Key>
     <Property Name="CityId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
-  <EntityType Name="city1">
-    <Key>
-      <PropertyRef Name="column1" />
-      <PropertyRef Name="column2" />
-      <PropertyRef Name="column3" />
-      <PropertyRef Name="column7" />
-      <PropertyRef Name="column9" />
-    </Key>
-    <Property Name="column1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="column2" Type="Int32" Nullable="false" />
-    <Property Name="column3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="column4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="column5" Type="Int32" />
-    <Property Name="column6" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="column7" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="column8" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="column9" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="column10" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Street">
     <Key>
@@ -259,6 +264,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SubProperties_Properties">
+    <End Role="Properties" Type="Self.Property" Multiplicity="1" />
+    <End Role="SubProperties" Type="Self.SubProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="SubProperties">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tasks_Properties">
     <End Role="Properties" Type="Self.Property" Multiplicity="0..1" />
     <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
@@ -288,7 +305,7 @@
     <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="RoleID" />
+        <PropertyRef Name="UserID" />
       </Principal>
       <Dependent Role="Rentals">
         <PropertyRef Name="UserID" />
@@ -321,7 +338,7 @@
   </Association>
   <Association Name="FK_Users_UserRoles">
     <End Role="UserRoles" Type="Self.UserRole" Multiplicity="1" />
-    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserRoles">
         <PropertyRef Name="RoleID" />
@@ -333,6 +350,7 @@
   </Association>
   <EntityContainer Name="ArgamanExpressEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Classifications" EntityType="Self.Classification" />
+    <EntitySet Name="Documents" EntityType="Self.Document" />
     <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivity" />
     <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
     <EntitySet Name="Properties" EntityType="Self.Property" />
@@ -345,7 +363,6 @@
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <EntitySet Name="cities" EntityType="Self.city" />
-    <EntitySet Name="city1" EntityType="Self.city1" />
     <EntitySet Name="Streets" EntityType="Self.Street" />
     <AssociationSet Name="FK_Tasks_Classifications" Association="Self.FK_Tasks_Classifications">
       <End Role="Classifications" EntitySet="Classifications" />
@@ -370,6 +387,10 @@
     <AssociationSet Name="FK_Rentals_Properties" Association="Self.FK_Rentals_Properties">
       <End Role="Properties" EntitySet="Properties" />
       <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubProperties_Properties" Association="Self.FK_SubProperties_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="SubProperties" EntitySet="SubProperties" />
     </AssociationSet>
     <AssociationSet Name="FK_Tasks_Properties" Association="Self.FK_Tasks_Properties">
       <End Role="Properties" EntitySet="Properties" />

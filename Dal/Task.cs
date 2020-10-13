@@ -26,6 +26,7 @@ namespace Dal
         public Nullable<bool> IsHandled { get; set; }
         public Nullable<System.DateTime> HandlingDate { get; set; }
         public string HandlingWay { get; set; }
+        public Nullable<bool> status { get; set; }
     
         public virtual Classification Classification { get; set; }
         public virtual Classification Classification1 { get; set; }

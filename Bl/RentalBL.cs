@@ -58,5 +58,24 @@ namespace Bl
                 return ConvertListToDTO(pro);
             }
         }
-    }
+        public static void Addtask2()
+        {
+            TaskDTO t; /*= new TaskDTO();*/
+            List<RentalDTO> pro= GetAllRentals();
+            int x = pro.Count;
+            int i = 0;
+            while (i != x) { 
+                //!!!!!!!!!!!!!
+            if((pro[i].EndDate).Value== DateTime.Today.AddMonths(3))//להוריד שלושה חודשים לא הצלחתי
+                {
+                    t = new TaskDTO();
+                    TaskBL.AddTask(t);
+                   
+                }
+
+
+                i++;
+}
+            }
+        }
 }

@@ -25,7 +25,7 @@ namespace Dto
         public bool IsExclusivity { get; set; }
         public Nullable<int> ExclusivityID { get; set; }
         public bool IsWarranty { get; set; }// האם באחריות?
-        public bool IsRented { get; set; }
+        public Nullable<bool> IsRented { get; set; }
         public Nullable<double> RoomsNum { get; set; }
         public Nullable<int> ApartmentNum { get; set; }
 
@@ -52,8 +52,8 @@ namespace Dto
             this.ExclusivityID = p.ExclusivityID;
             this.IsWarranty = p.IsWarranty;
             this.IsRented = p.IsRented;
-           // this.RoomsNum = p.RoomsNum;
-           // this.ApartmentNum = p.ApartmentNum;
+            this.RoomsNum = p.RoomsNum;
+            this.ApartmentNum = p.ApartmentNum;
         }
         public static Property Todal(PropertyDTO dd)
         {
@@ -74,9 +74,9 @@ namespace Dto
                 IsExclusivity = dd.IsExclusivity,
                 ExclusivityID = dd.ExclusivityID,
                 IsWarranty = dd.IsWarranty,
-               // RoomsNum = dd.RoomsNum,
-               // ApartmentNum = dd.ApartmentNum
-        };
+                RoomsNum = dd.RoomsNum,
+                ApartmentNum = dd.ApartmentNum
+            };
 
         }
         //public int OwnerID { get; set; }

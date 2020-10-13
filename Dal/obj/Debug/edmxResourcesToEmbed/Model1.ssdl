@@ -10,33 +10,20 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city' does not have a primary k
     <Property Name="CityId" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ArgamanExpress.dbo.city1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="city1">
-    <Key>
-      <PropertyRef Name="column1" />
-      <PropertyRef Name="column2" />
-      <PropertyRef Name="column3" />
-      <PropertyRef Name="column7" />
-      <PropertyRef Name="column9" />
-    </Key>
-    <Property Name="column1" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="column2" Type="int" Nullable="false" />
-    <Property Name="column3" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="column4" Type="nvarchar" MaxLength="50" />
-    <Property Name="column5" Type="int" />
-    <Property Name="column6" Type="nvarchar" MaxLength="50" />
-    <Property Name="column7" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="column8" Type="nvarchar" MaxLength="50" />
-    <Property Name="column9" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="column10" Type="nvarchar" MaxLength="50" />
-  </EntityType>
   <EntityType Name="Classifications">
     <Key>
       <PropertyRef Name="ClassificationID" />
     </Key>
     <Property Name="ClassificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ClassificationName" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Documents">
+    <Key>
+      <PropertyRef Name="DocID" />
+    </Key>
+    <Property Name="DocID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocUser" Type="int" Nullable="false" />
+    <Property Name="DocCoding" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Exclusivitys">
     <Key>
@@ -45,6 +32,11 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city1' does not have a primary 
     <Property Name="ExclusivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ExclusivityName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'ArgamanExpress.dbo.home.csv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="home_csv">
+          <Property Name="column1" Type="nvarchar(max)" />
+        </EntityType>-->
   <EntityType Name="PaymentTypes">
     <Key>
       <PropertyRef Name="PaymentTypeID" />
@@ -68,19 +60,24 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city1' does not have a primary 
     <Property Name="IsDivided" Type="bit" Nullable="false" />
     <Property Name="ManagmentPayment" Type="float" />
     <Property Name="IsPaid" Type="bit" Nullable="false" />
-    <Property Name="IsRented" Type="bit" Nullable="false" />
     <Property Name="IsExclusivity" Type="bit" Nullable="false" />
     <Property Name="ExclusivityID" Type="int" />
     <Property Name="IsWarranty" Type="bit" Nullable="false" />
+    <Property Name="IsRented" Type="bit" />
+    <Property Name="RoomsNum" Type="float" />
+    <Property Name="ApartmentNum" Type="int" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <EntityType Name="PropertiesOwners">
     <Key>
       <PropertyRef Name="OwnerID" />
     </Key>
     <Property Name="OwnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="OwnerName" Type="nvarchar(max)" />
+    <Property Name="OwnerFirstName" Type="nvarchar(max)" />
     <Property Name="Phone" Type="nvarchar" MaxLength="10" />
     <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="OwnerLastName" Type="nvarchar(max)" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <EntityType Name="Rentals">
     <Key>
@@ -95,6 +92,7 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city1' does not have a primary 
     <Property Name="EnteryDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
     <Property Name="ContactRenew" Type="bit" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <!--Errors Found During Generation:
 warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -114,6 +112,11 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     </Key>
     <Property Name="SubPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PropertyID" Type="int" Nullable="false" />
+    <Property Name="num" Type="int" Nullable="false" />
+    <Property Name="IsRented" Type="bit" Nullable="false" />
+    <Property Name="Size" Type="float" />
+    <Property Name="RoomsNum" Type="float" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -141,6 +144,7 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <Property Name="IsHandled" Type="bit" />
     <Property Name="HandlingDate" Type="datetime" />
     <Property Name="HandlingWay" Type="nvarchar(max)" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <EntityType Name="TaskTypes">
     <Key>
@@ -158,16 +162,18 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
   </EntityType>
   <EntityType Name="Users">
     <Key>
-      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="UserID" />
     </Key>
     <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
     <Property Name="SMS" Type="nvarchar" MaxLength="10" />
     <Property Name="Email" Type="nvarchar(max)" />
     <Property Name="Phone" Type="nvarchar" MaxLength="10" />
     <Property Name="RoleID" Type="int" Nullable="false" />
     <Property Name="UserName" Type="nvarchar(max)" />
     <Property Name="Password" Type="nvarchar" MaxLength="10" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="status" Type="bit" />
   </EntityType>
   <Association Name="FK_Properties_Exclusivitys">
     <End Role="Exclusivitys" Type="Self.Exclusivitys" Multiplicity="0..1" />
@@ -234,10 +240,22 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="RoleID" />
+        <PropertyRef Name="UserID" />
       </Principal>
       <Dependent Role="Rentals">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubProperties_Properties">
+    <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+    <End Role="SubProperties" Type="Self.SubProperties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="SubProperties">
+        <PropertyRef Name="PropertyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -303,7 +321,7 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
   </Association>
   <Association Name="FK_Users_UserRoles">
     <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserRoles">
         <PropertyRef Name="RoleID" />
@@ -346,6 +364,7 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="ArgamanExpressModelStoreContainer">
     <EntitySet Name="Classifications" EntityType="Self.Classifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivitys" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PaymentTypes" EntityType="Self.PaymentTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Properties" EntityType="Self.Properties" Schema="dbo" store:Type="Tables" />
@@ -362,20 +381,6 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     [city].[CityId] AS [CityId], 
     [city].[CityName] AS [CityName]
     FROM [dbo].[city] AS [city]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="city1" EntityType="Self.city1" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [city1].[column1] AS [column1], 
-    [city1].[column2] AS [column2], 
-    [city1].[column3] AS [column3], 
-    [city1].[column4] AS [column4], 
-    [city1].[column5] AS [column5], 
-    [city1].[column6] AS [column6], 
-    [city1].[column7] AS [column7], 
-    [city1].[column8] AS [column8], 
-    [city1].[column9] AS [column9], 
-    [city1].[column10] AS [column10]
-    FROM [dbo].[city1] AS [city1]</DefiningQuery>
     </EntitySet>
     <EntitySet Name="Streets" EntityType="Self.Streets" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
@@ -407,6 +412,10 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <AssociationSet Name="FK_Rentals_Users" Association="Self.FK_Rentals_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubProperties_Properties" Association="Self.FK_SubProperties_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="SubProperties" EntitySet="SubProperties" />
     </AssociationSet>
     <AssociationSet Name="FK_Tasks_Classifications" Association="Self.FK_Tasks_Classifications">
       <End Role="Classifications" EntitySet="Classifications" />

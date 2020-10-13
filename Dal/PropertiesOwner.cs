@@ -21,9 +21,11 @@ namespace Dal
         }
     
         public int OwnerID { get; set; }
-        public string OwnerName { get; set; }
+        public string OwnerFirstName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public string OwnerLastName { get; set; }
+        public Nullable<bool> status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Property> Properties { get; set; }

@@ -24,20 +24,14 @@ namespace Dal
             {
                 List<Task> tasks = tasks = db.Tasks.ToList();
                 if (TaskTypeId != null)
-                    tasks = (from t in tasks where t.TaskTypeId == TaskTypeId select t).ToList();
-                //if (PropertyID != null)
-                    //tasks = (from t in tasks where t.PropertyID == PropertyID select t).ToList();
+                    tasks = (from t in tasks where t.TaskTypeId == TaskTypeId select t).ToList();            
                 if (ClassificationID != null)
                     tasks = (from t in tasks where t.ClassificationID == ClassificationID select t).ToList();
-                //if (ReportDate != null)
-                //    tasks = (from t in tasks where t.ReportDate == ReportDate select t).ToList();
+                
                 if (DateForHandling != null)
                     tasks = (from t in tasks where t.DateForHandling == DateForHandling select t).ToList();
                 if (IsHandled != null)
-                    tasks = (from t in tasks where t.IsHandled == IsHandled select t).ToList();
-                //if (HandlingDate != null)
-                //    tasks = (from t in tasks where t.HandlingDate >= HandlingDate select t).ToList();
-
+                    tasks = (from t in tasks where t.IsHandled == IsHandled select t).ToList();         
                 return tasks;
             }
             return null;

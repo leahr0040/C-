@@ -13,10 +13,10 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<User> users = (from u in db.Users where u.UserRole.RoleName=="שוכר" select u).ToList();
-                //if (FirstName != null)
-                //    users = (from u in users where u.FirstName.Contains( FirstName) select u).ToList();
-                //if (LastName != null)
-                //    users = (from u in users where u.LastName.Contains(LastName) select u).ToList();
+                if (FirstName != null)
+                    users = (from u in users where u.FirstName.Contains(FirstName) select u).ToList();
+                if (LastName != null)
+                    users = (from u in users where u.LastName.Contains(LastName) select u).ToList();
                 if (SMS != null)
                     users = (from u in users where u.SMS.Contains(SMS) select u).ToList();
                 if (Email != null)

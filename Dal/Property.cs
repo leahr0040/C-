@@ -18,6 +18,7 @@ namespace Dal
         public Property()
         {
             this.Rentals = new HashSet<Rental>();
+            this.SubProperties = new HashSet<SubProperty>();
             this.Tasks = new HashSet<Task>();
         }
     
@@ -33,15 +34,20 @@ namespace Dal
         public bool IsDivided { get; set; }
         public Nullable<double> ManagmentPayment { get; set; }
         public bool IsPaid { get; set; }
-        public bool IsRented { get; set; }
         public bool IsExclusivity { get; set; }
         public Nullable<int> ExclusivityID { get; set; }
         public bool IsWarranty { get; set; }
+        public Nullable<bool> IsRented { get; set; }
+        public Nullable<double> RoomsNum { get; set; }
+        public Nullable<int> ApartmentNum { get; set; }
+        public Nullable<bool> status { get; set; }
     
         public virtual Exclusivity Exclusivity { get; set; }
         public virtual PropertiesOwner PropertiesOwner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rental> Rentals { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubProperty> SubProperties { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
     }
