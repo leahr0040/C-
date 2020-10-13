@@ -33,7 +33,7 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum, Nullable<bool> IsRented)
         {
-            return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum, IsRented));
+            return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum));
         }
         [Route("GetAllSubProperties")]
         public IHttpActionResult GetAllSubProperties()

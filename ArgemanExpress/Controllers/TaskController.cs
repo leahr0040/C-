@@ -29,14 +29,19 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
         }
         [Route("Search")]
-        public IHttpActionResult Search(Nullable<int> TaskTypeId, Nullable<int> PropertyID, Nullable<int> ClassificationID, Nullable<System.DateTime> ReportDate, System.DateTime DateForHandling, Nullable<bool> IsHandled, Nullable<System.DateTime> HandlingDate)
+        public IHttpActionResult Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
         {
-            return Ok(Bl.TaskBL.Search(TaskTypeId, PropertyID, ClassificationID, ReportDate, DateForHandling, IsHandled, HandlingDate));
+            return Ok(Bl.TaskBL.Search(TaskTypeId, ClassificationID,  DateForHandling, IsHandled));
         }
         [Route("GetAllTasks")]
         public IHttpActionResult GetAllTasks()
         {
             return Ok(Bl.TaskBL.GetAllTasks());
+        }
+        [Route("GetTimePassedTasks")]
+        public IHttpActionResult GetTimePassedTasks()
+        {
+            return Ok(Bl.TaskBL.GetTimePassedTasks());
         }
         [Route("GetTypeName")]
         public IHttpActionResult GetTypeName(int id)

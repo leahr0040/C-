@@ -35,7 +35,7 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
         {
-            return Ok(Bl.RentalBL.Search(propertyID, subPropertyID, user, rentPayment, paymentTypeID, enteryDate, endDate, contactRenew));
+            return Ok(Bl.RentalBL.Search(propertyID, user, enteryDate, endDate));
         }
         [Route("GetAllRentals")]
         public IHttpActionResult GetAllRentals()

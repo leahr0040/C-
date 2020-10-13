@@ -15,11 +15,11 @@ namespace ArgemanExpress.Controllers
     public class PropertyOwnerController : ApiController
     {
         [Route("AddPropertyOwner")]
-        public IHttpActionResult AddPropertyOwner([FromBody]PropertyOwnerDTO po)
+        public IHttpActionResult AddPropertyOwner(PropertyOwnerDTO po)
         {
-            bool b = Bl.PropertyOwnerBL.AddPropertyOwner(po);
-            if (b)
-                return Ok("aaa");
+          //  bool b = Bl.PropertyOwnerBL.AddPropertyOwner(po);
+           // if (b)
+           //     return Ok("aaa");
             return BadRequest();
 
         }

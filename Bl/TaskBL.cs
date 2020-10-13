@@ -150,6 +150,14 @@ namespace Bl
                 return ConvertListToDTO(tasks);
             }
         }
+        public static List<TaskDTO> GetTimePassedTasks()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Dal.Task> tasks = (from t in db.Tasks where t.IsHandled==false && t.DateForHandling.Date > DateTime.Today select t).ToList();
+                return ConvertListToDTO(tasks);
+            }
+        }
         public static string GetTypeName(int id)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -158,22 +166,7 @@ namespace Bl
             }
             return null;
         }
-        //public static bool? IsTakala(int id)
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        return db.TaskTypes.Find(id).TaskTypeName == "תקלה";
-        //    }
-        //    return null;
-        //}
-        //public static string GetClassificationName(int id)
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        return db.Classifications.Find(id).ClassificationName;
-        //    }
-        //    return null;
-        //}
+       
         public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
