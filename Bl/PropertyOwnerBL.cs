@@ -21,8 +21,8 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 PropertiesOwner pro = db.PropertiesOwners.Find(po.OwnerID);
-                //pro.OwnerFirstName = po.OwnerFirstName;
-                //pro.OwnerLastName = po.OwnerLastName;
+                pro.OwnerFirstName = po.OwnerFirstName;
+                pro.OwnerLastName = po.OwnerLastName;
                 pro.Phone = po.Phone;
                 pro.Email = po.Email;
                 db.SaveChanges();

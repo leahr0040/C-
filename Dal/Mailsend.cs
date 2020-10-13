@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-    public class Class1
+    public class Mailsend
     {
         static ArgamanExpressEntities db = new ArgamanExpressEntities();
         //public static List<Rental> Return_Details_user(string userNam, string Passwor)

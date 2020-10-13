@@ -39,8 +39,8 @@ namespace ArgemanExpress.Controllers
         }
         [Route("GetAllRentals")]
         public IHttpActionResult GetAllRentals()
-        {
-            return Ok(Bl.RentalBL.GetAllRentals());
+        {//Bl.RentalBL.GetAllRentals()
+            return Ok("aaa");
         }
     }
 }

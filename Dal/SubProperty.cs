@@ -23,7 +23,13 @@ namespace Dal
     
         public int SubPropertyID { get; set; }
         public int PropertyID { get; set; }
+        public int num { get; set; }
+        public bool IsRented { get; set; }
+        public Nullable<double> Size { get; set; }
+        public Nullable<double> RoomsNum { get; set; }
+        public Nullable<bool> status { get; set; }
     
+        public virtual Property Property { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rental> Rentals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

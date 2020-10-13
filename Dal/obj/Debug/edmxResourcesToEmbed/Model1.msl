@@ -9,6 +9,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Document">
+        <MappingFragment StoreEntitySet="Documents">
+          <ScalarProperty Name="DocID" ColumnName="DocID" />
+          <ScalarProperty Name="DocUser" ColumnName="DocUser" />
+          <ScalarProperty Name="DocCoding" ColumnName="DocCoding" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Exclusivitys">
       <EntityTypeMapping TypeName="ArgamanExpressModel.Exclusivity">
         <MappingFragment StoreEntitySet="Exclusivitys">
@@ -40,10 +49,13 @@
           <ScalarProperty Name="IsDivided" ColumnName="IsDivided" />
           <ScalarProperty Name="ManagmentPayment" ColumnName="ManagmentPayment" />
           <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
-          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
           <ScalarProperty Name="IsExclusivity" ColumnName="IsExclusivity" />
           <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
           <ScalarProperty Name="IsWarranty" ColumnName="IsWarranty" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="ApartmentNum" ColumnName="ApartmentNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -51,9 +63,11 @@
       <EntityTypeMapping TypeName="ArgamanExpressModel.PropertiesOwner">
         <MappingFragment StoreEntitySet="PropertiesOwners">
           <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-          <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
+          <ScalarProperty Name="OwnerFirstName" ColumnName="OwnerFirstName" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OwnerLastName" ColumnName="OwnerLastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -69,6 +83,7 @@
           <ScalarProperty Name="EnteryDate" ColumnName="EnteryDate" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="ContactRenew" ColumnName="ContactRenew" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -77,6 +92,11 @@
         <MappingFragment StoreEntitySet="SubProperties">
           <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
           <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -106,6 +126,7 @@
           <ScalarProperty Name="IsHandled" ColumnName="IsHandled" />
           <ScalarProperty Name="HandlingDate" ColumnName="HandlingDate" />
           <ScalarProperty Name="HandlingWay" ColumnName="HandlingWay" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -129,13 +150,15 @@
       <EntityTypeMapping TypeName="ArgamanExpressModel.User">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
           <ScalarProperty Name="SMS" ColumnName="SMS" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="UserName" ColumnName="UserName" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -144,22 +167,6 @@
         <MappingFragment StoreEntitySet="city">
           <ScalarProperty Name="CityId" ColumnName="CityId" />
           <ScalarProperty Name="CityName" ColumnName="CityName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="city1">
-      <EntityTypeMapping TypeName="ArgamanExpressModel.city1">
-        <MappingFragment StoreEntitySet="city1">
-          <ScalarProperty Name="column1" ColumnName="column1" />
-          <ScalarProperty Name="column2" ColumnName="column2" />
-          <ScalarProperty Name="column3" ColumnName="column3" />
-          <ScalarProperty Name="column4" ColumnName="column4" />
-          <ScalarProperty Name="column5" ColumnName="column5" />
-          <ScalarProperty Name="column6" ColumnName="column6" />
-          <ScalarProperty Name="column7" ColumnName="column7" />
-          <ScalarProperty Name="column8" ColumnName="column8" />
-          <ScalarProperty Name="column9" ColumnName="column9" />
-          <ScalarProperty Name="column10" ColumnName="column10" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

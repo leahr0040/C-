@@ -23,6 +23,7 @@ namespace Dal
         public Nullable<System.DateTime> EnteryDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<bool> ContactRenew { get; set; }
+        public Nullable<bool> status { get; set; }
     
         public virtual PaymentType PaymentType { get; set; }
         public virtual Property Property { get; set; }

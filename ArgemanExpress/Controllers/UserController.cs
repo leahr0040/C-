@@ -10,14 +10,18 @@ using Dto;
 namespace ArgemanExpress.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+
+
+
     [RoutePrefix("api/users")]
     
     
+
     public class UserController : ApiController
     {
 
         [Route("AddUser")]
-        public IHttpActionResult AddUser([FromBody]UserDTO ud)
+        public IHttpActionResult AddUser([FromBody] UserDTO ud)
         {
             bool b = Bl.UserBL.AddUser(ud);
             if (b)
@@ -26,12 +30,26 @@ namespace ArgemanExpress.Controllers
 
         }
         [Route("UpdateUser")]
-        public IHttpActionResult UpdateRental([FromBody]UserDTO ud)
+        public IHttpActionResult UpdateRental([FromBody] UserDTO ud)
         {
             bool b = Bl.UserBL.UpdateUser(ud);
             if (b)
                 return Ok();
             return BadRequest();
         }
-    }
+
+        [Route("returnuser")]
+        public IHttpActionResult ee(string username, string password)
+        {
+            return Ok(Bl.UserBL.Return_Details_user(username, password));
+
+        }
+        [Route("returnuserproperty")]
+        public IHttpActionResult returnuserproperty(string username, string password)
+        {
+            return Ok(Bl.UserBL.Return_Details_user(username,password));
+
+        }
+    } 
+
 }

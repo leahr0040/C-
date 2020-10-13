@@ -15,9 +15,11 @@ namespace Dal
                 db.Users.Add(u);
                 db.SaveChanges();
                 return true;
-            }
-            return false;
+            } }
+        //public static bool Searchforuser(string UserName, string Password)
+        //{ }
+             
         }
         
     }
-}
+

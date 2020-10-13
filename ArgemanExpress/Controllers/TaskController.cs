@@ -31,7 +31,9 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
         {
-            return Ok(Bl.TaskBL.Search(TaskTypeId, ClassificationID,  DateForHandling, IsHandled));
+
+            return Ok(Bl.TaskBL.Search(TaskTypeId, ClassificationID, DateForHandling, IsHandled));
+
         }
         [Route("GetAllTasks")]
         public IHttpActionResult GetAllTasks()
