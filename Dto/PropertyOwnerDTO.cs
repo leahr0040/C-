@@ -16,7 +16,7 @@ namespace Dto
         public string Email { get; set; }
         public Nullable<bool> status { get; set; }
         public string Dock { get; set; }
-
+        public string docName { get; set; }
 
         public PropertyOwnerDTO()
         {

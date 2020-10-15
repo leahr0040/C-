@@ -13,7 +13,7 @@ namespace ArgemanExpress.Controllers
 
 
 
-    [RoutePrefix("api/users")]
+    [RoutePrefix("api/User")]
     
     
 
@@ -60,15 +60,11 @@ namespace ArgemanExpress.Controllers
 
         }
         [Route("GetUserDocuments")]
-        public IHttpActionResult GetUserDocuments(int id)
+        public IHttpActionResult GetUserDocuments(int id,int type)
         {
-            return Ok(Bl.DocumentBL.GetUserDocuments(id));
+            return Ok(Bl.DocumentBL.GetUserDocuments(id, type));
         }
-        [Route("AddUserDocuments")]
-        public IHttpActionResult AddUserDocuments([FromBody] DocumentDTO doc)
-        {
-            return Ok(Bl.DocumentBL.AddUserDocuments(doc));
-        }
+        
 
     } 
 

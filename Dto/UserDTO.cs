@@ -19,6 +19,7 @@ namespace Dto
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Dock { get; set; }
+        public string docName { get; set; }
         public UserDTO()
         {
 

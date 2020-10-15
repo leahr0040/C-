@@ -15,12 +15,17 @@ namespace Bl
             Document d = DocumentDTO.ToDAL(doc);
             return DocumentDAL.AddUserDocuments(d);
         }
-        public static string[] GetUserDocuments(int id)
+        public static List<DocumentDTO> GetUserDocuments(int id,int type)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                string[] documents = (from d in db.Documents where d.DocUser == id select d.DocCoding).ToArray();
-                return documents;
+                List<Document> documents = (from d in db.Documents where d.DocUser == id select d).ToList();
+                List<DocumentDTO> docks = new List<DocumentDTO>();
+                foreach (Document document in documents)
+                {
+                    docks.Add(new DocumentDTO(document));
+                }
+                return docks;
             }
 
         }

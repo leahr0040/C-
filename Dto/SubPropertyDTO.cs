@@ -17,6 +17,7 @@ namespace Dto
         public Nullable<double> Size { get; set; }
         public Nullable<double> RoomsNum { get; set; }
         public string Dock { get; set; }
+        public string docName { get; set; }
         public SubPropertyDTO(SubProperty sp)
         {
             this.SubPropertyID =sp.SubPropertyID;

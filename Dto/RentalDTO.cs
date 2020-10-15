@@ -19,6 +19,7 @@ namespace Dto
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<bool> ContactRenew { get; set; }
         public string Dock { get; set; }
+        public string docName { get; set; }
         public RentalDTO()
         {
 

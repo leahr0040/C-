@@ -28,6 +28,7 @@ namespace Bl
                 doc.DocCoding = ud.Dock;
                 doc.DocUser = id;
                 //doc.type=7
+                //doc.docName=ud.docName
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
                 return true;
             }
