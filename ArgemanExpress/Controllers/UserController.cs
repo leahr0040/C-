@@ -50,13 +50,13 @@ namespace ArgemanExpress.Controllers
         [Route("returnuser")]
         public IHttpActionResult ee(string username, string password)
         {
-            return Ok(Bl.UserBL.Return_Details_user(username, password));
+           return Ok(Bl.UserBL.Return_Details_user(username,password));
 
         }
         [Route("returnuserproperty")]
         public IHttpActionResult returnuserproperty(string username, string password)
         {
-            return Ok(Bl.UserBL.Return_Details_user(username,password));
+            return Ok(Bl.UserBL.Return_Details_use(username,password));
 
         }
         [Route("GetUserDocuments")]
@@ -64,7 +64,16 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.DocumentBL.GetUserDocuments(id, type));
         }
-        
+        [Route("Ifhaveuse")]
+        public IHttpActionResult ret(string username, string password)
+        {
+            return Ok(Bl.UserBL.Haveuserforpassword(username, password));
+        }
+        [Route("forgotpassword")]
+        public IHttpActionResult m(string username, string email)
+        {
+            return Ok(Bl.UserBL.Forgotpasswor(username,email));
+        }
 
     } 
 

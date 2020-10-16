@@ -13,7 +13,7 @@ namespace Bl
         public static bool AddRental(RentalDTO rd)
         {
             Rental r = RentalDTO.ToDal(rd);
-           int id= RentalDAL.AddRental(r);
+            int id = RentalDAL.AddRental(r);
             if (id != 0)
             {
                 Document doc = new Document();
@@ -39,7 +39,7 @@ namespace Bl
         }
         public static bool UpdateRental(RentalDTO rd)
         {
-            using(ArgamanExpressEntities db=new ArgamanExpressEntities())
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Rental r = db.Rentals.Find(rd.RentalID);
                 r.PropertyID = rd.PropertyID;
@@ -75,28 +75,39 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Rental> pro = (from r in  db.Rentals where r.status==true select r).ToList();
+                List<Rental> pro = (from r in db.Rentals where r.status == true select r).ToList();
                 return ConvertListToDTO(pro);
             }
         }
         public static void Addtask2()
         {
             TaskDTO t; /*= new TaskDTO();*/
-            List<RentalDTO> pro= GetAllRentals();
+            List<RentalDTO> pro = GetAllRentals();
             int x = pro.Count;
             int i = 0;
-            while (i != x) { 
-                //!!!!!!!!!!!!!
-            if((pro[i].EndDate).Value== DateTime.Today.AddMonths(3))//להוריד שלושה חודשים לא הצלחתי
+            while (i != x)
+            {
+                if ((pro[i].EndDate).Value == DateTime.Today.AddMonths(3))
                 {
                     t = new TaskDTO();
+                    t.TaskTypeId = 2;
+                    t.Description = pro[i].SubPropertyID + "סיום חוזה לדירה:";
+                    t.PropertyID = pro[i].SubPropertyID;
+                    t.SubPropertyID = t.SubPropertyID;
+                    t.ClassificationID = 3;
+                    t.ClientClassificationID = null;////////
+                    t.ReportDate = DateTime.Today;
+                    t.DateForHandling = DateTime.Today.AddMonths(1);
+                    t.IsHandled = false;
+                    t.HandlingDate = null;
+                    t.HandlingWay = "מזכירה";
+                    // t.Status = true;
                     TaskBL.AddTask(t);
-                   
+                    i++;
                 }
 
-
-                i++;
-}
             }
         }
+    }
+
 }
