@@ -18,7 +18,7 @@ namespace Bl
             ud.UserName = ud.FirstName.Substring(0,3) + ud.LastName.Substring(0,3);
             ud.Password = ud.UserName.Substring(1,3) + i.ToString();//יותר לפי firstname
             //if (ud.SMS==null||ud.SMS==" ")
-            Mailsend.Mailnewuser(ud.Email,ud.Password,ud.UserName);
+            Mailsend.Mailnewuser(ud);
            // else
            //sms
             int id= UserDAL.AddUser(u);
@@ -66,14 +66,14 @@ namespace Bl
                 //User u = UserDTO.ToDal(ud);
                 ud.UserName = ud.FirstName.Substring(1,4) + ud.LastName.Substring(1,4);
                 ud.Password = ud.UserName.Substring(1, 3) + i.ToString();//יותר לפי firstname
-                Mailsend.Mailnewuser(ud.Email, ud.Password, ud.UserName);
+                Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
             }
         }
        
         
-        public static bool UpdateUser(UserDTO ud)
+         public static bool UpdateUser(UserDTO ud)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -91,13 +91,65 @@ namespace Bl
                 u.UserName = ud.UserName;
                 u.Password = ud.Password;
                 if (b == true && (ud.SMS == null || ud.SMS == " "))//עוד בלי אופציית SMS
-                    Mailsend.Mailnewuser(ud.Email, ud.Password, ud.UserName);
-
+                    Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
                 //return false;
             }
             }
+        public static List<UserDTO> GetAllRenters()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<User> renters = (from r in db.Users where r.status == true select r).ToList();
+                return RenterBL.ConvertListToDTO(renters);
 
-    }
+            }
+        }
+        public static List<PropertyDTO> Return_Details_use(string userNam,string Passwor)
+        {
+            int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
+            return RenterBL.getPropertiesbyRenterID(u);
+        }
+        public static bool Haveuserforpassword(string userNam, string Passwor)
+        {
+            string u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.Password).FirstOrDefault();
+            if (u != null)
+                return true;
+            return false;
+
+        }
+        public static void MailToAllUser()
+        {
+            List<UserDTO> u = GetAllRenters();
+            int x = u.Count;
+            int i = 0;
+            while (i != x)
+            {
+                Mailsend.Mailnewuser(u[i]);
+            }
+        }
+        public static bool Forgotpasswor(string username,string mail)
+        {
+            //פונקצייה חיפוש עפי מייל קיים
+            //Mailsend.Mailforgotpasword()
+            int u = (from a in db.Users where username == a.UserName && mail == a.Email select a.UserID).FirstOrDefault();
+            if (u >= 0)
+            {
+                bool x = false;
+                List<UserDTO> s = GetAllRenters();
+                for (int i = 0; i < s.Count||x; i++)
+                {
+                    if (u == s[i].UserID)
+                        x = true;
+                    Mailsend.Mailforgotpasword(s[i]);
+                }                // להגריל סיסמה חדשה
+            }
+            return true;
+            return false;
+
+        }
+
+    
+}
 }

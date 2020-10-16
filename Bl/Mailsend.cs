@@ -13,7 +13,7 @@ namespace Bl
 {
     public class Mailsend
     {
-        public static void Mailnewuser(string mail1, string pasword,string username)
+        public static void Mailnewuser(UserDTO ud)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -23,19 +23,20 @@ namespace Bl
                     SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
                     mail.From = new MailAddress("esterieliav100@gmail.com");
-                    mail.To.Add(mail1);
-                   // mail.Bcc.Add(mail1);
-                    mail.Subject ="כניסת משתמש לארגמן אקספרס";
+                    mail.To.Add(ud.Email);
+                    // mail.Bcc.Add(mail1);
+                    mail.Subject = "כניסת משתמש לארגמן אקספרס";
                     mail.IsBodyHtml = true;
+
                     string ht = @"<html>
-                    <body style='color:forestgreen;background-color:yellow;font-size:150%'>
-          <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'>ברוכים הבאים</a><br/>שם המשתמש שלך :<br/>הסיסמה שלך:
+                    <body style='color:blueviolet;font-size:150%'>
+          <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'>ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>שם המשתמש שלך: " + ud.LastName + @"<br/>הסיסמה שלך: " + ud.Password + @"
                 <br/><a href='http://monkeys.co.il/'>כניסה לאתר</a></body></html>";
+
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
-                  
                     mail.Body = ht;
                     SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100","es211860663");
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100", "es211860663");
                     SmtpServer.EnableSsl = true;
 
                     SmtpServer.Send(mail);
@@ -44,11 +45,48 @@ namespace Bl
                 {
                     throw e;
                 }
-
-
             }
+
         }
+        public static void Mailforgotpasword(UserDTO ud)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                    mail.From = new MailAddress("esterieliav100@gmail.com");
+                    mail.To.Add(ud.Email);
+                    // mail.Bcc.Add(mail1);
+                    mail.Subject = "כניסת משתמש לארגמן אקספרס";
+                    mail.IsBodyHtml = true;
+
+                    string ht = @"<html>
+                    <body style='color:blueviolet;font-size:150%'>
+          <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'>ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>הסיסמה שלך: " + ud.Password + @"
+                <br/><a href='http://monkeys.co.il/'>כניסה לאתר</a></body></html>";
+
+                    // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
+                    mail.Body = ht;
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100", "es211860663");
+                    SmtpServer.EnableSsl = true;
+
+                    SmtpServer.Send(mail);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+
+        }
+
     }
+
+
 }
 
 
