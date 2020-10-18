@@ -24,6 +24,16 @@ namespace Bl
             }
             return false;
         }
+        public static bool AddExclusivityPerson(ExclusivityPersonDTO epDTO)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                db.Exclusivitys.Add(ExclusivityPersonDTO.ToDAL(epDTO));
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public static bool DeleteProperty(int id)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())

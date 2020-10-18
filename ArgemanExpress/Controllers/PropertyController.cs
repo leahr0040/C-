@@ -62,6 +62,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id));
         }
+        [Route("AddExclusivityPerson")]
+        public IHttpActionResult AddExclusivityPerson(ExclusivityPersonDTO ep)
+        {
+            return Ok(Bl.PropertyBL.AddExclusivityPerson(ep));
+        }
         //[Route("AdvancedSearch")]
         //public IHttpActionResult AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
         //{
