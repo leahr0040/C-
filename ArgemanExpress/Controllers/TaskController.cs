@@ -79,6 +79,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetAllTaskTypes());
         }
+        [Route("GetTaskId")]
+        public IHttpActionResult GetTaskId(int i)
+        {
+            return Ok(Bl.TaskBL.ReturnTaskbyid(i));
+        }
 
     }
 }

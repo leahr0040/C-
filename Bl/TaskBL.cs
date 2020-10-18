@@ -218,6 +218,25 @@ namespace Bl
             }
             return null;
         }
-        
+
+        public static TaskDTO ReturnTaskbyid(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                bool x = false; int i;
+                List<TaskDTO> s = GetAllTasks();
+                for (i = 0; i < s.Count ||x; i++)
+                {
+                    if (id == s[i].TaskID)
+                    {
+                        i--;
+                        x = true;
+                    }
+                }
+                return s[i];
+                
+            }
+        }
+
     }
 }

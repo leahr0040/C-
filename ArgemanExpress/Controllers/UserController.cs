@@ -72,7 +72,7 @@ namespace ArgemanExpress.Controllers
         [Route("forgotpassword")]
         public IHttpActionResult m(string username, string email)
         {
-            return Ok(Bl.UserBL.Forgotpasswor(username,email));
+            return Ok(Bl.UserBL.Forgotpassword(username,email));
         }
 
     } 

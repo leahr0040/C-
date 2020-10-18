@@ -46,17 +46,13 @@ namespace Bl
             return false;
         }
         static ArgamanExpressEntities db = new ArgamanExpressEntities();
+
         public static List<PropertyDTO> Return_Details_user(string userNam, string Passwor)
         {
             int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
              return RenterBL.getPropertiesbyRenterID(u);
         } 
-        public static bool Forgotpassword(string mail,string username)
-        {
-            //פונקצייה חיפוש עפי מייל קיים
-            //Mailsend.Mailnewuser()
-            return true;
-        }
+       
         public static bool UpdatePassword(UserDTO ud)//שינוי סיסמה 
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -129,7 +125,7 @@ namespace Bl
                 Mailsend.Mailnewuser(u[i]);
             }
         }
-        public static bool Forgotpasswor(string username,string mail)
+        public static bool Forgotpassword(string username,string mail)
         {
             //פונקצייה חיפוש עפי מייל קיים
             //Mailsend.Mailforgotpasword()
@@ -141,8 +137,10 @@ namespace Bl
                 for (int i = 0; i < s.Count||x; i++)
                 {
                     if (u == s[i].UserID)
+                    { 
                         x = true;
                     Mailsend.Mailforgotpasword(s[i]);
+                    }
                 }                // להגריל סיסמה חדשה
             }
             return true;
