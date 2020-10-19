@@ -28,10 +28,10 @@ namespace Dal
             {
                 List<Property> pro;
                 pro = (from p in db.Properties where p.status==true select p).ToList();
-                if (cityName != null)
-                    pro = (from p in pro where p.CityName.Contains(cityName) select p).ToList();
-                if (streetName != null)
-                    pro = (from p in pro where p.StreetName.Contains(streetName) select p).ToList();
+               // if (cityName != null)
+                //    pro = (from p in pro where p.CityName.Contains(cityName) select p).ToList();
+               // if (streetName != null)
+                   // pro = (from p in pro where p.StreetName.Contains(streetName) select p).ToList();
                 if (number != null)
                     pro = (from p in pro where p.Number.Contains(number) select p).ToList();
                 if (floor != null)

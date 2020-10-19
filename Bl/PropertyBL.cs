@@ -53,9 +53,7 @@ namespace Bl
                
                 p.OwnerID = pd.OwnerID;
                 p.CityID = pd.CityID;
-                p.CityName = pd.CityName;
                 p.StreetID = pd.StreetID;
-                p.StreetName = pd.StreetName;
                 p.Number = pd.Number;
                 p.Size = pd.Size;
                 p.Floor = pd.Floor;

@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ArgamanExpressModelStoreContainer" CdmEntityContainer="ArgamanExpressEntities">
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.City">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Classifications">
       <EntityTypeMapping TypeName="ArgamanExpressModel.Classification">
         <MappingFragment StoreEntitySet="Classifications">
@@ -15,6 +23,8 @@
           <ScalarProperty Name="DocID" ColumnName="DocID" />
           <ScalarProperty Name="DocUser" ColumnName="DocUser" />
           <ScalarProperty Name="DocCoding" ColumnName="DocCoding" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="DocName" ColumnName="DocName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -40,9 +50,7 @@
           <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
           <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
           <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="CityName" ColumnName="CityName" />
           <ScalarProperty Name="StreetID" ColumnName="StreetID" />
-          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Size" ColumnName="Size" />
           <ScalarProperty Name="Floor" ColumnName="Floor" />
@@ -84,6 +92,15 @@
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="ContactRenew" ColumnName="ContactRenew" />
           <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Streets">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Street">
+        <MappingFragment StoreEntitySet="Streets">
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -159,23 +176,6 @@
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="status" ColumnName="status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="cities">
-      <EntityTypeMapping TypeName="ArgamanExpressModel.city">
-        <MappingFragment StoreEntitySet="city">
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="CityName" ColumnName="CityName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Streets">
-      <EntityTypeMapping TypeName="ArgamanExpressModel.Street">
-        <MappingFragment StoreEntitySet="Streets">
-          <ScalarProperty Name="CityId" ColumnName="CityId" />
-          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
-          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

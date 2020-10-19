@@ -40,9 +40,7 @@ namespace Dto
             this.PropertyID = p.PropertyID;
             this.OwnerID = p.OwnerID;
             this.CityID = p.CityID;
-            this.CityName = p.CityName;
             this.StreetID = p.StreetID;
-            this.StreetName = p.StreetName;
             this.Number = p.Number;
             this.Size = p.Size;
             this.Floor = p.Floor;
@@ -63,7 +61,6 @@ namespace Dto
                 OwnerID = dd.OwnerID,
                 PropertyID = dd.PropertyID,
                 CityID = dd.CityID,
-                CityName = dd.CityName,
                 StreetID = dd.StreetID,
                 Number = dd.Number,
                 Size = dd.Size,

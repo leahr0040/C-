@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ArgamanExpressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_Citi" FromRole="Cities" ToRole="Properties" />
+    <NavigationProperty Name="Streets" Relationship="Self.FK_Street_Citi" FromRole="Cities" ToRole="Streets" />
+  </EntityType>
   <EntityType Name="Classification">
     <Key>
       <PropertyRef Name="ClassificationID" />
@@ -16,6 +25,8 @@
     <Property Name="DocID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DocUser" Type="Int32" Nullable="false" />
     <Property Name="DocCoding" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="DocName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Exclusivity">
     <Key>
@@ -40,9 +51,7 @@
     <Property Name="PropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="OwnerID" Type="Int32" Nullable="false" />
     <Property Name="CityID" Type="Int32" Nullable="false" />
-    <Property Name="CityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="StreetID" Type="Int32" Nullable="false" />
-    <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Number" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Size" Type="Double" />
     <Property Name="Floor" Type="Int32" />
@@ -56,8 +65,10 @@
     <Property Name="RoomsNum" Type="Double" />
     <Property Name="ApartmentNum" Type="Int32" />
     <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Properties_Citi" FromRole="Properties" ToRole="Cities" />
     <NavigationProperty Name="Exclusivity" Relationship="Self.FK_Properties_Exclusivitys" FromRole="Properties" ToRole="Exclusivitys" />
     <NavigationProperty Name="PropertiesOwner" Relationship="Self.FK_Properties_PropertiesOwners" FromRole="Properties" ToRole="PropertiesOwners" />
+    <NavigationProperty Name="Street" Relationship="Self.FK_Properties_Stree" FromRole="Properties" ToRole="Streets" />
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Properties" FromRole="Properties" ToRole="Rentals" />
     <NavigationProperty Name="SubProperties" Relationship="Self.FK_SubProperties_Properties" FromRole="Properties" ToRole="SubProperties" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Properties" FromRole="Properties" ToRole="Tasks" />
@@ -92,6 +103,16 @@
     <NavigationProperty Name="Property" Relationship="Self.FK_Rentals_Properties" FromRole="Rentals" ToRole="Properties" />
     <NavigationProperty Name="SubProperty" Relationship="Self.FK_Rentals_SubProperties" FromRole="Rentals" ToRole="SubProperties" />
     <NavigationProperty Name="User" Relationship="Self.FK_Rentals_Users" FromRole="Rentals" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="StreetID" />
+    </Key>
+    <Property Name="StreetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Street_Citi" FromRole="Streets" ToRole="Cities" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_Stree" FromRole="Streets" ToRole="Properties" />
   </EntityType>
   <EntityType Name="SubProperty">
     <Key>
@@ -174,24 +195,30 @@
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
     <NavigationProperty Name="UserRole" Relationship="Self.FK_Users_UserRoles" FromRole="Users" ToRole="UserRoles" />
   </EntityType>
-  <EntityType Name="city">
-    <Key>
-      <PropertyRef Name="CityId" />
-      <PropertyRef Name="CityName" />
-    </Key>
-    <Property Name="CityId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Street">
-    <Key>
-      <PropertyRef Name="CityId" />
-      <PropertyRef Name="StreetID" />
-      <PropertyRef Name="StreetName" />
-    </Key>
-    <Property Name="CityId" Type="Int32" Nullable="false" />
-    <Property Name="StreetID" Type="Int32" Nullable="false" />
-    <Property Name="StreetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-  </EntityType>
+  <Association Name="FK_Properties_Citi">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Street_Citi">
+    <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Streets" Type="Self.Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Streets">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Tasks_Classifications">
     <End Role="Classifications" Type="Self.Classification" Multiplicity="0..1" />
     <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
@@ -249,6 +276,18 @@
       </Principal>
       <Dependent Role="Properties">
         <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Stree">
+    <End Role="Streets" Type="Self.Street" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Streets">
+        <PropertyRef Name="StreetID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="StreetID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -349,6 +388,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="ArgamanExpressEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
     <EntitySet Name="Classifications" EntityType="Self.Classification" />
     <EntitySet Name="Documents" EntityType="Self.Document" />
     <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivity" />
@@ -356,14 +396,21 @@
     <EntitySet Name="Properties" EntityType="Self.Property" />
     <EntitySet Name="PropertiesOwners" EntityType="Self.PropertiesOwner" />
     <EntitySet Name="Rentals" EntityType="Self.Rental" />
+    <EntitySet Name="Streets" EntityType="Self.Street" />
     <EntitySet Name="SubProperties" EntityType="Self.SubProperty" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Tasks" EntityType="Self.Task" />
     <EntitySet Name="TaskTypes" EntityType="Self.TaskType" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <EntitySet Name="cities" EntityType="Self.city" />
-    <EntitySet Name="Streets" EntityType="Self.Street" />
+    <AssociationSet Name="FK_Properties_Citi" Association="Self.FK_Properties_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Street_Citi" Association="Self.FK_Street_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Streets" EntitySet="Streets" />
+    </AssociationSet>
     <AssociationSet Name="FK_Tasks_Classifications" Association="Self.FK_Tasks_Classifications">
       <End Role="Classifications" EntitySet="Classifications" />
       <End Role="Tasks" EntitySet="Tasks" />
@@ -382,6 +429,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Properties_PropertiesOwners" Association="Self.FK_Properties_PropertiesOwners">
       <End Role="PropertiesOwners" EntitySet="PropertiesOwners" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Stree" Association="Self.FK_Properties_Stree">
+      <End Role="Streets" EntitySet="Streets" />
       <End Role="Properties" EntitySet="Properties" />
     </AssociationSet>
     <AssociationSet Name="FK_Rentals_Properties" Association="Self.FK_Rentals_Properties">

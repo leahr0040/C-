@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ArgamanExpressModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ArgamanExpress.dbo.city' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-  <EntityType Name="city">
+  <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="CityId" />
-      <PropertyRef Name="CityName" />
     </Key>
-    <Property Name="CityId" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CityId" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Classifications">
     <Key>
@@ -24,6 +21,8 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city' does not have a primary k
     <Property Name="DocID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DocUser" Type="int" Nullable="false" />
     <Property Name="DocCoding" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="type" Type="int" />
+    <Property Name="DocName" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Exclusivitys">
     <Key>
@@ -32,11 +31,6 @@ warning 6002: The table/view 'ArgamanExpress.dbo.city' does not have a primary k
     <Property Name="ExclusivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ExclusivityName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'ArgamanExpress.dbo.home.csv' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="home_csv">
-          <Property Name="column1" Type="nvarchar(max)" />
-        </EntityType>-->
   <EntityType Name="PaymentTypes">
     <Key>
       <PropertyRef Name="PaymentTypeID" />
@@ -51,9 +45,7 @@ warning 6013: The table/view 'ArgamanExpress.dbo.home.csv' does not have a prima
     <Property Name="PropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OwnerID" Type="int" Nullable="false" />
     <Property Name="CityID" Type="int" Nullable="false" />
-    <Property Name="CityName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="StreetID" Type="int" Nullable="false" />
-    <Property Name="StreetName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Number" Type="nvarchar" MaxLength="5" Nullable="false" />
     <Property Name="Size" Type="float" />
     <Property Name="Floor" Type="int" />
@@ -94,17 +86,13 @@ warning 6013: The table/view 'ArgamanExpress.dbo.home.csv' does not have a prima
     <Property Name="ContactRenew" Type="bit" />
     <Property Name="status" Type="bit" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Streets">
     <Key>
-      <PropertyRef Name="CityId" />
       <PropertyRef Name="StreetID" />
-      <PropertyRef Name="StreetName" />
     </Key>
-    <Property Name="CityId" Type="int" Nullable="false" />
-    <Property Name="StreetID" Type="int" Nullable="false" />
-    <Property Name="StreetName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StreetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StreetName" Type="nvarchar(max)" />
+    <Property Name="CityId" Type="int" />
   </EntityType>
   <EntityType Name="SubProperties">
     <Key>
@@ -175,6 +163,18 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <Property Name="LastName" Type="nvarchar(max)" />
     <Property Name="status" Type="bit" />
   </EntityType>
+  <Association Name="FK_Properties_Citi">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Properties_Exclusivitys">
     <End Role="Exclusivitys" Type="Self.Exclusivitys" Multiplicity="0..1" />
     <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
@@ -196,6 +196,18 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
       </Principal>
       <Dependent Role="Properties">
         <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Stree">
+    <End Role="Streets" Type="Self.Streets" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Streets">
+        <PropertyRef Name="StreetID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="StreetID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -244,6 +256,18 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
       </Principal>
       <Dependent Role="Rentals">
         <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Street_Citi">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="Streets" Type="Self.Streets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Streets">
+        <PropertyRef Name="CityId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -363,6 +387,7 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="ArgamanExpressModelStoreContainer">
+    <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Classifications" EntityType="Self.Classifications" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivitys" Schema="dbo" store:Type="Tables" />
@@ -370,31 +395,27 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <EntitySet Name="Properties" EntityType="Self.Properties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PropertiesOwners" EntityType="Self.PropertiesOwners" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Streets" EntityType="Self.Streets" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SubProperties" EntityType="Self.SubProperties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="city" EntityType="Self.city" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [city].[CityId] AS [CityId], 
-    [city].[CityName] AS [CityName]
-    FROM [dbo].[city] AS [city]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="Streets" EntityType="Self.Streets" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Streets].[CityId] AS [CityId], 
-    [Streets].[StreetID] AS [StreetID], 
-    [Streets].[StreetName] AS [StreetName]
-    FROM [dbo].[Streets] AS [Streets]</DefiningQuery>
-    </EntitySet>
+    <AssociationSet Name="FK_Properties_Citi" Association="Self.FK_Properties_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
     <AssociationSet Name="FK_Properties_Exclusivitys" Association="Self.FK_Properties_Exclusivitys">
       <End Role="Exclusivitys" EntitySet="Exclusivitys" />
       <End Role="Properties" EntitySet="Properties" />
     </AssociationSet>
     <AssociationSet Name="FK_Properties_PropertiesOwners" Association="Self.FK_Properties_PropertiesOwners">
       <End Role="PropertiesOwners" EntitySet="PropertiesOwners" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Stree" Association="Self.FK_Properties_Stree">
+      <End Role="Streets" EntitySet="Streets" />
       <End Role="Properties" EntitySet="Properties" />
     </AssociationSet>
     <AssociationSet Name="FK_Rentals_PaymentTypes" Association="Self.FK_Rentals_PaymentTypes">
@@ -412,6 +433,10 @@ warning 6002: The table/view 'ArgamanExpress.dbo.Streets' does not have a primar
     <AssociationSet Name="FK_Rentals_Users" Association="Self.FK_Rentals_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Street_Citi" Association="Self.FK_Street_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Streets" EntitySet="Streets" />
     </AssociationSet>
     <AssociationSet Name="FK_SubProperties_Properties" Association="Self.FK_SubProperties_Properties">
       <End Role="Properties" EntitySet="Properties" />

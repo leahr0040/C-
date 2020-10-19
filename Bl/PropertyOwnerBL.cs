@@ -82,7 +82,7 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 PropertiesOwner owner = db.PropertiesOwners.FirstOrDefault(x=>x.OwnerID==id);
-                return new PropertyOwnerDTO(owner);
+                return new PropertyOwnerDTO();
             }
         }
 

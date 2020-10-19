@@ -27,6 +27,7 @@ namespace Dal
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<Exclusivity> Exclusivitys { get; set; }
@@ -34,14 +35,13 @@ namespace Dal
         public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<PropertiesOwner> PropertiesOwners { get; set; }
         public virtual DbSet<Rental> Rentals { get; set; }
+        public virtual DbSet<Street> Streets { get; set; }
         public virtual DbSet<SubProperty> SubProperties { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<TaskType> TaskTypes { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<city> cities { get; set; }
-        public virtual DbSet<Street> Streets { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

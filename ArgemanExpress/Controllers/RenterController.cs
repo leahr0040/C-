@@ -50,7 +50,8 @@ namespace ArgemanExpress.Controllers
         [Route("GetAllRenters")]
         public IHttpActionResult GetAllRenters()
         {
-            return Ok(Bl.RenterBL.GetAllRenters());
+            //    return Ok(Bl.RenterBL.GetAllRenters());
+            return Ok("llllllllllllllllllllllllllllllllllllllllllllll");
         }
         [Route("GetRenterByID")]
         public IHttpActionResult GetRenterByID(int id)

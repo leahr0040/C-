@@ -25,9 +25,7 @@ namespace Dal
         public int PropertyID { get; set; }
         public int OwnerID { get; set; }
         public int CityID { get; set; }
-        public string CityName { get; set; }
         public int StreetID { get; set; }
-        public string StreetName { get; set; }
         public string Number { get; set; }
         public Nullable<double> Size { get; set; }
         public Nullable<int> Floor { get; set; }
@@ -42,8 +40,10 @@ namespace Dal
         public Nullable<int> ApartmentNum { get; set; }
         public Nullable<bool> status { get; set; }
     
+        public virtual City City { get; set; }
         public virtual Exclusivity Exclusivity { get; set; }
         public virtual PropertiesOwner PropertiesOwner { get; set; }
+        public virtual Street Street { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rental> Rentals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

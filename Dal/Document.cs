@@ -17,5 +17,7 @@ namespace Dal
         public int DocID { get; set; }
         public int DocUser { get; set; }
         public string DocCoding { get; set; }
+        public Nullable<int> type { get; set; }
+        public string DocName { get; set; }
     }
 }

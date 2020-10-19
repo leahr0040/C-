@@ -14,8 +14,18 @@ namespace Dal
     
     public partial class Street
     {
-        public int CityId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Street()
+        {
+            this.Properties = new HashSet<Property>();
+        }
+    
         public int StreetID { get; set; }
         public string StreetName { get; set; }
+        public Nullable<int> CityId { get; set; }
+    
+        public virtual City City { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Property> Properties { get; set; }
     }
 }

@@ -12,9 +12,21 @@ namespace Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class city
+    public partial class City
     {
-        public string CityId { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public City()
+        {
+            this.Properties = new HashSet<Property>();
+            this.Streets = new HashSet<Street>();
+        }
+    
+        public int CityId { get; set; }
         public string CityName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Property> Properties { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Street> Streets { get; set; }
     }
 }
