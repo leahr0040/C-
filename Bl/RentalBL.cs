@@ -19,8 +19,13 @@ namespace Bl
                 Document doc = new Document();
                 doc.DocCoding = rd.Dock;
                 doc.DocUser = id;
-                //doc.type=3
+                doc.type = 3;
+                doc.DocName = rd.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                if (rd.ContactRenew == true && (rd.EndDate).Value < DateTime.Today.AddMonths(3))
+                {
+                    Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);                
+                }
                 return true;
             }
             return false;
@@ -79,35 +84,7 @@ namespace Bl
                 return ConvertListToDTO(pro);
             }
         }
-        public static void Addtask2()
-        {
-            TaskDTO t; /*= new TaskDTO();*/
-            List<RentalDTO> pro = GetAllRentals();
-            int x = pro.Count;
-            int i = 0;
-            while (i != x)
-            {
-                if ((pro[i].EndDate).Value == DateTime.Today.AddMonths(3))
-                {
-                    t = new TaskDTO();
-                    t.TaskTypeId = 2;
-                    t.Description = pro[i].SubPropertyID + "סיום חוזה לדירה:";
-                    t.PropertyID = pro[i].SubPropertyID;
-                    t.SubPropertyID = t.SubPropertyID;
-                    t.ClassificationID = 3;
-                    t.ClientClassificationID = null;////////
-                    t.ReportDate = DateTime.Today;
-                    t.DateForHandling = DateTime.Today.AddMonths(1);
-                    t.IsHandled = false;
-                    t.HandlingDate = null;
-                    t.HandlingWay = "מזכירה";
-                    // t.Status = true;
-                    TaskBL.AddTask(t);
-                    i++;
-                }
-
-            }
-        }
+        
     }
 
 }

@@ -15,6 +15,7 @@ namespace ArgemanExpress.Controllers
     [RoutePrefix("api/SubProperty")]
     public class SubPropertyController : ApiController
     {
+        [HttpPost]
         [Route("AddSubProperty")]
         public IHttpActionResult AddSubProperties([FromBody]SubPropertyDTO spd)
         {
@@ -23,6 +24,7 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("UpdateSubProperty")]
         public IHttpActionResult UpdateSubProperty([FromBody]SubPropertyDTO spd)
         {
@@ -30,33 +32,37 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("DeleteSubProperty")]
-        public IHttpActionResult DeleteSubProperty(int id)
+        public IHttpActionResult DeleteSubProperty([FromBody]int id)
         {
             if (Bl.SubPropertyBL.DeleteSubProperty(id))
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum, Nullable<bool> IsRented)
         {
             return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum));
         }
+
         [Route("GetAllSubProperties")]
         public IHttpActionResult GetAllSubProperties()
         {
             return Ok(Bl.SubPropertyBL.GetAllSubProperties());
         }
+        [HttpPost]
         [Route("GetSubPropertyByID")]
-        public IHttpActionResult GetSubPropertyByID(int id)
+        public IHttpActionResult GetSubPropertyByID([FromBody]int id)
         {
             return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id));
         }
+        [HttpPost]
         [Route("GetSubPropertiesOfParentProperty")]
-        public IHttpActionResult GetSubPropertiesOfParentProperty(int id)
+        public IHttpActionResult GetSubPropertiesOfParentProperty([FromBody]int id)
         {
             return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id));
         }
-        
     }
 }

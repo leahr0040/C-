@@ -21,7 +21,8 @@ namespace Bl
                 Document doc = new Document();
                 doc.DocCoding = td.Dock;
                 doc.DocUser = id;
-                //doc.type=6
+                doc.type = 6;
+                doc.DocName = td.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
                 return true;
             }
@@ -110,12 +111,10 @@ namespace Bl
                     {
                         if(task.IsHandled!=true && task.ClassificationID!=null)
                         {
-                            if (task.DateForHandling.Date <= DateTime.Now.Date   || (task.TaskTypeId!=1 && (task.DateForHandling.Date - DateTime.Now.Date).Days<=30))
+                            if (task.DateForHandling.Date <= DateTime.Now.Date   || (task.TaskTypeId!=1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days<=30))
                                 task.ClassificationID = 1;
-                           else if ((task.DateForHandling.Date-DateTime.Now.Date).Days<=7 || (task.TaskTypeId != 1 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60))
+                           else if (task.ClassificationID!=1 && ((task.DateForHandling.Date-DateTime.Now.Date).Days<=7 || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60)))
                                 task.ClassificationID = 2;
-                            else
-                                task.ClassificationID = 3;
                         }
                     }
                     db.SaveChanges();
@@ -127,30 +126,69 @@ namespace Bl
                 return false;
             }
         }
-        public static int? CountDatePassedTasks()
+        public static void Addtask2()
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            ; /*= new TaskDTO();*/
+            List<RentalDTO> pro =Bl.RentalBL.GetAllRentals();
+            int x = pro.Count;
+            int i = 0;
+            while (i != x)
             {
-                return db.Tasks.Count(t => (t.status == false && t.HandlingDate.Value.Date < DateTime.Today));
+                if ((pro[i].EndDate).Value == DateTime.Today.AddMonths(3))
+                {
+                    AddRenewTask(pro[i].PropertyID, pro[i].SubPropertyID);
+                    i++;
+                }
+
             }
-            return null;
         }
-        public static int? CountNotHandledTasks()
+        public static bool AddRenewTask(int propertyID,int? subpropertyID)
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            TaskDTO t = new TaskDTO();
+            t.TaskTypeId = 2;
+            if (subpropertyID != null)
             {
-                return db.Tasks.Count(t => t.status == false);
+                SubPropertyDTO sub = Bl.SubPropertyBL.GetSubPropertyByID(subpropertyID.Value);
+                t.Description = propertyID + "בנכס " + sub.num + "סיום חוזה לדירה מס:";
             }
-            return null;
+            else
+                t.Description = propertyID + "סיום חוזה לדירה:";
+            t.PropertyID = propertyID;
+            t.SubPropertyID = subpropertyID;
+            t.ClassificationID = 3;
+            t.ClientClassificationID = null;////////
+            t.ReportDate = DateTime.Today;
+            t.DateForHandling = DateTime.Today.AddMonths(3);//לבדוק למה כתבה 1
+            t.IsHandled = false;
+            t.HandlingDate = null;
+            t.status = true;
+           return AddTask(t);
+
         }
-        public static int? CountNotclassificatedTasks()
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                return db.Tasks.Count(t => t.ClassificationID == null);
-            }
-            return null;
-        }
+        //public static int? CountDatePassedTasks()
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.Tasks.Count(t => (t.status == false && t.HandlingDate.Value.Date < DateTime.Today));
+        //    }
+        //    return null;
+        //}
+        //public static int? CountNotHandledTasks()
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.Tasks.Count(t => t.status == false);
+        //    }
+        //    return null;
+        //}
+        //public static int? CountNotclassificatedTasks()
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.Tasks.Count(t => t.ClassificationID == null);
+        //    }
+        //    return null;
+        //}
         public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())

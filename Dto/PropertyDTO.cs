@@ -29,7 +29,8 @@ namespace Dto
         public Nullable<double> RoomsNum { get; set; }
         public Nullable<int> ApartmentNum { get; set; }
         public string Dock { get; set; }
-        public string docName { get; set; }
+        public string DocName { get; set; }
+        public Nullable<bool> status { get; set; }
         public PropertyDTO()
         {
 
@@ -53,6 +54,7 @@ namespace Dto
             this.IsRented = p.IsRented;
             this.RoomsNum = p.RoomsNum;
             this.ApartmentNum = p.ApartmentNum;
+            status = true;
         }
         public static Property Todal(PropertyDTO dd)
         {

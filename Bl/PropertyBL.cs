@@ -121,7 +121,73 @@ namespace Bl
                 return new RentalDTO(rental);
             }
         }
-        
+        public static bool AddExclusivityPerson(string name)
+        {
+            ExclusivityPersonDTO epDTO = new ExclusivityPersonDTO();
+            epDTO.ExclusivityName = name;
+            return PropertyDAL.AddExclusivityPerson(ExclusivityPersonDTO.ToDAL(epDTO));
+        }
+        public static List<ExclusivityPersonDTO> GetAllExclusivityPoeple()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Exclusivity> ex = db.Exclusivitys.ToList();
+                List<ExclusivityPersonDTO> exDTOs = new List<ExclusivityPersonDTO>();
+                foreach (Exclusivity e in ex)
+                {
+                    exDTOs.Add(new ExclusivityPersonDTO(e));
+                }
+                return exDTOs;
+            }
+            return null;
+        }
+        public static bool AddCity(string name)
+        {
+            CityDTO cDTO = new CityDTO();
+            cDTO.CityName = name;
+            return PropertyDAL.AddCity(CityDTO.ToDAL(cDTO));
+        }
+        public static List<CityDTO> GetAllCities()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<City> cities = db.Cities.ToList();
+                List<CityDTO> cityDTOs = new List<CityDTO>();
+                foreach (City city in cities)
+                {
+                    cityDTOs.Add(new CityDTO(city));
+                }
+                return cityDTOs;
+            }
+            return null;
+        }
+        public static bool AddStreet(StreetDTO sDTO)
+        {
+            return PropertyDAL.AddStreet(StreetDTO.ToDAL(sDTO));
+        }
+        public static List<StreetDTO> GetStreetsByCityID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                City city = db.Cities.Find(id);
+                List<StreetDTO> streetDTOs = new List<StreetDTO>();
+                foreach (Street street in city.Streets)
+                {
+                    streetDTOs.Add(new StreetDTO(street));
+                }
+                return streetDTOs;
+            }
+            return null;
+        }
+        public static StreetDTO GetStreetByID(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Street street= db.Streets.Find(id);
+                return new StreetDTO(street);
+            }
+            return null;
+        }
         //public static List<PropertyDTO> AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
         //{
         //    List<Property> pro = PropertyDAL.AdvancedSearch(propertyID, owner, cityName, streetName, number, apartmentNum, roomsNum, size, floor, isDivided, managmentPayment, isPaid, isExclusivity, exclusivity, isWarranty, isRented);

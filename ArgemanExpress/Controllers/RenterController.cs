@@ -15,7 +15,7 @@ namespace ArgemanExpress.Controllers
     [RoutePrefix("api/Renter")]
     public class RenterController : ApiController
     {
-
+        [HttpPost]
         [Route("AddRenter")]
         public IHttpActionResult AddRenter([FromBody]UserDTO rd)
         {
@@ -25,6 +25,7 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("DeleteRenter")]
         public IHttpActionResult DeleteRenter(int id)
         {
@@ -34,6 +35,7 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("UpdateRenter")]
         public IHttpActionResult UpdateRental([FromBody]UserDTO rd)
         {
@@ -42,6 +44,7 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("Search")]
         public IHttpActionResult Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
@@ -50,23 +53,25 @@ namespace ArgemanExpress.Controllers
         [Route("GetAllRenters")]
         public IHttpActionResult GetAllRenters()
         {
-            //    return Ok(Bl.RenterBL.GetAllRenters());
-            return Ok("llllllllllllllllllllllllllllllllllllllllllllll");
+             return  Ok(Bl.RenterBL.GetAllRenters());
+            
         }
+        [HttpPost]
         [Route("GetRenterByID")]
-        public IHttpActionResult GetRenterByID(int id)
+        public IHttpActionResult GetRenterByID([FromBody]int id)
         {
             return Ok(Bl.RenterBL.GetRenterByID(id));
         }
-        
+        [HttpPost]
         [Route("getRentalsbyRenterID")]
-        public IHttpActionResult getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
+        public IHttpActionResult getRentalsbyRenterID([FromBody]int id)//פרטי השכרה לפי איידי
         {
 
             return Ok(Bl.RenterBL.getRentalsbyRenterID(id));
         }
+        [HttpPost]
         [Route("getPropertiesbyRenterID")]
-        public IHttpActionResult getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
+        public IHttpActionResult getPropertiesbyRenterID([FromBody]int id)//דירות ששוכר לפי איידי
         {
             return Ok(Bl.RenterBL.getPropertiesbyRenterID(id));
         }

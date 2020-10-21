@@ -21,8 +21,10 @@ namespace Dto
         public Nullable<bool> IsHandled { get; set; }
         public Nullable<System.DateTime> HandlingDate { get; set; }
         public string HandlingWay { get; set; }
+
         public string Dock { get; set; }
-        public string docName { get; set; }
+        public string DocName { get; set; }
+        public bool status { get; set; }
         public TaskDTO()
         {
 
@@ -41,6 +43,7 @@ namespace Dto
             this.IsHandled = t.IsHandled;
             this.HandlingDate = t.HandlingDate;
             this.HandlingWay = t.HandlingWay;
+            status = true;
         }
         public static Dal.Task ToDal(TaskDTO t)
         {

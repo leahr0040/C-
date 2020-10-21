@@ -11,16 +11,16 @@ namespace Dto
     {
         public int DocID { get; set; }
         public int DocUser { get; set; }
-        public int type { get; set; }
+        public Nullable<int> type { get; set; }
         public string DocCoding { get; set; }
-        public string docName { get; set; }
+        public string DocName { get; set; }
         public DocumentDTO(Document d)
         {
             this.DocID = d.DocID;
             this.DocUser = d.DocUser;
             this.DocCoding = d.DocCoding;
-           // this.type = d.type;
-           // this.docName = d.docName;
+           this.type = d.type;
+            this.DocName = d.DocName;
         }
         public static Document ToDAL(DocumentDTO d)
         {
@@ -29,8 +29,8 @@ namespace Dto
                 DocID = d.DocID,
                 DocUser = d.DocUser,
                 DocCoding = d.DocCoding,
-               // type=d.type,
-               //docName=d.docName
+                type=d.type,
+               DocName=d.DocName
             };
         }
     }

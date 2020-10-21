@@ -17,7 +17,8 @@ namespace Dto
         public Nullable<double> Size { get; set; }
         public Nullable<double> RoomsNum { get; set; }
         public string Dock { get; set; }
-        public string docName { get; set; }
+        public string DocName { get; set; }
+        public Nullable<bool> status { get; set; }
         public SubPropertyDTO(SubProperty sp)
         {
             this.SubPropertyID =sp.SubPropertyID;
@@ -26,6 +27,7 @@ namespace Dto
             this.IsRented = sp.IsRented;
             this.Size = sp.Size;
             this.RoomsNum = sp.RoomsNum;
+            status = true;
         }
         public static SubProperty ToDal(SubPropertyDTO sp)
         {

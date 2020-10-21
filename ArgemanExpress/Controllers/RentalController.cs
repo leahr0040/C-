@@ -15,6 +15,7 @@ namespace ArgemanExpress.Controllers
    [RoutePrefix("api/Rental")]
     public class RentalController : ApiController
     {
+        [HttpPost]
         [Route("AddRental")]
         public IHttpActionResult AddRental([FromBody]RentalDTO rd)
         {
@@ -24,8 +25,9 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("AddRental")]
-        public IHttpActionResult AddRental(int id)
+        public IHttpActionResult AddRental([FromBody]int id)
         {
             bool b = Bl.RentalBL.DeleteRental(id);
             if (b)
@@ -33,6 +35,7 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("UpdateRental")]
         public IHttpActionResult UpdateRental([FromBody]RentalDTO rd)
         {
@@ -41,11 +44,13 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
         {
             return Ok(Bl.RentalBL.Search(propertyID, user, enteryDate, endDate));
         }
+
         [Route("GetAllRentals")]
         public IHttpActionResult GetAllRentals()
         {//Bl.RentalBL.GetAllRentals()

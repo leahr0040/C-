@@ -20,6 +20,7 @@ namespace ArgemanExpress.Controllers
     public class UserController : ApiController
     {
 
+        [HttpPost]
         [Route("AddUser")]
         public IHttpActionResult AddUser([FromBody] UserDTO ud)
         {
@@ -29,8 +30,9 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("DeleteUser")]
-        public IHttpActionResult DeleteUser(int id)
+        public IHttpActionResult DeleteUser([FromBody]int id)
         {
             bool b = Bl.UserBL.DeleteUser(id);
             if (b)
@@ -38,6 +40,7 @@ namespace ArgemanExpress.Controllers
             return BadRequest();
 
         }
+        [HttpPost]
         [Route("UpdateUser")]
         public IHttpActionResult UpdateRental([FromBody] UserDTO ud)
         {
@@ -46,33 +49,36 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
-
+        [HttpPost]
         [Route("returnuser")]
-        public IHttpActionResult ee(string username, string password)
+        public IHttpActionResult ee([FromBody]string username, [FromBody]string password)
         {
-           return Ok(Bl.UserBL.Return_Details_user(username,password));
+            return Ok(Bl.UserBL.Return_Details_user(username, password));
 
         }
+        [HttpPost]
         [Route("returnuserproperty")]
-        public IHttpActionResult returnuserproperty(string username, string password)
+        public IHttpActionResult returnuserproperty([FromBody]string username, [FromBody]string password)
         {
-            return Ok(Bl.UserBL.Return_Details_use(username,password));
-
+            return Ok(Bl.UserBL.Return_Details_use(username, password));
         }
+        [HttpPost]
         [Route("GetUserDocuments")]
-        public IHttpActionResult GetUserDocuments(int id,int type)
+        public IHttpActionResult GetUserDocuments([FromBody]int id, [FromBody]int type)
         {
             return Ok(Bl.DocumentBL.GetUserDocuments(id, type));
         }
+        [HttpPost]
         [Route("Ifhaveuse")]
-        public IHttpActionResult ret(string username, string password)
+        public IHttpActionResult ret([FromBody]string username, [FromBody]string password)
         {
             return Ok(Bl.UserBL.Haveuserforpassword(username, password));
         }
+        [HttpPost]
         [Route("forgotpassword")]
-        public IHttpActionResult m(string username, string email)
+        public IHttpActionResult m([FromBody]string username, [FromBody]string email)
         {
-            return Ok(Bl.UserBL.Forgotpassword(username,email));
+            return Ok(Bl.UserBL.Forgotpassword(username, email));
         }
 
     } 

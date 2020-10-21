@@ -43,7 +43,40 @@ namespace Dal
             }
             return null;
         }
+    
+    public static bool AddCity(City c)
+    {
+        using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        {
+
+            c.CityId = db.Cities.Count() + 1;
+            db.Cities.Add(c);
+            return true;
+        }
+        return false;
     }
+    public static bool AddStreet(Street s)
+    {
+        using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        {
+            s.StreetID = db.Streets.Count() + 1;
+            db.Streets.Add(s);
+            return true;
+        }
+        return false;
+    }
+    public static bool AddExclusivityPerson(Exclusivity e)
+    {
+        using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        {
+            e.ExclusivityID = db.Exclusivitys.Count() + 1;
+            db.Exclusivitys.Add(e);
+            return true;
+        }
+        return false;
+    }
+    }
+}
     //public static List<Property> AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
     //{
     //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -87,4 +120,4 @@ namespace Dal
     //    }
     //    return null;
     //}
-}
+

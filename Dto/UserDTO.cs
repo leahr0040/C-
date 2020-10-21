@@ -19,7 +19,8 @@ namespace Dto
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Dock { get; set; }
-        public string docName { get; set; }
+        public string DocName { get; set; }
+        public bool status { get; set; }
         public UserDTO()
         {
 
@@ -35,6 +36,7 @@ namespace Dto
             this.RoleID = u.RoleID;
             this.UserName = u.UserName;
             this.Password = u.Password;
+            status = true;
         }
         public static User ToDal(UserDTO u)
         {

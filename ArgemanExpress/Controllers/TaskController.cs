@@ -13,6 +13,7 @@ namespace ArgemanExpress.Controllers
     //[Authorize(Roles =]
     public class TaskController : ApiController
     {
+        [HttpPost]
         [Route("AddTask")]// לבדוק איך קוראים בר
         public IHttpActionResult AddTask([FromBody]TaskDTO dt)
         {
@@ -21,6 +22,7 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("DeleteTask")]
         public IHttpActionResult DeleteTask(int id)
         {
@@ -29,6 +31,7 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("UpdateTask")]
         public IHttpActionResult UpdateTask([FromBody]TaskDTO pd)
         {
@@ -36,6 +39,7 @@ namespace ArgemanExpress.Controllers
                 return Ok();
             return BadRequest();
         }
+        [HttpPost]
         [Route("Search")]
         public IHttpActionResult Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
         {
@@ -53,22 +57,12 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetTimePassedTasks());
         }
+        [HttpPost]
         [Route("GetTypeName")]
         public IHttpActionResult GetTypeName(int id)
         {
             return Ok(Bl.TaskBL.GetTypeName(id));
         }
-        
-        //[Route("IsTakala")]
-        //public IHttpActionResult IsTakala(int id)
-        //{
-        //    return Ok(Bl.TaskBL.IsTakala(id));
-        //}
-        [Route("GetClassificationName")]
-        //public IHttpActionResult GetClassificationName(int id)
-        //{
-        //    return Ok(Bl.TaskBL.GetClassificationName(id));
-        //}
         [Route("GetAllClassificationTypes")]
         public IHttpActionResult GetAllClassificationTypes()
         {
@@ -79,8 +73,9 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetAllTaskTypes());
         }
+        [HttpPost]
         [Route("GetTaskId")]
-        public IHttpActionResult GetTaskId(int i)
+        public IHttpActionResult GetTaskId([FromBody]int i)
         {
             return Ok(Bl.TaskBL.ReturnTaskbyid(i));
         }
