@@ -10,7 +10,7 @@ namespace ArgemanExpress
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
@@ -18,6 +18,7 @@ namespace ArgemanExpress
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
+
             );
         }
     }

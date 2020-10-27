@@ -25,9 +25,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("DeleteProperty")]// לבדוק איך קוראים בר
-        public IHttpActionResult DeleteProperty(int id)
+        public IHttpActionResult DeleteProperty(IdDto id)
         {
-            bool b = Bl.PropertyBL.DeleteProperty(id);
+            bool b = Bl.PropertyBL.DeleteProperty(id.id);
             if (b == true)
                 return Ok();
             return BadRequest();
@@ -42,9 +42,10 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<double> roomsNum, Nullable<bool> isRented)
+       
+        public IHttpActionResult Search(PropertyDTO pd)
         {
-            return Ok(Bl.PropertyBL.Search(cityName, streetName, number, floor, isRented));
+            return Ok(Bl.PropertyBL.Search(pd.CityName, pd.StreetName,pd.Number,pd.Floor,pd.IsRented));
         }
         [Route("GetAllProperties")]
         public IHttpActionResult GetAllProperties()
@@ -53,9 +54,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetPropertyByID")]
-        public IHttpActionResult GetPropertyByID([FromBody]int id)
+        public IHttpActionResult GetPropertyByID([FromBody]IdDto id)
         {
-            return Ok(Bl.PropertyBL.GetPropertyByID(id));
+            return Ok(Bl.PropertyBL.GetPropertyByID(id.id));
         }
         [HttpPost]
         [Route("GetRentalByPropertyID")]
@@ -65,15 +66,15 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetRentalBySubPropertyID")]
-        public IHttpActionResult GetRentalBySubPropertyID([FromBody]int id)
+        public IHttpActionResult GetRentalBySubPropertyID([FromBody] IdDto id)
         {
-            return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id));
+            return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id.id));
         }
         [HttpPost]
         [Route("AddCity")]// לבדוק איך קוראים בר
-        public IHttpActionResult AddCity([FromBody]string name)
+        public IHttpActionResult AddCity([FromBody]NameDto name)
         {
-            bool b = Bl.PropertyBL.AddCity(name);
+            bool b = Bl.PropertyBL.AddCity(name.name);
             if (b == true)
                 return Ok();
             return BadRequest();
@@ -94,15 +95,15 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetStreetsByCityID")]// לבדוק איך קוראים בר
-        public IHttpActionResult GetStreetsByCityID([FromBody]int CityId)
+        public IHttpActionResult GetStreetsByCityID([FromBody]IdDto CityId)
         {
-            return Ok(Bl.PropertyBL.GetStreetsByCityID(CityId));
+            return Ok(Bl.PropertyBL.GetStreetsByCityID(CityId.id));
         }
         [HttpPost]
         [Route("GetStreetByID")]// לבדוק איך קוראים בר
-        public IHttpActionResult GetStreetByID([FromBody]int streetId)
+        public IHttpActionResult GetStreetByID([FromBody]IdDto streetId)
         {
-            return Ok(Bl.PropertyBL.GetStreetByID(streetId));
+            return Ok(Bl.PropertyBL.GetStreetByID(streetId.id));
         }
         [HttpPost]
         [Route("AddExclusivityPerson")]

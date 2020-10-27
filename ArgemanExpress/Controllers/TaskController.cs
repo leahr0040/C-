@@ -9,7 +9,7 @@ using Dto;
 
 namespace ArgemanExpress.Controllers
 {   [EnableCors(origins: "*", headers: "*", methods: "*")]
-    [RoutePrefix("api/Task")]
+    [RoutePrefix("api/task")]
     //[Authorize(Roles =]
     public class TaskController : ApiController
     {
@@ -24,9 +24,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("DeleteTask")]
-        public IHttpActionResult DeleteTask(int id)
+        public IHttpActionResult DeleteTask(IdDto id)
         {
-            bool b = Bl.TaskBL.DeleteTask(id);
+            bool b = Bl.TaskBL.DeleteTask(id.id);
             if (b == true)
                 return Ok();
             return BadRequest();
@@ -41,10 +41,10 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
+        public IHttpActionResult Search(TaskDTO td)
         {
 
-            return Ok(Bl.TaskBL.Search(TaskTypeId, ClassificationID, DateForHandling, IsHandled));
+            return Ok(Bl.TaskBL.Search(td.TaskTypeId,td.ClassificationID,td.DateForHandling,td.IsHandled));
 
         }
         [Route("GetAllTasks")]
@@ -58,10 +58,10 @@ namespace ArgemanExpress.Controllers
             return Ok(Bl.TaskBL.GetTimePassedTasks());
         }
         [HttpPost]
-        [Route("GetTypeName")]
-        public IHttpActionResult GetTypeName(int id)
+        [Route("gettypename")]
+        public IHttpActionResult gettypename(IdDto id)
         {
-            return Ok(Bl.TaskBL.GetTypeName(id));
+            return Ok(Bl.TaskBL.GetTypeName(id.id));
         }
         [Route("GetAllClassificationTypes")]
         public IHttpActionResult GetAllClassificationTypes()
@@ -75,9 +75,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetTaskId")]
-        public IHttpActionResult GetTaskId([FromBody]int i)
+        public IHttpActionResult GetTaskId([FromBody]IdDto i)
         {
-            return Ok(Bl.TaskBL.ReturnTaskbyid(i));
+            return Ok(Bl.TaskBL.ReturnTaskbyid(i.id));
         }
 
     }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Dto;
+using Microsoft.Ajax.Utilities;
 
 namespace ArgemanExpress.Controllers
 {
@@ -27,9 +28,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("AddRental")]
-        public IHttpActionResult AddRental([FromBody]int id)
+        public IHttpActionResult AddRental([FromBody]IdDto id)
         {
-            bool b = Bl.RentalBL.DeleteRental(id);
+            bool b = Bl.RentalBL.DeleteRental(id.id);
             if (b)
                 return Ok();
             return BadRequest();
@@ -46,15 +47,15 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search(Nullable<int> propertyID, Nullable<bool> subPropertyID, String user, Nullable<double> rentPayment, Nullable<int> paymentTypeID, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate, Nullable<bool> contactRenew)
+        public IHttpActionResult Search(DtoRent rd)
         {
-            return Ok(Bl.RentalBL.Search(propertyID, user, enteryDate, endDate));
+            return Ok(Bl.RentalBL.Search(rd.PropertyID, rd. user,rd.EnteryDate,rd.EndDate));
         }
-
+        [HttpGet]
         [Route("GetAllRentals")]
         public IHttpActionResult GetAllRentals()
-        {//Bl.RentalBL.GetAllRentals()
-            return Ok("aaa");
+        {
+            return Ok(Bl.RentalBL.GetAllRentals());
         }
     }
 }

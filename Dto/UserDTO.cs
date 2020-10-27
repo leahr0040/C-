@@ -9,21 +9,34 @@ namespace Dto
 {
     public class UserDTO
     {
-        public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string SMS { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public int RoleID { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Dock { get; set; }
-        public string DocName { get; set; }
-        public bool status { get; set; }
+        public int UserID { set; get; }
+        public string FirstName { set; get; }
+        public string LastName { set; get; }
+        public string SMS { set; get; }
+        public string Email { set; get; }
+        public string Phone { set; get; }
+        public int RoleID { set; get; }
+        public string UserName { set; get; }
+        public string Password { set; get; }
+        public string Dock { set; get; }
+        public string DocName { set; get; }
+        public bool status { set; get; }
         public UserDTO()
         {
 
+        }
+        public UserDTO(int UserID, string FirstName, string LastName, string SMS, string Email, string Phone, int RoleID, string UserName, string Password, string Dock, string DocName, bool status)
+        {
+            this.UserID = UserID;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.SMS = SMS;
+            this.Email = Email;
+            this.Phone = Phone;
+            this.RoleID = RoleID;
+            this.UserName = UserName;
+            this.Password = Password;
+            this.status = status;
         }
         public UserDTO(User u)
         {
@@ -36,7 +49,7 @@ namespace Dto
             this.RoleID = u.RoleID;
             this.UserName = u.UserName;
             this.Password = u.Password;
-            status = true;
+            this.status = true;
         }
         public static User ToDal(UserDTO u)
         {
@@ -53,5 +66,55 @@ namespace Dto
                 Password = u.Password
             };
         }
+
+    }
+
+    public class IdDto
+    {
+        public int id { set; get; }
+
+        public IdDto() { }
+    }
+
+    public class NameDto
+    {
+            public string name { set; get; }
+        public NameDto() { }
+    }
+
+    public class DoubleDto
+    {
+        public double dob { set; get; }
+        public DoubleDto() { }
+    }
+
+
+    public class DtoRent
+    {
+        public int PropertyID { set; get; }
+        public string user { set; get; }
+        public DateTime EnteryDate { set; get; }
+        public DateTime EndDate { set; get; }
+
+        public DtoRent() { }
+    }
+
+
+
+
+    public class Dtostrstr
+    {
+        public string username { set; get; }
+        public string passemail { set; get; }
+        
+        public Dtostrstr() { }
+    }
+
+    public class Dtointint
+    {
+        public int id { set; get; }
+        public int type { set; get; }
+
+        public Dtointint() { }
     }
 }
