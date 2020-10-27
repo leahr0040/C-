@@ -34,17 +34,17 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("DeleteSubProperty")]
-        public IHttpActionResult DeleteSubProperty([FromBody]int id)
+        public IHttpActionResult DeleteSubProperty([FromBody]IdDto id)
         {
-            if (Bl.SubPropertyBL.DeleteSubProperty(id))
+            if (Bl.SubPropertyBL.DeleteSubProperty(id.id))
                 return Ok();
             return BadRequest();
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum, Nullable<bool> IsRented)
+        public IHttpActionResult Search(SubPropertyDTO sd)
         {
-            return Ok(Bl.SubPropertyBL.Search(PropertyID, num, Size, RoomsNum));
+            return Ok(Bl.SubPropertyBL.Search(sd));
         }
 
         [Route("GetAllSubProperties")]
@@ -54,15 +54,15 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetSubPropertyByID")]
-        public IHttpActionResult GetSubPropertyByID([FromBody]int id)
+        public IHttpActionResult GetSubPropertyByID([FromBody]IdDto id)
         {
-            return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id));
+            return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id.id));
         }
         [HttpPost]
         [Route("GetSubPropertiesOfParentProperty")]
-        public IHttpActionResult GetSubPropertiesOfParentProperty([FromBody]int id)
+        public IHttpActionResult GetSubPropertiesOfParentProperty([FromBody]IdDto id)
         {
-            return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id));
+            return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id.id));
         }
     }
 }

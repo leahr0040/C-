@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CityDTO.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DocumentDTO.cs" />
     <Compile Include="ExclusivityPersonDTO.cs" />
     <Compile Include="PaymentTypeDTO.cs" />

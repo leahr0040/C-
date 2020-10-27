@@ -13,7 +13,7 @@ namespace ArgemanExpress.Controllers
 
 
 
-    [RoutePrefix("api/User")]
+    [RoutePrefix("api/user")]
     
     
 
@@ -21,20 +21,20 @@ namespace ArgemanExpress.Controllers
     {
 
         [HttpPost]
-        [Route("AddUser")]
-        public IHttpActionResult AddUser([FromBody] UserDTO ud)
+        [Route("adduser")]
+        public IHttpActionResult adduser([FromBody] UserDTO ud)
         {
-            bool b = Bl.UserBL.AddUser(ud);
-            if (b)
+        bool b = Bl.UserBL.AddUser(ud);
+           if (b)
                 return Ok();
             return BadRequest();
 
         }
         [HttpPost]
         [Route("DeleteUser")]
-        public IHttpActionResult DeleteUser([FromBody]int id)
+        public IHttpActionResult DeleteUser([FromBody]IdDto id)
         {
-            bool b = Bl.UserBL.DeleteUser(id);
+            bool b = Bl.UserBL.DeleteUser(id.id);
             if (b)
                 return Ok();
             return BadRequest();
@@ -51,34 +51,34 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("returnuser")]
-        public IHttpActionResult ee([FromBody]string username, [FromBody]string password)
+        public IHttpActionResult ee([FromBody]Dtostrstr ds)
         {
-            return Ok(Bl.UserBL.Return_Details_user(username, password));
+            return Ok(Bl.UserBL.Return_Details_user(ds.username, ds.passemail));
 
         }
         [HttpPost]
         [Route("returnuserproperty")]
-        public IHttpActionResult returnuserproperty([FromBody]string username, [FromBody]string password)
-        {
-            return Ok(Bl.UserBL.Return_Details_use(username, password));
+        public IHttpActionResult returnuserproperty([FromBody]Dtostrstr dp)
+        { 
+            return Ok(Bl.UserBL.Return_Details_use(dp.username, dp.passemail));
         }
         [HttpPost]
         [Route("GetUserDocuments")]
-        public IHttpActionResult GetUserDocuments([FromBody]int id, [FromBody]int type)
+        public IHttpActionResult GetUserDocuments([FromBody]Dtointint di)
         {
-            return Ok(Bl.DocumentBL.GetUserDocuments(id, type));
+            return Ok(Bl.DocumentBL.GetUserDocuments(di.id, di.type));
         }
         [HttpPost]
         [Route("Ifhaveuse")]
-        public IHttpActionResult ret([FromBody]string username, [FromBody]string password)
+        public IHttpActionResult ret([FromBody]Dtostrstr dn)
         {
-            return Ok(Bl.UserBL.Haveuserforpassword(username, password));
+            return Ok(Bl.UserBL.Haveuserforpassword(dn.username,dn.passemail));
         }
         [HttpPost]
         [Route("forgotpassword")]
-        public IHttpActionResult m([FromBody]string username, [FromBody]string email)
+        public IHttpActionResult m([FromBody]Dtostrstr dx)
         {
-            return Ok(Bl.UserBL.Forgotpassword(username, email));
+            return Ok(Bl.UserBL.Forgotpassword(dx.username, dx.passemail));
         }
 
     } 

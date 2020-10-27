@@ -58,3 +58,15 @@ C:\Users\אסתר אליאב\Desktop\project\c-\Dal\bin\Debug\EntityFramework.Sq
 C:\Users\אסתר אליאב\Desktop\project\c-\Dal\bin\Debug\EntityFramework.xml
 C:\Users\אסתר אליאב\Desktop\project\c-\Dal\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\אסתר אליאב\Desktop\project\c-\Dal\obj\Debug\Dal.csproj.CopyComplete
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\Dal.dll.config
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\Dal.dll
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\Dal.pdb
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\EntityFramework.dll
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\EntityFramework.xml
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\obj\Debug\Dal.csprojAssemblyReference.cache
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\obj\Debug\Dal.csproj.CoreCompileInputs.cache
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\obj\Debug\Dal.csproj.CopyComplete
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\obj\Debug\Dal.dll
+C:\Users\אסתר אליאב\Desktop\new\yyy\c-\Dal\obj\Debug\Dal.pdb

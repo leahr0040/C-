@@ -26,9 +26,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("DeletePropertyOwner")]
-        public IHttpActionResult DeletePropertyOwner(int id)
+        public IHttpActionResult DeletePropertyOwner(IdDto id)
         {
-            bool b = Bl.PropertyOwnerBL.DeletePropertyOwner(id);
+            bool b = Bl.PropertyOwnerBL.DeletePropertyOwner(id.id);
             if (b)
                 return Ok();
             return BadRequest();
@@ -44,9 +44,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search([FromBody]string OwnerFirstName, [FromBody]string OwnerLastName, [FromBody]string Phone, [FromBody]string Email)
+        public IHttpActionResult Search([FromBody]PropertyOwnerDTO pd )
         {
-            return Ok(Bl.PropertyOwnerBL.Search(OwnerFirstName, OwnerLastName, Phone, Email));
+            return Ok(Bl.PropertyOwnerBL.Search(pd.OwnerFirstName,pd.OwnerLastName,pd.Phone,pd.Email));
         }
 
         [Route("GetAllOwners")]
@@ -56,21 +56,21 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetOwnerByID")]
-        public IHttpActionResult GetOwnerByID([FromBody]int id)
+        public IHttpActionResult GetOwnerByID([FromBody]IdDto id)
         {
-            return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id));
+            return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id.id));
         }
         [HttpPost]
         [Route("GetPropertiesbyOwnerID")]
-        public IHttpActionResult GetPropertiesbyOwnerID([FromBody]int id)//דירות ששוכר לפי איידי
+        public IHttpActionResult GetPropertiesbyOwnerID([FromBody]IdDto id)//דירות ששוכר לפי איידי
         {
-            return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id));
+            return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id.id));
         }
         [HttpPost]
         [Route("getRentalsbyOwnerID")]
-        public IHttpActionResult getRentalsbyOwnerID([FromBody]int id)//פרטי השכרה לפי איידי
+        public IHttpActionResult getRentalsbyOwnerID([FromBody]IdDto id)//פרטי השכרה לפי איידי
         {
-            return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id));
+            return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id.id));
         }
 
     }
