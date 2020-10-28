@@ -49,7 +49,7 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(DtoRent rd)
         {
-            return Ok(Bl.RentalBL.Search(rd.PropertyID, rd. user,rd.EnteryDate,rd.EndDate));
+            return Ok(Bl.RentalBL.Search(rd.PropertyID, rd. User,rd.Owner,rd.EnteryDate,rd.EndDate));
         }
         [HttpGet]
         [Route("GetAllRentals")]

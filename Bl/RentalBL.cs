@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Dal;
 using Dto;
 
@@ -70,10 +72,10 @@ namespace Bl
             }
             return null;
         }
-        public static List<RentalDTO> Search(Nullable<int> propertyID, String user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
+        public static List<RentalDTO> Search(Nullable<int> propertyID,string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
 
-            List<Rental> rentals = RentalDAL.Search(propertyID, user, enteryDate, endDate);
+            List<Rental> rentals = RentalDAL.Search(propertyID,owner, user, enteryDate, endDate);
             return ConvertListToDTO(rentals);
         }
         public static List<RentalDTO> GetAllRentals()
@@ -84,7 +86,35 @@ namespace Bl
                 return ConvertListToDTO(pro);
             }
         }
-        
+        static System.Timers.Timer timer;
+        public static void DeleteAllNotUsedRentals(object source, ElapsedEventArgs e)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                foreach (Rental rental in db.Rentals)
+                {
+                    if (rental.status == false)
+                        db.Rentals.Remove(rental);
+                }
+                db.SaveChanges();
+                timer.Stop();
+                schedule_Timer(DateTime.Now.AddYears(1));
+            }
+        }
+        public static void schedule_Timer(DateTime scheduledTime)
+        {
+
+            DateTime nowTime = DateTime.Now;
+            //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
+            if (nowTime > scheduledTime)
+            {
+                scheduledTime = scheduledTime.AddMonths(1);
+            }
+            double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
+            timer = new System.Timers.Timer(tickTime);
+            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedRentals);
+            timer.Start();
+        }
     }
 
 }

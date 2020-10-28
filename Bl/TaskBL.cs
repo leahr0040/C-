@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Dal;
 using Dto;
 
@@ -125,6 +126,36 @@ namespace Bl
             {
                 return false;
             }
+        }
+        static System.Timers.Timer timer;
+        public static void schedule_Timer(DateTime scheduledTime)
+        {
+            
+            DateTime nowTime = DateTime.Now;
+            //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
+            if (nowTime > scheduledTime)
+            {
+                scheduledTime = scheduledTime.AddMonths(1);
+            }
+            double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
+            timer = new System.Timers.Timer(tickTime);
+            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedTasks);
+            timer.Start();
+        }
+        public static void DeleteAllNotUsedTasks(object sender, ElapsedEventArgs e)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                foreach (Dal.Task task in db.Tasks)
+                {
+                    if (task.status == false)
+                        db.Tasks.Remove(task);
+                }
+                db.SaveChanges();
+            }
+            timer.Stop();
+            schedule_Timer(DateTime.Now.AddMonths(1));
+
         }
         public static void Addtask2()
         {
