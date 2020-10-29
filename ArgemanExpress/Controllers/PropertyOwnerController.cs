@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using Dto;
 using System.Web.Http;
 using System.Web.Http.Cors;
-
-using Dto;
 
 namespace ArgemanExpress.Controllers
 {
@@ -35,7 +29,7 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("UpdatePropertyOwner")]
-        public IHttpActionResult UpdatePropertyOwner([FromBody]PropertyOwnerDTO po)
+        public IHttpActionResult UpdatePropertyOwner([FromBody] PropertyOwnerDTO po)
         {
             bool b = Bl.PropertyOwnerBL.UpdatePropertyOwner(po);
             if (b)
@@ -44,9 +38,9 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("Search")]
-        public IHttpActionResult Search([FromBody]PropertyOwnerDTO pd )
+        public IHttpActionResult Search([FromBody] PropertyOwnerDTO pd)
         {
-            return Ok(Bl.PropertyOwnerBL.Search(pd.OwnerFirstName,pd.OwnerLastName,pd.Phone,pd.Email));
+            return Ok(Bl.PropertyOwnerBL.Search(pd.OwnerFirstName, pd.OwnerLastName, pd.Phone, pd.Email));
         }
 
         [Route("GetAllOwners")]
@@ -56,19 +50,19 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetOwnerByID")]
-        public IHttpActionResult GetOwnerByID([FromBody]IdDto id)
+        public IHttpActionResult GetOwnerByID([FromBody] IdDto id)
         {
             return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id.id));
         }
         [HttpPost]
         [Route("GetPropertiesbyOwnerID")]
-        public IHttpActionResult GetPropertiesbyOwnerID([FromBody]IdDto id)//דירות ששוכר לפי איידי
+        public IHttpActionResult GetPropertiesbyOwnerID([FromBody] IdDto id)//דירות ששוכר לפי איידי
         {
             return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id.id));
         }
         [HttpPost]
         [Route("getRentalsbyOwnerID")]
-        public IHttpActionResult getRentalsbyOwnerID([FromBody]IdDto id)//פרטי השכרה לפי איידי
+        public IHttpActionResult getRentalsbyOwnerID([FromBody] IdDto id)//פרטי השכרה לפי איידי
         {
             return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id.id));
         }

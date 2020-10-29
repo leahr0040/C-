@@ -31,7 +31,7 @@ namespace Bl
                     string ht = @"<html>
                     <body style='color:blueviolet;font-size:150%'>
           <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'>ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>שם המשתמש שלך: " + ud.LastName + @"<br/>הסיסמה שלך: " + ud.Password + @"
-                <br/><a href='http://monkeys.co.il/'>כניסה לאתר</a></body></html>";
+                <br/><a href='http://ArgamanExpress.co.il/'>כניסה לאתר</a></body></html>";
 
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
                     mail.Body = ht;
@@ -71,7 +71,7 @@ namespace Bl
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
                     mail.Body = ht;
                     SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100", "es211860663");
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100","es211860663");
                     SmtpServer.EnableSsl = true;
 
                     SmtpServer.Send(mail);

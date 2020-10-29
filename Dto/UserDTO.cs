@@ -100,8 +100,6 @@ namespace Dto
     }
 
 
-
-
     public class Dtostrstr
     {
         public string username { set; get; }

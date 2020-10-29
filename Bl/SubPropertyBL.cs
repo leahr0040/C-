@@ -72,7 +72,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<SubProperty> subProperties =(from sp in db.SubProperties where sp.status==true select sp).ToList();
+                List<SubProperty> subProperties =(from sp in db.SubProperties where sp.status==true select sp).OrderBy(sp =>sp.IsRented).ToList();
                 return ConvertListToDTO(subProperties);
             }
         }

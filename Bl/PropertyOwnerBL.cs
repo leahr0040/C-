@@ -73,7 +73,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).ToList();
+                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).OrderBy(o => o.OwnerFirstName) .ToList();
                return ConvertListToDTO(owners);
             }
         }

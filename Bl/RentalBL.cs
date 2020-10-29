@@ -80,7 +80,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Rental> pro = (from r in db.Rentals where r.status == true select r).ToList();
+                List<Rental> pro = (from r in db.Rentals where r.status == true select r).OrderBy(r =>r.EndDate) .ToList();
                 return ConvertListToDTO(pro);
             }
         }

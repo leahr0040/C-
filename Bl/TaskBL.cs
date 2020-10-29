@@ -209,7 +209,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks =(from t in db.Tasks where t.status==true select t).ToList();
+                List<Dal.Task> tasks =(from t in db.Tasks where t.status==true select t).OrderBy(t=>t.DateForHandling).ToList();
                 return ConvertListToDTO(tasks);
             }
         }

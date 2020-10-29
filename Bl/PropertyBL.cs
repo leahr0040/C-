@@ -93,7 +93,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Property> pro =(from p in  db.Properties where p.status==true select p).ToList();
+                List<Property> pro =(from p in  db.Properties where p.status==true select p).OrderBy(p=>p.City.CityName).ToList();
                 return ConvertListToDTO(pro);
             }
         }

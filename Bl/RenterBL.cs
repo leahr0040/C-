@@ -56,7 +56,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).ToList();
+                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).OrderBy(r => r.FirstName).ToList();
                 return ConvertListToDTO(renters);
             }
         }
