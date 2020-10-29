@@ -56,13 +56,17 @@ namespace Bl
                 t.ReportDate = td.ReportDate;
                 t.DateForHandling = td.DateForHandling;
                 t.IsHandled = td.IsHandled;
-                t.HandlingDate = td.HandlingDate;
-                if (t.HandlingWay != td.HandlingWay)
+                if (t.IsHandled != td.IsHandled)
                 {
-                    t.HandlingWay = td.HandlingWay;
-                    t.status = false;
-                }
+                    if (td.IsHandled == true)
+                        t.status = false;
+                    else
+                        t.status = true;
 
+                }
+                t.HandlingDate = td.HandlingDate;
+                t.HandlingWay = td.HandlingWay;
+               
                 db.SaveChanges();
                 return true;
             }

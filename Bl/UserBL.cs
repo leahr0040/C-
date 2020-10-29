@@ -107,12 +107,10 @@ namespace Bl
             int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
             return RenterBL.getPropertiesbyRenterID(u);
         }
-        public static bool Haveuserforpassword(string userNam, string Passwor)
+        public static UserDTO Haveuserforpassword(string userNam, string Passwor)
         {
-            string u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.Password).FirstOrDefault();
-            if (u != null)
-                return true;
-            return false;
+            User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
+            return new UserDTO(u);
 
         }
         public static void MailToAllUser()
