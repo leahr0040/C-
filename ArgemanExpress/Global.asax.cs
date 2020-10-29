@@ -19,6 +19,9 @@ namespace ArgemanExpress
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Bl.TaskBL.RunPrepareDaily(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 6, 0, 0));//קריאה לפונקציה שתעיר פונקציה כל יום ב 6:00
+            Bl.TaskBL.schedule_Timer(DateTime.Now.AddMinutes(1));
+            Bl.RentalBL.schedule_Timer(DateTime.Now.AddMinutes(2));
+            //Console.ReadLine();
         }
     }
 }

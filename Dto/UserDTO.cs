@@ -92,13 +92,13 @@ namespace Dto
     public class DtoRent
     {
         public int PropertyID { set; get; }
-        public string user { set; get; }
+        public string Owner { set; get; }
+        public string User { set; get; }
         public DateTime EnteryDate { set; get; }
         public DateTime EndDate { set; get; }
 
         public DtoRent() { }
     }
-
 
     public class Dtostrstr
     {
