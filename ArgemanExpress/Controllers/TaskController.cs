@@ -73,6 +73,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetAllTaskTypes());
         }
+        [Route("AddTaskType")]
+        public IHttpActionResult AddTaskType(NameDto str)
+        {
+            return Ok(Bl.TaskBL.AddTaskType(str.name));
+        }
         [HttpPost]
         [Route("GetTaskId")]
         public IHttpActionResult GetTaskId([FromBody]IdDto i)
