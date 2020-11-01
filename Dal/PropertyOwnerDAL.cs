@@ -39,13 +39,13 @@ namespace Dal
                 List<PropertiesOwner> po;
                 po = (from p in db.PropertiesOwners where p.status == true select p).ToList();
                 if (OwnerFirstName != null)
-                    po = (from p in po where p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
+                    po = (from p in po where p.OwnerFirstName!=null && p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
                 if (OwnerLastName != null)
-                    po = (from p in po where p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
+                    po = (from p in po where p.OwnerLastName!=null && p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
                 if (Phone != null)
-                    po = (from p in po where p.Phone.Contains(Phone) select p).ToList();
+                    po = (from p in po where p.Phone!=null && p.Phone.Contains(Phone) select p).ToList();
                 if (Email != null)
-                    po = (from p in po where p.Email.Contains(Email) select p).ToList();
+                    po = (from p in po where p.Email!=null && p.Email.Contains(Email) select p).ToList();
                 return po;
             }
             return null;

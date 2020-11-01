@@ -17,7 +17,7 @@ namespace Bl
         {
             Dal.Task t = TaskDTO.ToDal(td);
             int id= TaskDAL.AddTask(t);
-            if (id != 0)
+            if (id != 0 && td.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = td.Dock;
@@ -66,7 +66,16 @@ namespace Bl
                 }
                 t.HandlingDate = td.HandlingDate;
                 t.HandlingWay = td.HandlingWay;
-               
+                if (td.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = td.Dock;
+                    doc.DocUser = td.TaskID;
+                    doc.type = 6;
+                    doc.DocName = td.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    return true;
+                }
                 db.SaveChanges();
                 return true;
             }
@@ -200,30 +209,7 @@ namespace Bl
            return AddTask(t);
 
         }
-        //public static int? CountDatePassedTasks()
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        return db.Tasks.Count(t => (t.status == false && t.HandlingDate.Value.Date < DateTime.Today));
-        //    }
-        //    return null;
-        //}
-        //public static int? CountNotHandledTasks()
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        return db.Tasks.Count(t => t.status == false);
-        //    }
-        //    return null;
-        //}
-        //public static int? CountNotclassificatedTasks()
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        return db.Tasks.Count(t => t.ClassificationID == null);
-        //    }
-        //    return null;
-        //}
+       
         public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -291,23 +277,36 @@ namespace Bl
             }
             return null;
         }
-
-        public static TaskDTO ReturnTaskbyid(int id)
+        public static bool AddTaskType(string name)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                bool x = false; int i;
-                List<TaskDTO> s = GetAllTasks();
-                for (i = 0; i < s.Count ||x; i++)
-                {
-                    if (id == s[i].TaskID)
-                    {
-                        i--;
-                        x = true;
-                    }
-                }
-                return s[i];
-                
+                TaskType taskType = new TaskType();
+                taskType.TaskTypeName = name;
+                db.TaskTypes.Add(taskType);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+                public static TaskDTO ReturnTaskbyid(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Dal.Task task = db.Tasks.Find(id);
+                return new TaskDTO(task);
+                //bool x = false; int i;
+                //List<TaskDTO> s = GetAllTasks();
+                //for (i = 0; i < s.Count ||x; i++)
+                //{
+                //    if (id == s[i].TaskID)
+                //    {
+                //        i--;
+                //        x = true;
+                //    }
+                //}
+                //return s[i];
+
             }
         }
 

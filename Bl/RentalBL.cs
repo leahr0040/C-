@@ -16,7 +16,7 @@ namespace Bl
         {
             Rental r = RentalDTO.ToDal(rd);
             int id = RentalDAL.AddRental(r);
-            if (id != 0)
+            if (id != 0 && rd.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = rd.Dock;
@@ -57,7 +57,17 @@ namespace Bl
                 r.EnteryDate = rd.EnteryDate;
                 r.EndDate = rd.EndDate;
                 r.ContactRenew = rd.ContactRenew;
-                return true;
+                if (rd.Dock !=null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = rd.Dock;
+                    doc.DocUser = rd.RentalID;
+                    doc.type = 3;
+                    doc.DocName = rd.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                }
+                db.SaveChanges();
+                    return true;
             }
             return false;
         }

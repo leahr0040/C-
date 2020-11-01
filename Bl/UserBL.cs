@@ -22,13 +22,13 @@ namespace Bl
            // else
            //sms
             int id= UserDAL.AddUser(u);
-            if (id != 0)
+            if (id != 0 && ud.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = ud.Dock;
                 doc.DocUser = id;
-                //doc.type=7
-                //doc.docName=ud.docName
+                doc.type = 7;
+                doc.DocName = ud.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
                 return true;
             }
@@ -40,6 +40,7 @@ namespace Bl
             {
                 User t = db.Users.Find(id);
                 t.status = false;
+
                 db.SaveChanges();
                 return true;
             }
@@ -118,9 +119,10 @@ namespace Bl
             List<UserDTO> u = GetAllRenters();
             int x = u.Count;
             int i = 0;
-            while (i != x)
+            while (i<x)
             {
                 Mailsend.Mailnewuser(u[i]);
+                i++;
             }
         }
         public static bool Forgotpassword(string username,string mail)
