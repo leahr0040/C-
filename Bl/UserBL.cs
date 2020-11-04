@@ -135,9 +135,14 @@ namespace Bl
            
                 
                     if (u!=null)
-                    Mailsend.Mailforgotpasword(u);     
-      
-            return true;
+            {
+                Random rand = new Random();
+                int i = rand.Next(100000, 999999);
+                u.Password = u.UserName.Substring(0,2) + i.ToString();
+                db.SaveChanges();
+                Mailsend.Mailforgotpasword(u);     
+                return true;
+            }
             return false;
 
         }

@@ -65,8 +65,8 @@ namespace Bl
 
                     string ht = @"<html>
                     <body style='color:blueviolet;font-size:150%'>
-          <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'>ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>הסיסמה שלך: " + ud.Password + @"
-                <br/><a href='http://monkeys.co.il/'>כניסה לאתר</a></body></html>";
+          <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'> ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>הסיסמה שלך: " + ud.Password + @"
+                <br/><a href='http://ArgamanExpress.co.il/'>כניסה לאתר</a></body></html>";
 
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
                     mail.Body = ht;
