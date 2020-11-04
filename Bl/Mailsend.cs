@@ -48,7 +48,7 @@ namespace Bl
             }
 
         }
-        public static void Mailforgotpasword(UserDTO ud)
+        public static void Mailforgotpasword(User ud)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {

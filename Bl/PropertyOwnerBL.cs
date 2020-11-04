@@ -15,13 +15,10 @@ namespace Bl
 
             PropertiesOwner poDal = PropertyOwnerDTO.ToDal(pod);
             int id=PropertyOwnerDAL.AddPropertyOwner(poDal);
-<<<<<<< HEAD
             if (id != 0)
             { 
                 if(pod.Dock!=null)
-=======
             if (id != 0 && pod.Dock!=null)
->>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
             {
                 Document doc = new Document();
                 doc.DocCoding = pod.Dock;

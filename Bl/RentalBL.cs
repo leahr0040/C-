@@ -16,13 +16,11 @@ namespace Bl
         {
             Rental r = RentalDTO.ToDal(rd);
             int id = RentalDAL.AddRental(r);
-<<<<<<< HEAD
             if (id != 0 )
             { 
                 if(rd.Dock!=null)
-=======
+
             if (id != 0 && rd.Dock!=null)
->>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
             {
                 Document doc = new Document();
                 doc.DocCoding = rd.Dock;

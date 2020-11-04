@@ -29,7 +29,6 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Property> pro;
-<<<<<<< HEAD
                 pro = (from p in db.Properties where p.status==true select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (cityName != null)
                     pro = (from p in pro where p.City.CityName.Contains(cityName) select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
@@ -37,7 +36,6 @@ namespace Dal
                     pro = (from p in pro where p.Street.StreetName.Contains(streetName) select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (number != null)
                     pro = (from p in pro where p.Number==number select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
-=======
                 pro = (from p in db.Properties where p.status==true select p).ToList();
                 if (cityName != null)
                     pro = (from p in pro where p.City.CityName.Contains(cityName) select p).ToList();
@@ -45,7 +43,6 @@ namespace Dal
                     pro = (from p in pro where p.Street.StreetName.Contains(streetName) select p).ToList();
                 if (number != null)
                     pro = (from p in pro where p.Number==number select p).ToList();
->>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
                 if (floor != null)
                     pro = (from p in pro where p.Floor == floor select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (isRented != null)

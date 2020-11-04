@@ -131,20 +131,12 @@ namespace Bl
         {
             //פונקצייה חיפוש עפי מייל קיים
             //Mailsend.Mailforgotpasword()
-            int u = (from a in db.Users where username == a.UserName && mail == a.Email select a.UserID).FirstOrDefault();
-            if (u >= 0)
-            {
-                bool x = false;
-                List<UserDTO> s = GetAllRenters();
-                for (int i = 0; i < s.Count||x; i++)
-                {
-                    if (u == s[i].UserID)
-                    { 
-                        x = true;
-                    Mailsend.Mailforgotpasword(s[i]);
-                    }
-                }                // להגריל סיסמה חדשה
-            }
+            User u = (from a in db.Users where username == a.UserName && mail == a.Email select a).FirstOrDefault();
+           
+                
+                    if (u!=null)
+                    Mailsend.Mailforgotpasword(u);     
+      
             return true;
             return false;
 
