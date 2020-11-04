@@ -16,13 +16,17 @@ namespace Bl
             SubProperty sp = SubPropertyDTO.ToDal(spd);
             int id= SubPropertyDAL.AddSubProperty(sp);
             if (id != 0)
+            { 
+                if(spd.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = spd.Dock;
                 doc.DocUser = id;
-                //doc.type=5
+                doc.type = 5;
+                doc.DocName = spd.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                return true;
+                
+            }return true;
             }
             return false;
         }
@@ -44,10 +48,21 @@ namespace Bl
                 SubProperty sp = db.SubProperties.Find(spd.SubPropertyID);
 
 
-                sp.num = sp.num;
-                sp.IsRented = sp.IsRented;
-                sp.Size = sp.Size;
-                sp.RoomsNum = sp.RoomsNum;
+                sp.num = spd.num;
+                sp.IsRented = spd.IsRented;
+                sp.Size = spd.Size;
+                sp.RoomsNum = spd.RoomsNum;
+                if (spd.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = spd.Dock;
+                    doc.DocUser = spd.SubPropertyID;
+                    doc.type = 5;
+                    doc.DocName = spd.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+               
+                }
+                db.SaveChanges();
                 return true;
             }
             return false;

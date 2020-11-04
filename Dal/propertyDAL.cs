@@ -14,9 +14,11 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Properties.Add(pe);
+              
                 db.SaveChanges();
 
-                return (from p in db.Properties where p.OwnerID == pe.OwnerID && p.CityID == pe.CityID && p.StreetID == pe.StreetID && p.Number == pe.Number && p.Floor == pe.Floor && p.ApartmentNum == p.ApartmentNum select p.PropertyID).FirstOrDefault();
+                return db.Properties.Max(i=>i.PropertyID);
+              // return (from p in db.Properties where p.OwnerID == pe.OwnerID && p.CityID == pe.CityID && p.StreetID == pe.StreetID && p.Number == pe.Number && p.Floor == pe.Floor && p.ApartmentNum == p.ApartmentNum select p.PropertyID).FirstOrDefault();
             }
             return 0;
 
@@ -27,17 +29,17 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Property> pro;
-                pro = (from p in db.Properties where p.status==true select p).ToList();
-               // if (cityName != null)
-                //    pro = (from p in pro where p.CityName.Contains(cityName) select p).ToList();
-               // if (streetName != null)
-                   // pro = (from p in pro where p.StreetName.Contains(streetName) select p).ToList();
+                pro = (from p in db.Properties where p.status==true select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
+                if (cityName != null)
+                    pro = (from p in pro where p.City.CityName.Contains(cityName) select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
+                if (streetName != null)
+                    pro = (from p in pro where p.Street.StreetName.Contains(streetName) select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (number != null)
-                    pro = (from p in pro where p.Number.Contains(number) select p).ToList();
+                    pro = (from p in pro where p.Number==number select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (floor != null)
-                    pro = (from p in pro where p.Floor == floor select p).ToList();
+                    pro = (from p in pro where p.Floor == floor select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 if (isRented != null)
-                    pro = (from p in pro where p.IsRented == isRented select p).ToList();
+                    pro = (from p in pro where p.IsRented == isRented select p).OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
 
                 return pro;
             }
@@ -51,6 +53,7 @@ namespace Dal
 
             c.CityId = db.Cities.Count() + 1;
             db.Cities.Add(c);
+                db.SaveChanges();
             return true;
         }
         return false;
@@ -61,6 +64,7 @@ namespace Dal
         {
             s.StreetID = db.Streets.Count() + 1;
             db.Streets.Add(s);
+                db.SaveChanges();
             return true;
         }
         return false;
@@ -69,8 +73,9 @@ namespace Dal
     {
         using (ArgamanExpressEntities db = new ArgamanExpressEntities())
         {
-            e.ExclusivityID = db.Exclusivitys.Count() + 1;
+            //e.ExclusivityID = db.Exclusivitys.Count() + 1;
             db.Exclusivitys.Add(e);
+                db.SaveChanges();
             return true;
         }
         return false;

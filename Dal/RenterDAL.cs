@@ -12,17 +12,17 @@ namespace Dal
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> users = (from u in db.Users where u.UserID==3 && u.status == true select u).ToList();
+                List<User> users = (from u in db.Users where u.UserID==3 && u.status == true select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 if (FirstName != null)
-                    users = (from u in users where u.FirstName.Contains(FirstName) select u).ToList();
+                    users = (from u in users where u.FirstName.Contains(FirstName) select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 if (LastName != null)
-                    users = (from u in users where u.LastName.Contains(LastName) select u).ToList();
+                    users = (from u in users where u.LastName.Contains(LastName) select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 if (SMS != null)
-                    users = (from u in users where u.SMS.Contains(SMS) select u).ToList();
+                    users = (from u in users where u.SMS.Contains(SMS) select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 if (Email != null)
-                    users = (from u in users where u.Email.Contains(Email) select u).ToList();
+                    users = (from u in users where u.Email.Contains(Email) select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 if (Phone != null)
-                    users = (from u in users where u.Phone.Contains(Phone) select u).ToList();
+                    users = (from u in users where u.Phone.Contains(Phone) select u).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
 
                 return users;
             }

@@ -16,7 +16,9 @@ namespace Bl
         {
             Rental r = RentalDTO.ToDal(rd);
             int id = RentalDAL.AddRental(r);
-            if (id != 0)
+            if (id != 0 )
+            { 
+                if(rd.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = rd.Dock;
@@ -28,7 +30,8 @@ namespace Bl
                 {
                     Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);                
                 }
-                return true;
+               
+            } return true;
             }
             return false;
 
@@ -49,6 +52,7 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Rental r = db.Rentals.Find(rd.RentalID);
+               
                 r.PropertyID = rd.PropertyID;
                 r.SubPropertyID = rd.SubPropertyID;
                 r.UserID = rd.UserID;
@@ -57,7 +61,17 @@ namespace Bl
                 r.EnteryDate = rd.EnteryDate;
                 r.EndDate = rd.EndDate;
                 r.ContactRenew = rd.ContactRenew;
-                return true;
+                if (rd.Dock !=null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = rd.Dock;
+                    doc.DocUser = rd.RentalID;
+                    doc.type = 3;
+                    doc.DocName = rd.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                }
+                db.SaveChanges();
+                    return true;
             }
             return false;
         }
@@ -85,6 +99,20 @@ namespace Bl
                 List<Rental> pro = (from r in db.Rentals where r.status == true select r).OrderBy(r =>r.EndDate) .ToList();
                 return ConvertListToDTO(pro);
             }
+        }
+        public static List<PaymentTypeDTO> GetAllPaymentTypes()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<PaymentType> ptypes = (from pt in db.PaymentTypes select pt).OrderBy(pt => pt.PaymentTypeName).ToList();
+                List<PaymentTypeDTO> ptdto = new List<PaymentTypeDTO>();
+                foreach (PaymentType ptype in ptypes)
+                {
+                    ptdto.Add(new PaymentTypeDTO(ptype));
+                }
+                return ptdto;
+            }
+            return null;
         }
         static System.Timers.Timer timer;
         public static void DeleteAllNotUsedRentals(object source, ElapsedEventArgs e)

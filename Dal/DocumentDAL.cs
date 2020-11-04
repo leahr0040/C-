@@ -12,6 +12,7 @@ namespace Dal
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+               
                 db.Documents.Add(doc);
                 db.SaveChanges();
                 return true;

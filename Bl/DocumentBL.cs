@@ -19,7 +19,21 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Document> documents = (from d in db.Documents where d.DocUser == id select d).ToList();
+                List<Document> documents = (from d in db.Documents where d.DocUser == id && d.type==type select d).ToList();
+                List<DocumentDTO> docks = new List<DocumentDTO>();
+                foreach (Document document in documents)
+                {
+                    docks.Add(new DocumentDTO(document));
+                }
+                return docks;
+            }
+
+        }
+        public static List<DocumentDTO> GetAllDocuments()
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<Document> documents = (from d in db.Documents select d).ToList();
                 List<DocumentDTO> docks = new List<DocumentDTO>();
                 foreach (Document document in documents)
                 {

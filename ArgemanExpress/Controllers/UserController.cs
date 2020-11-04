@@ -68,6 +68,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.DocumentBL.GetUserDocuments(di.id, di.type));
         }
+        [Route("GetAllDocuments")]
+        public IHttpActionResult GetAllDocuments()
+        {
+            return Ok(Bl.DocumentBL.GetAllDocuments());
+        }
         [HttpPost]
         [Route("Ifhaveuse")]
         public IHttpActionResult ret([FromBody]Dtostrstr dn)

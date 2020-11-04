@@ -19,11 +19,15 @@ namespace Bl
             int id= UserDAL.AddUser(u);
             if (id != 0)
             {
+                if(ud.Dock!=null)
+                { 
                 Document doc = new Document();
                 doc.DocCoding = ud.Dock;
                 doc.DocUser = id;
-                //doc.type=4
+                doc.type = 4;
+                doc.DocName = ud.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                }
                 return true;
             }
             return false;
@@ -34,6 +38,16 @@ namespace Bl
         }
         public static bool UpdateRenter(UserDTO ud)
         {
+            if ( ud.Dock != null)
+            {
+                Document doc = new Document();
+                doc.DocCoding = ud.Dock;
+                doc.DocUser = ud.UserID;
+                doc.type = 4;
+                doc.DocName = ud.DocName;
+                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                
+            }
             return UserBL.UpdateUser(ud);
         }
         public static List<UserDTO> ConvertListToDTO(List<User> renters)
@@ -56,7 +70,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).OrderBy(r => r.FirstName).ToList();
+                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return ConvertListToDTO(renters);
             }
         }

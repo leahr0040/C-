@@ -99,17 +99,31 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyBL.GetStreetsByCityID(CityId.id));
         }
+        
+        [Route("GetAllStreets")]// לבדוק איך קוראים בר
+        public IHttpActionResult GetAllStreets()
+        {
+            return Ok(Bl.PropertyBL.GetAllStreets());
+        }
         [HttpPost]
         [Route("GetStreetByID")]// לבדוק איך קוראים בר
         public IHttpActionResult GetStreetByID([FromBody]IdDto streetId)
         {
             return Ok(Bl.PropertyBL.GetStreetByID(streetId.id));
         }
+        [Route("GetAllExclusivityPoeple")]// לבדוק איך קוראים בר
+        public IHttpActionResult GetAllExclusivityPoeple()
+        {
+            return Ok(Bl.PropertyBL.GetAllExclusivityPoeple());
+        }
         [HttpPost]
         [Route("AddExclusivityPerson")]
-        public IHttpActionResult AddExclusivityPerson([FromBody]ExclusivityPersonDTO ep)
+        public IHttpActionResult AddExclusivityPerson([FromBody]NameDto name)
         {
-            return Ok(Bl.PropertyBL.AddExclusivityPerson(ep));
+            bool b = Bl.PropertyBL.AddExclusivityPerson(name.name);
+            if (b == true)
+                return Ok();
+            return BadRequest();
         }
     }
 }

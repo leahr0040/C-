@@ -16,12 +16,17 @@ namespace Bl
             PropertiesOwner poDal = PropertyOwnerDTO.ToDal(pod);
             int id=PropertyOwnerDAL.AddPropertyOwner(poDal);
             if (id != 0)
+            { 
+                if(pod.Dock!=null)
             {
                 Document doc = new Document();
                 doc.DocCoding = pod.Dock;
                 doc.DocUser = id;
-                //doc.type=2
+                doc.type = 2;
+                doc.DocName = pod.DocName;
                 DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                
+            }
                 return true;
             }
             return false;
@@ -46,6 +51,16 @@ namespace Bl
                 pro.OwnerLastName = po.OwnerLastName;
                 pro.Phone = po.Phone;
                 pro.Email = po.Email;
+                if (po.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = po.Dock;
+                    doc.DocUser = po.OwnerID;
+                    doc.type = 2;
+                    doc.DocName = po.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    
+                }
                 db.SaveChanges();
                 return true;
             }
@@ -73,7 +88,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).OrderBy(o => o.OwnerFirstName) .ToList();
+                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
                return ConvertListToDTO(owners);
             }
         }

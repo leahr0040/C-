@@ -57,6 +57,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetTimePassedTasks());
         }
+        [Route("GetAllarchivesTasks")]
+        public IHttpActionResult GetAllarchivesTasks()
+        {
+            return Ok(Bl.TaskBL.GetAllarchivesTasks());
+        }
         [HttpPost]
         [Route("gettypename")]
         public IHttpActionResult gettypename(IdDto id)
@@ -72,6 +77,11 @@ namespace ArgemanExpress.Controllers
         public IHttpActionResult GetAllTaskTypes()
         {
             return Ok(Bl.TaskBL.GetAllTaskTypes());
+        }
+        [Route("AddTaskType")]
+        public IHttpActionResult AddTaskType(NameDto str)
+        {
+            return Ok(Bl.TaskBL.AddTaskType(str.name));
         }
         [HttpPost]
         [Route("GetTaskId")]

@@ -15,7 +15,8 @@ namespace Dal
                 r.status = true;
                 db.Rentals.Add(r);
                 db.SaveChanges();
-                return (from ren in db.Rentals where ren.PropertyID==r.PropertyID && ren.UserID==r.UserID && ren.EnteryDate==ren.EnteryDate select ren.RentalID).FirstOrDefault();
+                return db.Rentals.Max(i => i.RentalID);
+                //return (from ren in db.Rentals where ren.PropertyID==r.PropertyID && ren.UserID==r.UserID && ren.EnteryDate==ren.EnteryDate select ren.RentalID).FirstOrDefault();
             }
             return 0;
         }
@@ -24,20 +25,20 @@ namespace Dal
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Rental> rentals;
-                rentals = (from r in db.Rentals where r.status == true select r).ToList();
+                rentals = (from r in db.Rentals where r.status == true select r).OrderBy(r => r.EndDate).ToList();
                 if (propertyID != null)
-                    rentals = (from r in rentals where r.PropertyID == propertyID select r).ToList();
+                    rentals = (from r in rentals where r.PropertyID == propertyID select r).OrderBy(r => r.EndDate).ToList();
                 if (owner != null)
                 {
                    List<int> owners = (from own in db.PropertiesOwners where (own.OwnerFirstName + " " + own.OwnerLastName).Contains(owner.Trim())select own.OwnerID).ToList();
-                    rentals = (from r in rentals where owners.Contains(r.Property.OwnerID) select r).ToList();
+                    rentals = (from r in rentals where owners.Contains(r.Property.OwnerID) select r).OrderBy(r => r.EndDate).ToList();
                 }
                 if (user != null)
-                    rentals = (from r in rentals where (r.User.FirstName + ' ' + r.User.FirstName).Contains(user.Trim()) select r).ToList();
+                    rentals = (from r in rentals where (r.User.FirstName + ' ' + r.User.FirstName).Contains(user.Trim()) select r).OrderBy(r => r.EndDate).ToList();
                 if (enteryDate != null)
-                    rentals = (from r in rentals where r.EnteryDate >= enteryDate select r).ToList();
+                    rentals = (from r in rentals where r.EnteryDate >= enteryDate select r).OrderBy(r => r.EndDate).ToList();
                 if (endDate != null)
-                    rentals = (from r in rentals where r.EndDate >= endDate select r).ToList();        
+                    rentals = (from r in rentals where r.EndDate >= endDate select r).OrderBy(r => r.EndDate).ToList();        
                 return rentals;
             }
             return null;

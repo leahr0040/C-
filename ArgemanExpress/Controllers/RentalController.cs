@@ -57,5 +57,11 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.RentalBL.GetAllRentals());
         }
+        
+        [Route("GetAllPaymentTypes")]
+        public IHttpActionResult GetAllPaymentTypes()
+        {
+            return Ok(Bl.RentalBL.GetAllPaymentTypes());
+        }
     }
 }
