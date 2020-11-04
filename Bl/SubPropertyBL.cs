@@ -15,9 +15,13 @@ namespace Bl
         {
             SubProperty sp = SubPropertyDTO.ToDal(spd);
             int id= SubPropertyDAL.AddSubProperty(sp);
+<<<<<<< HEAD
             if (id != 0)
             { 
                 if(spd.Dock!=null)
+=======
+            if (id != 0 && spd.Dock!=null)
+>>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
             {
                 Document doc = new Document();
                 doc.DocCoding = spd.Dock;

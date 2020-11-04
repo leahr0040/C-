@@ -17,9 +17,13 @@ namespace Bl
         {
             Dal.Task t = TaskDTO.ToDal(td);
             int id= TaskDAL.AddTask(t);
+<<<<<<< HEAD
             if (id != 0)
             { 
                 if(td.Dock!=null)
+=======
+            if (id != 0 && td.Dock!=null)
+>>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
             {
                 Document doc = new Document();
                 doc.DocCoding = td.Dock;

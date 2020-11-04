@@ -40,6 +40,7 @@ namespace Dal
                 List<PropertiesOwner> po;
                 po = (from p in db.PropertiesOwners where p.status == true select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
                 if (OwnerFirstName != null)
+<<<<<<< HEAD
                     po = (from p in po where p.OwnerFirstName!=null && p.OwnerFirstName.Contains(OwnerFirstName) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
                 if (OwnerLastName != null)
                     po = (from p in po where p.OwnerLastName!=null && p.OwnerLastName.Contains(OwnerLastName) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
@@ -47,6 +48,15 @@ namespace Dal
                     po = (from p in po where p.Phone!=null && p.Phone.Contains(Phone) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
                 if (Email != null)
                     po = (from p in po where p.Email!=null && p.Email.Contains(Email) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+=======
+                    po = (from p in po where p.OwnerFirstName!=null && p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
+                if (OwnerLastName != null)
+                    po = (from p in po where p.OwnerLastName!=null && p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
+                if (Phone != null)
+                    po = (from p in po where p.Phone!=null && p.Phone.Contains(Phone) select p).ToList();
+                if (Email != null)
+                    po = (from p in po where p.Email!=null && p.Email.Contains(Email) select p).ToList();
+>>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
                 return po;
             }
             return null;

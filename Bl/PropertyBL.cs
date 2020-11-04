@@ -13,9 +13,13 @@ namespace Bl
         {
             Property p = PropertyDTO.Todal(d);
             int id = PropertyDAL.AddProperty(p);
+<<<<<<< HEAD
             if (id != 0)
             { 
                 if( d.Dock!=null)
+=======
+            if (id != 0 && d.Dock!=null)
+>>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
             {
                 Document doc = new Document();
                 doc.DocCoding = d.Dock;
@@ -197,7 +201,10 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+<<<<<<< HEAD
                 db.Database.CommandTimeout=300;
+=======
+>>>>>>> 36d4bc3a001ffbbb78c995e24fb60791f2231a52
                 List<Street> streets = db.Streets.OrderBy(i=>i.StreetName).ToList();
                 List<StreetDTO> streetDTOs = new List<StreetDTO>();
                 foreach (Street street in streets)
