@@ -52,7 +52,7 @@ namespace ArgemanExpress.Controllers
         [Route("GetAllRenters")]
         public IHttpActionResult GetAllRenters()
         {
-             return  Ok(Bl.RenterBL.GetAllRenters());
+             return Ok(Bl.RenterBL.GetAllRenters());
             
         }
         [HttpPost]

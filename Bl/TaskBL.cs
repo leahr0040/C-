@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Data;
+using System.Data.Entity.Core.Objects;
 using Dal;
 using Dto;
-
+using System.Data.Entity;
 
 namespace Bl
 {
@@ -15,6 +17,7 @@ namespace Bl
     {
         public static bool AddTask(TaskDTO td)
         {
+            
             Dal.Task t = TaskDTO.ToDal(td);
             int id= TaskDAL.AddTask(t);
             if (id != 0)
@@ -248,7 +251,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where t.IsHandled==false && t.DateForHandling.Date > DateTime.Today select t).ToList();
+                List<Dal.Task> tasks = (from t in db.Tasks where t.IsHandled==false && t.DateForHandling > DateTime.Today select t).ToList();
                 return ConvertListToDTO(tasks);
             }
         }

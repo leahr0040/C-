@@ -19,5 +19,16 @@ namespace Dal
             }
             return false;
         }
+        public static bool DeleteUserDocuments(Document doc)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Document d = db.Documents.Find(doc.DocID);
+                db.Documents.Remove(d);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

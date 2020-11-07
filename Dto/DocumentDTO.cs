@@ -14,6 +14,10 @@ namespace Dto
         public Nullable<int> type { get; set; }
         public string DocCoding { get; set; }
         public string DocName { get; set; }
+        public DocumentDTO()
+        {
+            
+        }
         public DocumentDTO(Document d)
         {
             this.DocID = d.DocID;

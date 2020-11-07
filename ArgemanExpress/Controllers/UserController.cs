@@ -74,6 +74,12 @@ namespace ArgemanExpress.Controllers
             return Ok(Bl.DocumentBL.GetAllDocuments());
         }
         [HttpPost]
+        [Route("DeleteUserDocument")]
+        public IHttpActionResult DeleteUserDocument([FromBody] DocumentDTO doc)
+        {
+            return Ok(Bl.DocumentBL.DeleteUserDocument(doc));
+        }
+        [HttpPost]
         [Route("Ifhaveuse")]
         public IHttpActionResult ret([FromBody]Dtostrstr dn)
         {

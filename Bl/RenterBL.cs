@@ -70,7 +70,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> renters = (from r in db.Users where r.UserID==1 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
+                List<User> renters = (from r in db.Users where r.RoleID==3 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return ConvertListToDTO(renters);
             }
         }

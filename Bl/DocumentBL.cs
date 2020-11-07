@@ -15,6 +15,11 @@ namespace Bl
             Document d = DocumentDTO.ToDAL(doc);
             return DocumentDAL.AddUserDocuments(d);
         }
+        public static bool DeleteUserDocument(DocumentDTO doc)
+        {
+            Document d = DocumentDTO.ToDAL(doc);
+            return DocumentDAL.DeleteUserDocuments(d);
+        }
         public static List<DocumentDTO> GetUserDocuments(int id,int type)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
