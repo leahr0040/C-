@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ArgamanExpressModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ArgamanExpressModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cities">
           <Key>
             <PropertyRef Name="CityId" />
@@ -361,6 +361,16 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="getAllCities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllDocuments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllProperties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllPropertiesOwners" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllRentals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllSubProperties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getProperties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getStreets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -472,8 +482,7 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ArgamanExpressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -974,6 +983,16 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="getStreets" ReturnType="Collection(ArgamanExpressModel.getStreets_Result)" />
+          <FunctionImport Name="getAllCities" ReturnType="Collection(ArgamanExpressModel.getAllCities_Result)" />
+          <FunctionImport Name="getAllDocuments" ReturnType="Collection(ArgamanExpressModel.getAllDocuments_Result)" />
+          <FunctionImport Name="getAllProperties" ReturnType="Collection(ArgamanExpressModel.getAllProperties_Result)" />
+          <FunctionImport Name="getAllPropertiesOwners" ReturnType="Collection(ArgamanExpressModel.getAllPropertiesOwners_Result)" />
+          <FunctionImport Name="getAllRentals" ReturnType="Collection(ArgamanExpressModel.getAllRentals_Result)" />
+          <FunctionImport Name="getAllTasks" ReturnType="Collection(ArgamanExpressModel.getAllTasks_Result)" />
+          <FunctionImport Name="getAllUsers" ReturnType="Collection(ArgamanExpressModel.getAllUsers_Result)" />
+          <FunctionImport Name="getAllSubProperties" ReturnType="Collection(ArgamanExpressModel.getAllSubProperties_Result)" />
+          <FunctionImport Name="getProperties" ReturnType="Collection(ArgamanExpressModel.getProperties_Result)" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -985,6 +1004,116 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getStreets_Result">
+          <Property Type="Int32" Name="StreetID" Nullable="false" />
+          <Property Type="String" Name="StreetName" Nullable="true" />
+          <Property Type="Int32" Name="CityId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllCities_Result">
+          <Property Type="Int32" Name="CityId" Nullable="false" />
+          <Property Type="String" Name="CityName" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllDocuments_Result">
+          <Property Type="Int32" Name="DocID" Nullable="false" />
+          <Property Type="Int32" Name="DocUser" Nullable="false" />
+          <Property Type="String" Name="DocCoding" Nullable="false" />
+          <Property Type="Int32" Name="type" Nullable="true" />
+          <Property Type="String" Name="DocName" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllProperties_Result">
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Int32" Name="StreetID" Nullable="false" />
+          <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
+          <Property Type="Double" Name="Size" Nullable="true" />
+          <Property Type="Int32" Name="Floor" Nullable="true" />
+          <Property Type="Boolean" Name="IsDivided" Nullable="false" />
+          <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
+          <Property Type="Boolean" Name="IsPaid" Nullable="false" />
+          <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
+          <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
+          <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
+          <Property Type="Boolean" Name="IsRented" Nullable="true" />
+          <Property Type="Double" Name="RoomsNum" Nullable="true" />
+          <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllPropertiesOwners_Result">
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+          <Property Type="String" Name="OwnerFirstName" Nullable="true" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="OwnerLastName" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllRentals_Result">
+          <Property Type="Int32" Name="RentalID" Nullable="false" />
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+          <Property Type="Int32" Name="UserID" Nullable="true" />
+          <Property Type="Double" Name="RentPayment" Nullable="true" />
+          <Property Type="Int32" Name="PaymentTypeID" Nullable="true" />
+          <Property Type="DateTime" Name="EnteryDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="ContactRenew" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllTasks_Result">
+          <Property Type="Int32" Name="TaskID" Nullable="false" />
+          <Property Type="Int32" Name="TaskTypeId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Int32" Name="PropertyID" Nullable="true" />
+          <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+          <Property Type="Int32" Name="ClassificationID" Nullable="true" />
+          <Property Type="Int32" Name="ClientClassificationID" Nullable="true" />
+          <Property Type="DateTime" Name="ReportDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DateForHandling" Nullable="false" Precision="23" />
+          <Property Type="Boolean" Name="IsHandled" Nullable="true" />
+          <Property Type="DateTime" Name="HandlingDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="HandlingWay" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllUsers_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="SMS" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="RoleID" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="true" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getAllSubProperties_Result">
+          <Property Type="Int32" Name="SubPropertyID" Nullable="false" />
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="Int32" Name="num" Nullable="false" />
+          <Property Type="Boolean" Name="IsRented" Nullable="false" />
+          <Property Type="Double" Name="Size" Nullable="true" />
+          <Property Type="Double" Name="RoomsNum" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getProperties_Result">
+          <Property Type="Int32" Name="PropertyID" Nullable="false" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+          <Property Type="Int32" Name="CityID" Nullable="false" />
+          <Property Type="Int32" Name="StreetID" Nullable="false" />
+          <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
+          <Property Type="Double" Name="Size" Nullable="true" />
+          <Property Type="Int32" Name="Floor" Nullable="true" />
+          <Property Type="Boolean" Name="IsDivided" Nullable="false" />
+          <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
+          <Property Type="Boolean" Name="IsPaid" Nullable="false" />
+          <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
+          <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
+          <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
+          <Property Type="Boolean" Name="IsRented" Nullable="true" />
+          <Property Type="Double" Name="RoomsNum" Nullable="true" />
+          <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1194,6 +1323,156 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ArgamanExpressModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ArgamanExpressModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="getStreets" FunctionName="ArgamanExpressModel.Store.getStreets">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getStreets_Result">
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+                <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllCities" FunctionName="ArgamanExpressModel.Store.getAllCities">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllCities_Result">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllDocuments" FunctionName="ArgamanExpressModel.Store.getAllDocuments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllDocuments_Result">
+                <ScalarProperty Name="DocID" ColumnName="DocID" />
+                <ScalarProperty Name="DocUser" ColumnName="DocUser" />
+                <ScalarProperty Name="DocCoding" ColumnName="DocCoding" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="DocName" ColumnName="DocName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllProperties" FunctionName="ArgamanExpressModel.Store.getAllProperties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllProperties_Result">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="IsDivided" ColumnName="IsDivided" />
+                <ScalarProperty Name="ManagmentPayment" ColumnName="ManagmentPayment" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="IsExclusivity" ColumnName="IsExclusivity" />
+                <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
+                <ScalarProperty Name="IsWarranty" ColumnName="IsWarranty" />
+                <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+                <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+                <ScalarProperty Name="ApartmentNum" ColumnName="ApartmentNum" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllPropertiesOwners" FunctionName="ArgamanExpressModel.Store.getAllPropertiesOwners">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllPropertiesOwners_Result">
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="OwnerFirstName" ColumnName="OwnerFirstName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OwnerLastName" ColumnName="OwnerLastName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllRentals" FunctionName="ArgamanExpressModel.Store.getAllRentals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllRentals_Result">
+                <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RentPayment" ColumnName="RentPayment" />
+                <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+                <ScalarProperty Name="EnteryDate" ColumnName="EnteryDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="ContactRenew" ColumnName="ContactRenew" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllTasks" FunctionName="ArgamanExpressModel.Store.getAllTasks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllTasks_Result">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+                <ScalarProperty Name="ClassificationID" ColumnName="ClassificationID" />
+                <ScalarProperty Name="ClientClassificationID" ColumnName="ClientClassificationID" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+                <ScalarProperty Name="DateForHandling" ColumnName="DateForHandling" />
+                <ScalarProperty Name="IsHandled" ColumnName="IsHandled" />
+                <ScalarProperty Name="HandlingDate" ColumnName="HandlingDate" />
+                <ScalarProperty Name="HandlingWay" ColumnName="HandlingWay" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllUsers" FunctionName="ArgamanExpressModel.Store.getAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllUsers_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="SMS" ColumnName="SMS" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllSubProperties" FunctionName="ArgamanExpressModel.Store.getAllSubProperties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllSubProperties_Result">
+                <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getProperties" FunctionName="ArgamanExpressModel.Store.getProperties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ArgamanExpressModel.getProperties_Result">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="IsDivided" ColumnName="IsDivided" />
+                <ScalarProperty Name="ManagmentPayment" ColumnName="ManagmentPayment" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="IsExclusivity" ColumnName="IsExclusivity" />
+                <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
+                <ScalarProperty Name="IsWarranty" ColumnName="IsWarranty" />
+                <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+                <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+                <ScalarProperty Name="ApartmentNum" ColumnName="ApartmentNum" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

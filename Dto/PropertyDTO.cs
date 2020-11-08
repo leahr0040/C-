@@ -56,6 +56,27 @@ namespace Dto
             this.ApartmentNum = p.ApartmentNum;
             status = true;
         }
+
+        public PropertyDTO(getAllProperties_Result p)
+        {
+            this.PropertyID = p.PropertyID;
+            this.OwnerID = p.OwnerID;
+            this.CityID = p.CityID;
+            this.StreetID = p.StreetID;
+            this.Number = p.Number;
+            this.Size = p.Size;
+            this.Floor = p.Floor;
+            this.IsDivided = p.IsDivided;
+            this.ManagmentPayment = p.ManagmentPayment;
+            this.IsPaid = p.IsPaid;
+            this.IsExclusivity = p.IsExclusivity;
+            this.ExclusivityID = p.ExclusivityID;
+            this.IsWarranty = p.IsWarranty;
+            this.IsRented = p.IsRented;
+            this.RoomsNum = p.RoomsNum;
+            this.ApartmentNum = p.ApartmentNum;
+            status = true;
+        }
         public static Property Todal(PropertyDTO dd)
         {
             return new Property

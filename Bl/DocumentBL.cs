@@ -38,9 +38,9 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Document> documents = (from d in db.Documents select d).ToList();
+                List<getAllDocuments_Result> documents = (from d in db.getAllDocuments() select d).ToList();
                 List<DocumentDTO> docks = new List<DocumentDTO>();
-                foreach (Document document in documents)
+                foreach (getAllDocuments_Result document in documents)
                 {
                     docks.Add(new DocumentDTO(document));
                 }

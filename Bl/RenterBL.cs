@@ -61,6 +61,17 @@ namespace Bl
             }
             return null;
         }
+        public static List<UserDTO> ConvertListToDTO(List<getAllUsers_Result> renters)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<UserDTO> udto = new List<UserDTO>();
+                foreach (getAllUsers_Result u in renters)
+                    udto.Add(new UserDTO(u));
+                return udto;
+            }
+            return null;
+        }
         public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
             List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone);
@@ -70,7 +81,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<User> renters = (from r in db.Users where r.RoleID==3 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
+                List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID==3 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return ConvertListToDTO(renters);
             }
         }

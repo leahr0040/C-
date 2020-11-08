@@ -78,6 +78,18 @@ namespace Bl
             }
             return null;
         }
+
+        public static List<PropertyOwnerDTO> ConvertListToDTO(List<getAllPropertiesOwners_Result> po)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<PropertyOwnerDTO> podto = new List<PropertyOwnerDTO>();
+                foreach (getAllPropertiesOwners_Result p in po)
+                    podto.Add(new PropertyOwnerDTO(p));
+                return podto;
+            }
+            return null;
+        }
         public static List<PropertyOwnerDTO> Search(string OwnerFirstName, string OwnerLastName, string Phone, string Email)
         {
             
@@ -89,7 +101,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<PropertiesOwner> owners =(from o in db.PropertiesOwners where o.status==true select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
+                List<getAllPropertiesOwners_Result> owners =(from o in db.getAllPropertiesOwners() where o.status==true select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
                return ConvertListToDTO(owners);
             }
         }

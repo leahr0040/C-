@@ -145,5 +145,55 @@ namespace Dal
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<getStreets_Result> getStreets()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getStreets_Result>("getStreets");
+        }
+    
+        public virtual ObjectResult<getAllCities_Result> getAllCities()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllCities_Result>("getAllCities");
+        }
+    
+        public virtual ObjectResult<getAllDocuments_Result> getAllDocuments()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllDocuments_Result>("getAllDocuments");
+        }
+    
+        public virtual ObjectResult<getAllProperties_Result> getAllProperties()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllProperties_Result>("getAllProperties");
+        }
+    
+        public virtual ObjectResult<getAllPropertiesOwners_Result> getAllPropertiesOwners()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllPropertiesOwners_Result>("getAllPropertiesOwners");
+        }
+    
+        public virtual ObjectResult<getAllRentals_Result> getAllRentals()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllRentals_Result>("getAllRentals");
+        }
+    
+        public virtual ObjectResult<getAllTasks_Result> getAllTasks()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllTasks_Result>("getAllTasks");
+        }
+    
+        public virtual ObjectResult<getAllUsers_Result> getAllUsers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllUsers_Result>("getAllUsers");
+        }
+    
+        public virtual ObjectResult<getAllSubProperties_Result> getAllSubProperties()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getAllSubProperties_Result>("getAllSubProperties");
+        }
+    
+        public virtual ObjectResult<getProperties_Result> getProperties()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getProperties_Result>("getProperties");
+        }
     }
 }

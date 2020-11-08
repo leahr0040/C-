@@ -13,7 +13,7 @@ namespace ArgemanExpress.Controllers
 
 
 
-    [RoutePrefix("api/user")]
+    [RoutePrefix("api/User")]
     
     
 
@@ -90,6 +90,12 @@ namespace ArgemanExpress.Controllers
         public IHttpActionResult m([FromBody]Dtostrstr dx)
         {
             return Ok(Bl.UserBL.Forgotpassword(dx.username, dx.passemail));
+        }
+        [HttpGet]
+        [Route("SendAllRenter")]
+        public IHttpActionResult SendAllRenter()
+        {
+            return Ok(Bl.UserBL.MailToAllUser());
         }
 
     } 

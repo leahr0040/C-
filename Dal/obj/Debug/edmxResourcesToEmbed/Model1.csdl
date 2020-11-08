@@ -497,6 +497,16 @@
       <Parameter Name="new_diagramname" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="getStreets" ReturnType="Collection(ArgamanExpressModel.getStreets_Result)" />
+    <FunctionImport Name="getAllCities" ReturnType="Collection(ArgamanExpressModel.getAllCities_Result)" />
+    <FunctionImport Name="getAllDocuments" ReturnType="Collection(ArgamanExpressModel.getAllDocuments_Result)" />
+    <FunctionImport Name="getAllProperties" ReturnType="Collection(ArgamanExpressModel.getAllProperties_Result)" />
+    <FunctionImport Name="getAllPropertiesOwners" ReturnType="Collection(ArgamanExpressModel.getAllPropertiesOwners_Result)" />
+    <FunctionImport Name="getAllRentals" ReturnType="Collection(ArgamanExpressModel.getAllRentals_Result)" />
+    <FunctionImport Name="getAllTasks" ReturnType="Collection(ArgamanExpressModel.getAllTasks_Result)" />
+    <FunctionImport Name="getAllUsers" ReturnType="Collection(ArgamanExpressModel.getAllUsers_Result)" />
+    <FunctionImport Name="getAllSubProperties" ReturnType="Collection(ArgamanExpressModel.getAllSubProperties_Result)" />
+    <FunctionImport Name="getProperties" ReturnType="Collection(ArgamanExpressModel.getProperties_Result)" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -508,5 +518,115 @@
     <Property Type="Int32" Name="ID" Nullable="false" />
     <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
     <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="getStreets_Result">
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="StreetName" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllCities_Result">
+    <Property Type="Int32" Name="CityId" Nullable="false" />
+    <Property Type="String" Name="CityName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllDocuments_Result">
+    <Property Type="Int32" Name="DocID" Nullable="false" />
+    <Property Type="Int32" Name="DocUser" Nullable="false" />
+    <Property Type="String" Name="DocCoding" Nullable="false" />
+    <Property Type="Int32" Name="type" Nullable="true" />
+    <Property Type="String" Name="DocName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllProperties_Result">
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+    <Property Type="Int32" Name="CityID" Nullable="false" />
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Int32" Name="Floor" Nullable="true" />
+    <Property Type="Boolean" Name="IsDivided" Nullable="false" />
+    <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
+    <Property Type="Boolean" Name="IsPaid" Nullable="false" />
+    <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
+    <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
+    <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllPropertiesOwners_Result">
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+    <Property Type="String" Name="OwnerFirstName" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Email" Nullable="true" />
+    <Property Type="String" Name="OwnerLastName" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllRentals_Result">
+    <Property Type="Int32" Name="RentalID" Nullable="false" />
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+    <Property Type="Int32" Name="UserID" Nullable="true" />
+    <Property Type="Double" Name="RentPayment" Nullable="true" />
+    <Property Type="Int32" Name="PaymentTypeID" Nullable="true" />
+    <Property Type="DateTime" Name="EnteryDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="ContactRenew" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllTasks_Result">
+    <Property Type="Int32" Name="TaskID" Nullable="false" />
+    <Property Type="Int32" Name="TaskTypeId" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="Int32" Name="PropertyID" Nullable="true" />
+    <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+    <Property Type="Int32" Name="ClassificationID" Nullable="true" />
+    <Property Type="Int32" Name="ClientClassificationID" Nullable="true" />
+    <Property Type="DateTime" Name="ReportDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateForHandling" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsHandled" Nullable="true" />
+    <Property Type="DateTime" Name="HandlingDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="HandlingWay" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllUsers_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" />
+    <Property Type="String" Name="SMS" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Email" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="RoleID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="true" />
+    <Property Type="String" Name="Password" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="LastName" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllSubProperties_Result">
+    <Property Type="Int32" Name="SubPropertyID" Nullable="false" />
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="num" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="false" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getProperties_Result">
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+    <Property Type="Int32" Name="CityID" Nullable="false" />
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Int32" Name="Floor" Nullable="true" />
+    <Property Type="Boolean" Name="IsDivided" Nullable="false" />
+    <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
+    <Property Type="Boolean" Name="IsPaid" Nullable="false" />
+    <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
+    <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
+    <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
   </ComplexType>
 </Schema>

@@ -20,6 +20,11 @@ namespace Dto
             CityId = c.CityId;
             CityName = c.CityName;
         }
+        public CityDTO(getAllCities_Result c)
+        {
+            CityId = c.CityId;
+            CityName = c.CityName;
+        }
         public static City ToDAL(CityDTO cDTO)
         {
             return new City

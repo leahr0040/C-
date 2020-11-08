@@ -17,22 +17,22 @@ namespace Bl
     {
         public static bool AddTask(TaskDTO td)
         {
-            
+
             Dal.Task t = TaskDTO.ToDal(td);
-            int id= TaskDAL.AddTask(t);
+            int id = TaskDAL.AddTask(t);
             if (id != 0)
-            { 
-                if(td.Dock!=null)
-            
             {
-                Document doc = new Document();
-                doc.DocCoding = td.Dock;
-                doc.DocUser = id;
-                doc.type = 6;
-                doc.DocName = td.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                
-            }return true;
+                if (td.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = td.Dock;
+                    doc.DocUser = id;
+                    doc.type = 6;
+                    doc.DocName = td.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+
+                }
+                return true;
             }
             return false;
         }
@@ -53,7 +53,7 @@ namespace Bl
             {
                 Dal.Task t = db.Tasks.Find(td.TaskID);
 
-               
+
                 t.TaskTypeId = td.TaskTypeId;
                 t.Description = td.Description;
                 t.PropertyID = td.PropertyID;
@@ -63,10 +63,10 @@ namespace Bl
                 t.ReportDate = td.ReportDate;
                 t.DateForHandling = td.DateForHandling;
                 t.IsHandled = td.IsHandled;
-                    if (td.IsHandled == true)
-                        t.status = false;
-                    else
-                        t.status = true;
+                if (td.IsHandled == true)
+                    t.status = false;
+                else
+                    t.status = true;
 
                 t.HandlingDate = td.HandlingDate;
                 t.HandlingWay = td.HandlingWay;
@@ -127,11 +127,11 @@ namespace Bl
                 {
                     foreach (Dal.Task task in db.Tasks)
                     {
-                        if(task.IsHandled!=true && task.ClassificationID!=null)
+                        if (task.IsHandled != true && task.ClassificationID != null)
                         {
-                            if (task.DateForHandling.Date <= DateTime.Now.Date   || (task.TaskTypeId!=1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days<=30))
+                            if (task.DateForHandling.Date <= DateTime.Now.Date || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 30))
                                 task.ClassificationID = 1;
-                           else if (task.ClassificationID!=1 && ((task.DateForHandling.Date-DateTime.Now.Date).Days<=7 || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60)))
+                            else if (task.ClassificationID != 1 && ((task.DateForHandling.Date - DateTime.Now.Date).Days <= 7 || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60)))
                                 task.ClassificationID = 2;
                         }
                     }
@@ -144,22 +144,43 @@ namespace Bl
                 return false;
             }
         }
-        static System.Timers.Timer timer;
-        public static void schedule_Timer(DateTime scheduledTime)
+
+        public static void setMonthly(DateTime date)//מקבלת תאריך מדויק
         {
-            
-            DateTime nowTime = DateTime.Now;
-            //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
-            if (nowTime > scheduledTime)
+            CancellationTokenSource ctSource;
+            ctSource = new CancellationTokenSource();
+            var dateNow = DateTime.Now;
+            // TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
+            if (date <= dateNow)
+            {//אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
+                date = date.AddMonths(1);
+                DeleteAllNotUsedTasks();//קריאה לפונקציה המבוקשת
+
+            }//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
+             // ts = date - dateNow;
+             //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
+            System.Threading.Tasks.Task.Delay(1000 * 60 * 60 * 24 * 5).ContinueWith((x) =>
             {
-                scheduledTime = scheduledTime.AddMonths(1);
-            }
-            double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
-            timer = new System.Timers.Timer(tickTime);
-            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedTasks);
-            timer.Start();
+
+                setMonthly(date);//קריאה חוזרת לפונקציה...
+            }, ctSource.Token);
         }
-        public static void DeleteAllNotUsedTasks(object sender, ElapsedEventArgs e)
+        //        static System.Timers.Timer timer;
+        //        public static void schedule_Timer(DateTime scheduledTime)
+        //        {
+
+        //            DateTime nowTime = DateTime.Now;
+        //            //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
+        //            if (nowTime > scheduledTime)
+        //            {
+        //                scheduledTime = scheduledTime.AddMonths(1);
+        //            }
+        ////double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
+        //            timer = new System.Timers.Timer(1000*60*60*24*5);
+        //            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedTasks);
+        //            timer.Start();
+        //        }
+        public static void DeleteAllNotUsedTasks()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -170,14 +191,11 @@ namespace Bl
                 }
                 db.SaveChanges();
             }
-            timer.Stop();
-            schedule_Timer(DateTime.Now.AddMonths(1));
-
         }
         public static void Addtask2()
         {
             ; /*= new TaskDTO();*/
-            List<RentalDTO> pro =Bl.RentalBL.GetAllRentals();
+            List<RentalDTO> pro = Bl.RentalBL.GetAllRentals();
             int x = pro.Count;
             int i = 0;
             while (i != x)
@@ -190,7 +208,7 @@ namespace Bl
 
             }
         }
-        public static bool AddRenewTask(int propertyID,int? subpropertyID)
+        public static bool AddRenewTask(int propertyID, int? subpropertyID)
         {
             TaskDTO t = new TaskDTO();
             t.TaskTypeId = 2;
@@ -201,8 +219,8 @@ namespace Bl
             }
             else
                 t.Description = propertyID + "סיום חוזה לדירה:";
-            
-                t.PropertyID = propertyID;
+
+            t.PropertyID = propertyID;
             t.SubPropertyID = subpropertyID;
             t.ClassificationID = 3;
             t.ClientClassificationID = null;////////
@@ -211,16 +229,28 @@ namespace Bl
             t.IsHandled = false;
             t.HandlingDate = null;
             t.status = true;
-           return AddTask(t);
+            return AddTask(t);
 
         }
-       
+
         public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<TaskDTO> tdto = new List<TaskDTO>();
                 foreach (Dal.Task t in tasks)
+                    tdto.Add(new TaskDTO(t));
+                return tdto;
+            }
+            return null;
+        }
+
+        public static List<TaskDTO> ConvertListToDTO(List<getAllTasks_Result> tasks)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<TaskDTO> tdto = new List<TaskDTO>();
+                foreach (getAllTasks_Result t in tasks)
                     tdto.Add(new TaskDTO(t));
                 return tdto;
             }
@@ -235,7 +265,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks =(from t in db.Tasks where t.status==true select t).OrderBy(t=>t.DateForHandling).ToList();
+                List<getAllTasks_Result> tasks = (from t in db.getAllTasks() where t.status == true select t).OrderBy(t => t.DateForHandling).ToList();
                 return ConvertListToDTO(tasks);
             }
         }
@@ -251,7 +281,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where t.IsHandled==false && t.DateForHandling > DateTime.Today select t).ToList();
+                List<Dal.Task> tasks = (from t in db.Tasks where t.status == true && t.IsHandled == false && t.DateForHandling > DateTime.Today select t).ToList();
                 return ConvertListToDTO(tasks);
             }
         }
@@ -263,17 +293,17 @@ namespace Bl
             }
             return null;
         }
-       
+
         public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Classification> classifications= db.Classifications.ToList();
+                List<Classification> classifications = db.Classifications.ToList();
                 List<TaskClassificationDTO> taskClassifications = new List<TaskClassificationDTO>();
                 foreach (Classification classif in classifications)
                     taskClassifications.Add(new TaskClassificationDTO(classif));
                 return taskClassifications;
-                
+
             }
             return null;
         }
@@ -282,7 +312,7 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<TaskType> taskTypes = db.TaskTypes.ToList();
-                List<TaskTypeDTO> typesDTO= new List<TaskTypeDTO>();
+                List<TaskTypeDTO> typesDTO = new List<TaskTypeDTO>();
                 foreach (TaskType type in taskTypes)
                     typesDTO.Add(new TaskTypeDTO(type));
                 return typesDTO;
@@ -302,7 +332,7 @@ namespace Bl
             }
             return false;
         }
-                public static TaskDTO ReturnTaskbyid(int id)
+        public static TaskDTO ReturnTaskbyid(int id)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {

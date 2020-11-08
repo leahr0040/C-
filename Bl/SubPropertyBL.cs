@@ -80,6 +80,8 @@ namespace Bl
             }
             return null;
         }
+
+
         public static List<SubPropertyDTO> Search(SubPropertyDTO sd)
         {
             List<SubProperty> subProperties = SubPropertyDAL.Search(sd.PropertyID,sd.num,sd.Size,sd.RoomsNum);

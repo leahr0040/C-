@@ -26,6 +26,14 @@ namespace Dto
            this.type = d.type;
             this.DocName = d.DocName;
         }
+        public DocumentDTO(getAllDocuments_Result d)
+        {
+            this.DocID = d.DocID;
+            this.DocUser = d.DocUser;
+            this.DocCoding = d.DocCoding;
+            this.type = d.type;
+            this.DocName = d.DocName;
+        }
         public static Document ToDAL(DocumentDTO d)
         {
             return new Document

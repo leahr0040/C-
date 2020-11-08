@@ -116,16 +116,24 @@ namespace Bl
             return null;
                 
         }
-        public static void MailToAllUser()
+        public static bool MailToAllUser()
         {
-            List<UserDTO> u = GetAllRenters();
-            int x = u.Count;
-            int i = 0;
-            while (i<x)
+            try
             {
-                Mailsend.Mailnewuser(u[i]);
-                i++;
+                List<UserDTO> u = GetAllRenters();
+                int x = u.Count;
+                int i = 0;
+                
+                while (i < x)
+                {
+                    if(u[i].Email!=string.Empty && u[i].Email!=null)
+                    Mailsend.Mailnewuser(u[i]);
+                    i++;
+                }
+                return true;
+
             }
+            catch { return false; }
         }
         public static bool Forgotpassword(string username,string mail)
         {

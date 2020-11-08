@@ -16,24 +16,22 @@ namespace Bl
         {
             Rental r = RentalDTO.ToDal(rd);
             int id = RentalDAL.AddRental(r);
-            if (id != 0 )
-            { 
-                if(rd.Dock!=null)
-
-            if (id != 0 && rd.Dock!=null)
+            if (id != 0)
             {
-                Document doc = new Document();
-                doc.DocCoding = rd.Dock;
-                doc.DocUser = id;
-                doc.type = 3;
-                doc.DocName = rd.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                if (rd.ContactRenew == true && (rd.EndDate).Value < DateTime.Today.AddMonths(3))
+                if (rd.Dock != null)
                 {
-                    Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);                
+                    Document doc = new Document();
+                    doc.DocCoding = rd.Dock;
+                    doc.DocUser = id;
+                    doc.type = 3;
+                    doc.DocName = rd.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+
+
                 }
-               
-            } return true;
+                if (rd.ContactRenew == true && (rd.EndDate).Value < DateTime.Today.AddMonths(3))
+                    Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
+                return true;
             }
             return false;
 
@@ -54,7 +52,6 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Rental r = db.Rentals.Find(rd.RentalID);
-               
                 r.PropertyID = rd.PropertyID;
                 r.SubPropertyID = rd.SubPropertyID;
                 r.UserID = rd.UserID;
@@ -63,7 +60,7 @@ namespace Bl
                 r.EnteryDate = rd.EnteryDate;
                 r.EndDate = rd.EndDate;
                 r.ContactRenew = rd.ContactRenew;
-                if (rd.Dock !=null)
+                if (rd.Dock != null)
                 {
                     Document doc = new Document();
                     doc.DocCoding = rd.Dock;
@@ -73,7 +70,7 @@ namespace Bl
                     DocumentBL.AddUserDocuments(new DocumentDTO(doc));
                 }
                 db.SaveChanges();
-                    return true;
+                return true;
             }
             return false;
         }
@@ -88,17 +85,29 @@ namespace Bl
             }
             return null;
         }
-        public static List<RentalDTO> Search(Nullable<int> propertyID,string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
+        public static List<RentalDTO> ConvertListToDTO(List<getAllRentals_Result> rentals)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<RentalDTO> redto = new List<RentalDTO>();
+                foreach (getAllRentals_Result r in rentals)
+                    redto.Add(new RentalDTO(r));
+                return redto;
+            }
+            return null;
+        }
+        public static List<RentalDTO> Search(Nullable<int> propertyID, string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
 
-            List<Rental> rentals = RentalDAL.Search(propertyID,owner, user, enteryDate, endDate);
+            List<Rental> rentals = RentalDAL.Search(propertyID, owner, user, enteryDate, endDate);
             return ConvertListToDTO(rentals);
         }
         public static List<RentalDTO> GetAllRentals()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Rental> pro = (from r in db.Rentals where r.status == true select r).OrderBy(r =>r.EndDate) .ToList();
+                List<getAllRentals_Result> pro = (from r in db.getAllRentals() where r.status == true select r).OrderBy(r => r.EndDate).ToList();
+
                 return ConvertListToDTO(pro);
             }
         }
@@ -116,8 +125,26 @@ namespace Bl
             }
             return null;
         }
-        static System.Timers.Timer timer;
-        public static void DeleteAllNotUsedRentals(object source, ElapsedEventArgs e)
+        static CancellationTokenSource ctSource;
+        public static void setYearly(DateTime date)//מקבלת תאריך מדויק
+        {
+
+            ctSource = new CancellationTokenSource();
+            var dateNow = DateTime.Now;
+            // TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
+            if (date <= dateNow)
+            {//אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
+                date = date.AddYears(1);//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
+                DeleteAllNotUsedRentals();//קריאה לפונקציה המבוקשת
+            }                                                   //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
+            System.Threading.Tasks.Task.Delay(1000 * 60 * 60 * 24 * 20).ContinueWith((x) =>
+            {
+
+                setYearly(date);//קריאה חוזרת לפונקציה...
+            }, ctSource.Token);
+        }
+        //    static System.Timers.Timer timer;
+        public static void DeleteAllNotUsedRentals()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
@@ -127,24 +154,23 @@ namespace Bl
                         db.Rentals.Remove(rental);
                 }
                 db.SaveChanges();
-                timer.Stop();
-                schedule_Timer(DateTime.Now.AddYears(1));
-            }
-        }
-        public static void schedule_Timer(DateTime scheduledTime)
-        {
 
-            DateTime nowTime = DateTime.Now;
-            //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
-            if (nowTime > scheduledTime)
-            {
-                scheduledTime = scheduledTime.AddMonths(1);
             }
-            double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
-            timer = new System.Timers.Timer(tickTime);
-            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedRentals);
-            timer.Start();
         }
+        //    public static void schedule_Timer(DateTime scheduledTime)
+        //    {
+
+        //        DateTime nowTime = DateTime.Now;
+        //        //DateTime scheduledTime = DateTime.Now.AddSeconds(15); //new DateTime((nowTime.Year, nowTime.Month, nowTime.Day, 8, 42, 0, 0); //Specify your scheduled time HH,MM,SS [8am and 42 minutes]
+        //        if (nowTime > scheduledTime)
+        //        {
+        //            scheduledTime = scheduledTime.AddMonths(1);
+        //        }
+        //        double tickTime = (double)(scheduledTime - DateTime.Now).TotalMilliseconds;
+        //        timer = new System.Timers.Timer(tickTime);
+        //        timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedRentals);
+        //        timer.Start();
+        //    }
     }
 
 }

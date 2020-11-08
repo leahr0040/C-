@@ -31,6 +31,16 @@ namespace Dto
             status = true;
            
         }
+        public PropertyOwnerDTO(getAllPropertiesOwners_Result po)
+        {
+            OwnerID = po.OwnerID;
+            OwnerFirstName = po.OwnerFirstName;
+            OwnerLastName = po.OwnerLastName;
+            Phone = po.Phone;
+            Email = po.Email;
+            status = true;
+
+        }
         public static PropertiesOwner ToDal(PropertyOwnerDTO po)
         {
             return new PropertiesOwner

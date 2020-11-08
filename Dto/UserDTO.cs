@@ -38,6 +38,7 @@ namespace Dto
             this.Password = Password;
             this.status = status;
         }
+
         public UserDTO(User u)
         {
             this.UserID = u.UserID;
@@ -65,6 +66,19 @@ namespace Dto
                 UserName = u.UserName,
                 Password = u.Password
             };
+        }
+        public UserDTO(getAllUsers_Result u)
+        {
+            this.UserID = u.UserID;
+            this.FirstName = u.FirstName;
+            this.LastName = u.LastName;
+            this.SMS = u.SMS;
+            this.Email = u.Email;
+            this.Phone = u.Phone;
+            this.RoleID = u.RoleID;
+            this.UserName = u.UserName;
+            this.Password = u.Password;
+            this.status = true;
         }
 
     }
@@ -114,5 +128,7 @@ namespace Dto
         public int type { set; get; }
 
         public Dtointint() { }
+       
     }
+   
 }

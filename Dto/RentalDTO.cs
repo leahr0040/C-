@@ -39,6 +39,20 @@ namespace Dto
             ContactRenew = r.ContactRenew;
             status = true;
         }
+        public RentalDTO(getAllRentals_Result r)
+        {
+            RentalID = r.RentalID;
+            PropertyID = r.PropertyID;
+            SubPropertyID = r.SubPropertyID;
+            UserID = r.UserID;
+            RentPayment = r.RentPayment;
+            PaymentTypeID = r.PaymentTypeID;
+            EnteryDate = r.EnteryDate;
+            EndDate = r.EndDate;
+            ContactRenew = r.ContactRenew;
+            status = true;
+        }
+
         public static Rental ToDal(RentalDTO r)
         {
             return new Rental

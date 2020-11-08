@@ -45,6 +45,22 @@ namespace Dto
             this.HandlingWay = t.HandlingWay;
             status = true;
         }
+        public TaskDTO(getAllTasks_Result t)
+        {
+            this.TaskID = t.TaskID;
+            this.TaskTypeId = t.TaskTypeId;
+            this.Description = t.Description;
+            this.PropertyID = t.PropertyID;
+            this.SubPropertyID = t.SubPropertyID;
+            this.ClassificationID = t.ClassificationID;
+            this.ClientClassificationID = t.ClientClassificationID;
+            this.ReportDate = t.ReportDate;
+            this.DateForHandling = t.DateForHandling;
+            this.IsHandled = t.IsHandled;
+            this.HandlingDate = t.HandlingDate;
+            this.HandlingWay = t.HandlingWay;
+            status = true;
+        }
         public static Dal.Task ToDal(TaskDTO t)
         {
             return new Dal.Task

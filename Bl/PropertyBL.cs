@@ -97,6 +97,17 @@ namespace Bl
             }
             return null;
         }
+        public static List<PropertyDTO> ConvertListToDTO(List<getAllProperties_Result> pro)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                List<PropertyDTO> prodto = new List<PropertyDTO>();
+                foreach (getAllProperties_Result p in pro)
+                    prodto.Add(new PropertyDTO(p));
+                return prodto;
+            }
+            return null;
+        }
         public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
 
@@ -107,7 +118,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Property> pro =(from p in  db.Properties where p.status==true select p).OrderBy(p=>p.City.CityName).OrderBy(p =>p.Street.StreetName).ToList();
+                List<getAllProperties_Result> pro =(from p in  db.getAllProperties() where p.status==true select p).ToList();//.OrderBy(p=>p.City.CityName).OrderBy(p =>p.Street.StreetName)
                 return ConvertListToDTO(pro);
             }
         }
@@ -165,9 +176,9 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<City> cities = db.Cities.OrderBy(i=>i.CityName).ToList();
+                List<getAllCities_Result> cities = db.getAllCities().OrderBy(i=>i.CityName).ToList();
                 List<CityDTO> cityDTOs = new List<CityDTO>();
-                foreach (City city in cities)
+                foreach (getAllCities_Result city in cities)
                 {
                     cityDTOs.Add(new CityDTO(city));
                 }
@@ -199,11 +210,17 @@ namespace Bl
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Database.CommandTimeout=300;
-                List<Street> streets = db.Streets.OrderBy(i=>i.StreetName).ToList();
+                List< getStreets_Result> streets = db.getStreets().ToList();
+                
                 List<StreetDTO> streetDTOs = new List<StreetDTO>();
-                foreach (Street street in streets)
+                foreach (getStreets_Result street in streets)
                 {
-                    streetDTOs.Add(new StreetDTO(street));
+                   
+                    Street s = new Street();
+                    s.CityId = street.CityId;
+                    s.StreetID = street.StreetID;
+                    s.StreetName = street.StreetName;
+                    streetDTOs.Add(new StreetDTO(s));
                 }
               
                 return streetDTOs;
