@@ -24,7 +24,7 @@ namespace Dto
 
         public string Dock { get; set; }
         public string DocName { get; set; }
-        public bool status { get; set; }
+        public bool? status { get; set; }
         public TaskDTO()
         {
 
@@ -43,7 +43,7 @@ namespace Dto
             this.IsHandled = t.IsHandled;
             this.HandlingDate = t.HandlingDate;
             this.HandlingWay = t.HandlingWay;
-            status = true;
+            status = t.status;
         }
         public TaskDTO(getAllTasks_Result t)
         {
@@ -59,7 +59,7 @@ namespace Dto
             this.IsHandled = t.IsHandled;
             this.HandlingDate = t.HandlingDate;
             this.HandlingWay = t.HandlingWay;
-            status = true;
+            status = t.status;
         }
         public static Dal.Task ToDal(TaskDTO t)
         {

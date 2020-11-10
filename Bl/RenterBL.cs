@@ -19,14 +19,14 @@ namespace Bl
             int id= UserDAL.AddUser(u);
             if (id != 0)
             {
-                if(ud.Dock!=null)
-                { 
-                Document doc = new Document();
-                doc.DocCoding = ud.Dock;
-                doc.DocUser = id;
-                doc.type = 4;
-                doc.DocName = ud.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                if (ud.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = ud.Dock;
+                    doc.DocUser = id;
+                    doc.type = 4;
+                    doc.DocName = ud.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
                 }
                 return true;
             }
@@ -81,23 +81,23 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID==3 && r.status==true select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
+                List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID==3  select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return ConvertListToDTO(renters);
             }
         }
-        public static UserDTO GetRenterByID(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                User renter = db.Users.Find(id );
-                return new UserDTO(renter);
-            }
-        }
-        public static List<RentalDTO> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
-        {
-            List<Rental> rentals = RenterDAL.getRentalsbyRenterID(id);
-            return Bl.RentalBL.ConvertListToDTO(rentals);
-        }
+        //public static UserDTO GetRenterByID(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        User renter = db.Users.Find(id );
+        //        return new UserDTO(renter);
+        //    }
+        //}
+        //public static List<RentalDTO> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
+        //{
+        //    List<Rental> rentals = RenterDAL.getRentalsbyRenterID(id);
+        //    return Bl.RentalBL.ConvertListToDTO(rentals);
+        //}
 
         public static List<PropertyDTO> getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
         {

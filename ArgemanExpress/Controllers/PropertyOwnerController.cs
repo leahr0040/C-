@@ -48,24 +48,24 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyOwnerBL.getAllOwners());
         }
-        [HttpPost]
-        [Route("GetOwnerByID")]
-        public IHttpActionResult GetOwnerByID([FromBody] IdDto id)
-        {
-            return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id.id));
-        }
-        [HttpPost]
-        [Route("GetPropertiesbyOwnerID")]
-        public IHttpActionResult GetPropertiesbyOwnerID([FromBody] IdDto id)//דירות ששוכר לפי איידי
-        {
-            return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id.id));
-        }
-        [HttpPost]
-        [Route("getRentalsbyOwnerID")]
-        public IHttpActionResult getRentalsbyOwnerID([FromBody] IdDto id)//פרטי השכרה לפי איידי
-        {
-            return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id.id));
-        }
+        //[HttpPost]
+        //[Route("GetOwnerByID")]
+        //public IHttpActionResult GetOwnerByID([FromBody] IdDto id)
+        //{
+        //    return Ok(Bl.PropertyOwnerBL.GetOwnerByID(id.id));
+        //}
+        //[HttpPost]
+        //[Route("GetPropertiesbyOwnerID")]
+        //public IHttpActionResult GetPropertiesbyOwnerID([FromBody] IdDto id)//דירות ששוכר לפי איידי
+        //{
+        //    return Ok(Bl.PropertyOwnerBL.getPropertiesbyOwnerID(id.id));
+        //}
+        //[HttpPost]
+        //[Route("getRentalsbyOwnerID")]
+        //public IHttpActionResult getRentalsbyOwnerID([FromBody] IdDto id)//פרטי השכרה לפי איידי
+        //{
+        //    return Ok(Bl.PropertyOwnerBL.getRentalsbyOwnerID(id.id));
+        //}
 
     }
 }

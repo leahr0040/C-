@@ -76,9 +76,15 @@ namespace Bl
             {
                 bool b = false;
                 User u = db.Users.Find(ud.UserID);
-                if ((u.SMS != ud.SMS) || (u.Email != ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
+                if ((u.Email!= ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
                     b = true;
-
+                if ((ud.UserName == null) || (ud.Password == null) || (ud.UserName == ""))
+                {
+                    Random rand = new Random();//הגרלה לא תקינה
+                    int i = rand.Next(100000, 999999);
+                    ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
+                    ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
+                }
                 u.FirstName = ud.FirstName;
                 u.LastName = ud.LastName;
                 u.SMS = ud.SMS;
@@ -87,7 +93,7 @@ namespace Bl
                 u.RoleID = ud.RoleID;
                 u.UserName = ud.UserName;
                 u.Password = ud.Password;
-                if (b == true && (ud.SMS == null || ud.SMS == " "))//עוד בלי אופציית SMS
+                if (b == true)//עוד בלי אופציית SMS
                     Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
@@ -103,11 +109,11 @@ namespace Bl
 
             }
         }
-        public static List<PropertyDTO> Return_Details_use(string userNam,string Passwor)
-        {
-            int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
-            return RenterBL.getPropertiesbyRenterID(u);
-        }
+        //public static List<PropertyDTO> Return_Details_use(string userNam,string Passwor)
+        //{
+        //    int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
+        //    return RenterBL.getPropertiesbyRenterID(u);
+        //}
         public static UserDTO Haveuserforpassword(string userNam, string Passwor)
         {
             User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();

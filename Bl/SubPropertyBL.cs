@@ -16,19 +16,19 @@ namespace Bl
             SubProperty sp = SubPropertyDTO.ToDal(spd);
             int id= SubPropertyDAL.AddSubProperty(sp);
             if (id != 0)
-            { 
-                if(spd.Dock!=null)
-
-            if (id != 0 && spd.Dock!=null)
             {
-                Document doc = new Document();
-                doc.DocCoding = spd.Dock;
-                doc.DocUser = id;
-                doc.type = 5;
-                doc.DocName = spd.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                
-            }return true;
+                if (spd.Dock != null)
+
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = spd.Dock;
+                    doc.DocUser = id;
+                    doc.type = 5;
+                    doc.DocName = spd.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+
+                }
+                return true;
             }
             return false;
         }
@@ -91,7 +91,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<SubProperty> subProperties =(from sp in db.SubProperties where sp.status==true select sp).OrderBy(sp =>sp.IsRented).ToList();
+                List<SubProperty> subProperties =(from sp in db.SubProperties  select sp).OrderBy(sp =>sp.IsRented).ToList();
                 return ConvertListToDTO(subProperties);
             }
         }
@@ -99,18 +99,18 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-               SubProperty subProperty = db.SubProperties.Find(id);
+                SubProperty subProperty = db.SubProperties.Find(id);
                 return new SubPropertyDTO(subProperty);
             }
         }
-        public static List<SubPropertyDTO> GetSubPropertiesOfParentProperty(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<SubProperty> subProperties = (from sp in db.SubProperties where sp.PropertyID == id select sp).ToList();
-                return ConvertListToDTO(subProperties);
-            }
-            return null;
-        }
+        //public static List<SubPropertyDTO> GetSubPropertiesOfParentProperty(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        List<SubProperty> subProperties = (from sp in db.SubProperties where sp.PropertyID == id select sp).ToList();
+        //        return ConvertListToDTO(subProperties);
+        //    }
+        //    return null;
+        //}
     }
 }

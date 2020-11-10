@@ -16,18 +16,17 @@ namespace Bl
             PropertiesOwner poDal = PropertyOwnerDTO.ToDal(pod);
             int id=PropertyOwnerDAL.AddPropertyOwner(poDal);
             if (id != 0)
-            { 
-                if(pod.Dock!=null)
-            if (id != 0 && pod.Dock!=null)
             {
-                Document doc = new Document();
-                doc.DocCoding = pod.Dock;
-                doc.DocUser = id;
-                doc.type = 2;
-                doc.DocName = pod.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                
-            }
+                if (pod.Dock != null)
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = pod.Dock;
+                    doc.DocUser = id;
+                    doc.type = 2;
+                    doc.DocName = pod.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+
+                }
                 return true;
             }
             return false;
@@ -101,30 +100,30 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<getAllPropertiesOwners_Result> owners =(from o in db.getAllPropertiesOwners() where o.status==true select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
+                List<getAllPropertiesOwners_Result> owners =(from o in db.getAllPropertiesOwners() select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
                return ConvertListToDTO(owners);
             }
         }
-        public static PropertyOwnerDTO GetOwnerByID(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                PropertiesOwner owner = db.PropertiesOwners.FirstOrDefault(x=>x.OwnerID==id);
-                return new PropertyOwnerDTO();
-            }
-        }
+        //public static PropertyOwnerDTO GetOwnerByID(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        PropertiesOwner owner = db.PropertiesOwners.FirstOrDefault(x=>x.OwnerID==id);
+        //        return new PropertyOwnerDTO();
+        //    }
+        //}
 
-        public static List<PropertyDTO> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
-        {
-            List<Property> properties = PropertyOwnerDAL.getPropertiesbyOwnerID(id);
-            return Bl.PropertyBL.ConvertListToDTO(properties);
+        //public static List<PropertyDTO> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
+        //{
+        //    List<Property> properties = PropertyOwnerDAL.getPropertiesbyOwnerID(id);
+        //    return Bl.PropertyBL.ConvertListToDTO(properties);
 
-        }
-        public static List<RentalDTO> getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
-        {
-            List<Rental> renters = PropertyOwnerDAL.getRentalsbyOwnerID(id);
-            return Bl.RentalBL.ConvertListToDTO(renters);
-        }
+        //}
+        //public static List<RentalDTO> getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
+        //{
+        //    List<Rental> renters = PropertyOwnerDAL.getRentalsbyOwnerID(id);
+        //    return Bl.RentalBL.ConvertListToDTO(renters);
+        //}
 
 
 

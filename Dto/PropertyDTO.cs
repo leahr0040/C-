@@ -54,7 +54,7 @@ namespace Dto
             this.IsRented = p.IsRented;
             this.RoomsNum = p.RoomsNum;
             this.ApartmentNum = p.ApartmentNum;
-            status = true;
+            status = p.status;
         }
 
         public PropertyDTO(getAllProperties_Result p)
@@ -75,7 +75,7 @@ namespace Dto
             this.IsRented = p.IsRented;
             this.RoomsNum = p.RoomsNum;
             this.ApartmentNum = p.ApartmentNum;
-            status = true;
+            status = p.status;
         }
         public static Property Todal(PropertyDTO dd)
         {

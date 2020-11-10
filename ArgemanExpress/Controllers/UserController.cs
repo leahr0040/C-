@@ -56,12 +56,12 @@ namespace ArgemanExpress.Controllers
             return Ok(Bl.UserBL.Return_Details_user(ds.username, ds.passemail));
 
         }
-        [HttpPost]
-        [Route("returnuserproperty")]
-        public IHttpActionResult returnuserproperty([FromBody]Dtostrstr dp)
-        { 
-            return Ok(Bl.UserBL.Return_Details_use(dp.username, dp.passemail));
-        }
+        //[HttpPost]
+        //[Route("returnuserproperty")]
+        //public IHttpActionResult returnuserproperty([FromBody]Dtostrstr dp)
+        //{ 
+        //    return Ok(Bl.UserBL.Return_Details_use(dp.username, dp.passemail));
+        //}
         [HttpPost]
         [Route("GetUserDocuments")]
         public IHttpActionResult GetUserDocuments([FromBody]Dtointint di)

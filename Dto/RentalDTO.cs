@@ -37,7 +37,7 @@ namespace Dto
             EnteryDate = r.EnteryDate;
             EndDate = r.EndDate;
             ContactRenew = r.ContactRenew;
-            status = true;
+            status = r.status;
         }
         public RentalDTO(getAllRentals_Result r)
         {
@@ -50,7 +50,7 @@ namespace Dto
             EnteryDate = r.EnteryDate;
             EndDate = r.EndDate;
             ContactRenew = r.ContactRenew;
-            status = true;
+            status = r.status;
         }
 
         public static Rental ToDal(RentalDTO r)

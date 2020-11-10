@@ -54,22 +54,22 @@ namespace ArgemanExpress.Controllers
         }
         [HttpPost]
         [Route("GetPropertyByID")]
-        public IHttpActionResult GetPropertyByID([FromBody]IdDto id)
+        public IHttpActionResult GetPropertyByID([FromBody] IdDto id)
         {
             return Ok(Bl.PropertyBL.GetPropertyByID(id.id));
         }
-        [HttpPost]
-        [Route("GetRentalByPropertyID")]
-        public IHttpActionResult GetRentalByPropertyID([FromBody]int id)
-        {
-            return Ok(Bl.PropertyBL.GetRentalByPropertyID(id));
-        }
-        [HttpPost]
-        [Route("GetRentalBySubPropertyID")]
-        public IHttpActionResult GetRentalBySubPropertyID([FromBody] IdDto id)
-        {
-            return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id.id));
-        }
+        //[HttpPost]
+        //[Route("GetRentalByPropertyID")]
+        //public IHttpActionResult GetRentalByPropertyID([FromBody]int id)
+        //{
+        //    return Ok(Bl.PropertyBL.GetRentalByPropertyID(id));
+        //}
+        //[HttpPost]
+        //[Route("GetRentalBySubPropertyID")]
+        //public IHttpActionResult GetRentalBySubPropertyID([FromBody] IdDto id)
+        //{
+        //    return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id.id));
+        //}
         [HttpPost]
         [Route("AddCity")]// לבדוק איך קוראים בר
         public IHttpActionResult AddCity([FromBody]NameDto name)
@@ -105,12 +105,12 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.PropertyBL.GetAllStreets());
         }
-        [HttpPost]
-        [Route("GetStreetByID")]// לבדוק איך קוראים בר
-        public IHttpActionResult GetStreetByID([FromBody]IdDto streetId)
-        {
-            return Ok(Bl.PropertyBL.GetStreetByID(streetId.id));
-        }
+        //[HttpPost]
+        //[Route("GetStreetByID")]// לבדוק איך קוראים בר
+        //public IHttpActionResult GetStreetByID([FromBody]IdDto streetId)
+        //{
+        //    return Ok(Bl.PropertyBL.GetStreetByID(streetId.id));
+        //}
         [Route("GetAllExclusivityPoeple")]// לבדוק איך קוראים בר
         public IHttpActionResult GetAllExclusivityPoeple()
         {

@@ -52,17 +52,17 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.SubPropertyBL.GetAllSubProperties());
         }
-        [HttpPost]
-        [Route("GetSubPropertyByID")]
-        public IHttpActionResult GetSubPropertyByID([FromBody]IdDto id)
-        {
-            return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id.id));
-        }
-        [HttpPost]
-        [Route("GetSubPropertiesOfParentProperty")]
-        public IHttpActionResult GetSubPropertiesOfParentProperty([FromBody]IdDto id)
-        {
-            return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id.id));
-        }
+        //[HttpPost]
+        //[Route("GetSubPropertyByID")]
+        //public IHttpActionResult GetSubPropertyByID([FromBody]IdDto id)
+        //{
+        //    return Ok(Bl.SubPropertyBL.GetSubPropertyByID(id.id));
+        //}
+        //[HttpPost]
+        //[Route("GetSubPropertiesOfParentProperty")]
+        //public IHttpActionResult GetSubPropertiesOfParentProperty([FromBody]IdDto id)
+        //{
+        //    return Ok(Bl.SubPropertyBL.GetSubPropertiesOfParentProperty(id.id));
+        //}
     }
 }

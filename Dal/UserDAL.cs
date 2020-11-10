@@ -16,14 +16,12 @@ namespace Dal
                 db.Users.Add(u);
                 db.SaveChanges();
                 return db.Users.Max(i => i.UserID);
-                // return (from us in db.Users where us.FirstName==u.FirstName && us.LastName==us.LastName && us.Email==u.Email && us.SMS==u.SMS && us.UserName==us.UserName select us.UserID).FirstOrDefault();
             }
             return 0;
         }
-        //public static bool Searchforuser(string UserName, string Password)
-        //{ }
-             
-        }
-        
+
+
+
     }
+}
 

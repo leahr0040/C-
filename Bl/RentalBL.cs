@@ -26,8 +26,6 @@ namespace Bl
                     doc.type = 3;
                     doc.DocName = rd.DocName;
                     DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-
-
                 }
                 if (rd.ContactRenew == true && (rd.EndDate).Value < DateTime.Today.AddMonths(3))
                     Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
@@ -40,7 +38,9 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                
                 Rental p = db.Rentals.Find(id);
+                p.Property.IsRented = false;
                 p.status = false;
                 db.SaveChanges();
                 return true;
@@ -59,7 +59,19 @@ namespace Bl
                 r.PaymentTypeID = rd.PaymentTypeID;
                 r.EnteryDate = rd.EnteryDate;
                 r.EndDate = rd.EndDate;
+                if(r.ContactRenew != rd.ContactRenew)
+                {
+                    if (rd.ContactRenew == true && rd.EndDate.Value < DateTime.Today.AddMonths(3))
+                        Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
+                    else
+                    {
+                       getAllTasks_Result task= db.getAllTasks().Where(t => t.PropertyID == rd.PropertyID && t.TaskTypeId == 2 && t.status == true && t.SubPropertyID == rd.SubPropertyID).FirstOrDefault();
+                        if (task != null)
+                            Bl.TaskBL.DeleteTask(task.TaskID);
+                    }
+                }
                 r.ContactRenew = rd.ContactRenew;
+                
                 if (rd.Dock != null)
                 {
                     Document doc = new Document();
@@ -106,7 +118,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<getAllRentals_Result> pro = (from r in db.getAllRentals() where r.status == true select r).OrderBy(r => r.EndDate).ToList();
+                List<getAllRentals_Result> pro = (from r in db.getAllRentals()select r).OrderBy(r => r.EndDate).ToList();
 
                 return ConvertListToDTO(pro);
             }

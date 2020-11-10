@@ -55,19 +55,19 @@ namespace ArgemanExpress.Controllers
              return Ok(Bl.RenterBL.GetAllRenters());
             
         }
-        [HttpPost]
-        [Route("GetRenterByID")]
-        public IHttpActionResult GetRenterByID([FromBody]IdDto id)
-        {
-            return Ok(Bl.RenterBL.GetRenterByID(id.id));
-        }
-        [HttpPost]
-        [Route("getRentalsbyRenterID")]
-        public IHttpActionResult getRentalsbyRenterID([FromBody]IdDto id)//פרטי השכרה לפי איידי
-        {
+        //[HttpPost]
+        //[Route("GetRenterByID")]
+        //public IHttpActionResult GetRenterByID([FromBody]IdDto id)
+        //{
+        //    return Ok(Bl.RenterBL.GetRenterByID(id.id));
+        //}
+        //[HttpPost]
+        //[Route("getRentalsbyRenterID")]
+        //public IHttpActionResult getRentalsbyRenterID([FromBody]IdDto id)//פרטי השכרה לפי איידי
+        //{
 
-            return Ok(Bl.RenterBL.getRentalsbyRenterID(id.id));
-        }
+        //    return Ok(Bl.RenterBL.getRentalsbyRenterID(id.id));
+        //}
         [HttpPost]
         [Route("getPropertiesbyRenterID")]
         public IHttpActionResult getPropertiesbyRenterID([FromBody]IdDto id)//דירות ששוכר לפי איידי

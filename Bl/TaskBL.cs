@@ -116,6 +116,7 @@ namespace Bl
             System.Threading.Tasks.Task.Delay(ts).ContinueWith((x) =>
             {
                 DailySet();//קריאה לפונקציה המבוקשת
+                Addtask2();
                 RunPrepareDaily(date);//קריאה חוזרת לפונקציה...
             }, m_ctSource.Token);
         }
@@ -123,6 +124,7 @@ namespace Bl
         {
             try
             {
+                
                 using (ArgamanExpressEntities db = new ArgamanExpressEntities())
                 {
                     foreach (Dal.Task task in db.Tasks)
@@ -138,6 +140,7 @@ namespace Bl
                     db.SaveChanges();
                     return true;
                 }
+               
             }
             catch
             {
@@ -203,9 +206,9 @@ namespace Bl
                 if ((pro[i].EndDate).Value == DateTime.Today.AddMonths(3))
                 {
                     AddRenewTask(pro[i].PropertyID, pro[i].SubPropertyID);
-                    i++;
+                    
                 }
-
+                i++;
             }
         }
         public static bool AddRenewTask(int propertyID, int? subpropertyID)
@@ -265,7 +268,7 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<getAllTasks_Result> tasks = (from t in db.getAllTasks() where t.status == true select t).OrderBy(t => t.DateForHandling).ToList();
+                List<getAllTasks_Result> tasks = (from t in db.getAllTasks() select t).OrderBy(t => t.ClassificationID).OrderBy(t => t.DateForHandling).ToList();
                 return ConvertListToDTO(tasks);
             }
         }
@@ -281,18 +284,26 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where t.status == true && t.IsHandled == false && t.DateForHandling > DateTime.Today select t).ToList();
+                List<Dal.Task> tasks = (from t in db.Tasks where t.status == true && t.IsHandled == false && t.DateForHandling < DateTime.Today select t).ToList();
                 return ConvertListToDTO(tasks);
             }
         }
-        public static string GetTypeName(int id)
+        public static List<TaskDTO> GetNotClassificatedTasks()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                return db.TaskTypes.Find(id).TaskTypeName;
+                List<Dal.Task> tasks = (from t in db.Tasks where (t.status == true && t.ClassificationID == 0 ||  t.ClassificationID == null) select t).ToList();
+                return ConvertListToDTO(tasks);
             }
-            return null;
         }
+        //public static string GetTypeName(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        return db.TaskTypes.Find(id).TaskTypeName;
+        //    }
+        //    return null;
+        //}
 
         public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
@@ -332,26 +343,26 @@ namespace Bl
             }
             return false;
         }
-        public static TaskDTO ReturnTaskbyid(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Dal.Task task = db.Tasks.Find(id);
-                return new TaskDTO(task);
-                //bool x = false; int i;
-                //List<TaskDTO> s = GetAllTasks();
-                //for (i = 0; i < s.Count ||x; i++)
-                //{
-                //    if (id == s[i].TaskID)
-                //    {
-                //        i--;
-                //        x = true;
-                //    }
-                //}
-                //return s[i];
+        //public static TaskDTO ReturnTaskbyid(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        Dal.Task task = db.Tasks.Find(id);
+        //        return new TaskDTO(task);
+        //        //bool x = false; int i;
+        //        //List<TaskDTO> s = GetAllTasks();
+        //        //for (i = 0; i < s.Count ||x; i++)
+        //        //{
+        //        //    if (id == s[i].TaskID)
+        //        //    {
+        //        //        i--;
+        //        //        x = true;
+        //        //    }
+        //        //}
+        //        //return s[i];
 
-            }
-        }
+        //    }
+        //}
 
     }
 }

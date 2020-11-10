@@ -23,10 +23,10 @@ namespace Bl
                     MailMessage mail = new MailMessage();
                     SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                    mail.From = new MailAddress("esterieliav100@gmail.com");
+                    mail.From = new MailAddress("argamanexpress@gmail.com");
                     mail.To.Add(ud.Email);
                     // mail.Bcc.Add(mail1);
-                    mail.Subject = "כניסת משתמש לארגמן אקספרס";
+                    mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
                     mail.IsBodyHtml = true;
 
                     string ht = @"<html>
@@ -37,7 +37,7 @@ namespace Bl
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
                     mail.Body = ht;
                     SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100", "es211860663");
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
                     SmtpServer.EnableSsl = true;
 
                     SmtpServer.Send(mail);
@@ -58,10 +58,10 @@ namespace Bl
                     MailMessage mail = new MailMessage();
                     SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                    mail.From = new MailAddress("esterieliav100@gmail.com");
+                    mail.From = new MailAddress("argamanexpress@gmail.com");
                     mail.To.Add(ud.Email);
                     // mail.Bcc.Add(mail1);
-                    mail.Subject = "כניסת משתמש לארגמן אקספרס";
+                    mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
                     mail.IsBodyHtml = true;
 
                     string ht = @"<html>
@@ -72,7 +72,7 @@ namespace Bl
                     // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
                     mail.Body = ht;
                     SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("esterieliav100","es211860663");
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
                     SmtpServer.EnableSsl = true;
 
                     SmtpServer.Send(mail);

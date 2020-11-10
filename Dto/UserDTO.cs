@@ -20,7 +20,7 @@ namespace Dto
         public string Password { set; get; }
         public string Dock { set; get; }
         public string DocName { set; get; }
-        public bool status { set; get; }
+        public bool? status { set; get; }
         public UserDTO()
         {
 
@@ -50,7 +50,7 @@ namespace Dto
             this.RoleID = u.RoleID;
             this.UserName = u.UserName;
             this.Password = u.Password;
-            this.status = true;
+            this.status = u.status;
         }
         public static User ToDal(UserDTO u)
         {
@@ -78,7 +78,7 @@ namespace Dto
             this.RoleID = u.RoleID;
             this.UserName = u.UserName;
             this.Password = u.Password;
-            this.status = true;
+            this.status = u.status;
         }
 
     }

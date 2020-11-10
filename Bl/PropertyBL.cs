@@ -11,34 +11,27 @@ namespace Bl
     {
         public static bool AddProperty(PropertyDTO d)
         {
+            d.status = true;
             Property p = PropertyDTO.Todal(d);
             int id = PropertyDAL.AddProperty(p);
             if (id != 0)
-            { 
-                if( d.Dock!=null)
-            if (id != 0 && d.Dock!=null)
             {
-                Document doc = new Document();
-                doc.DocCoding = d.Dock;
-                doc.DocUser = id;
-                doc.type = 1;
-                doc.DocName = d.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                
-            }return true;
+                if (d.Dock != null)
+
+                {
+                    Document doc = new Document();
+                    doc.DocCoding = d.Dock;
+                    doc.DocUser = id;
+                    doc.type = 1;
+                    doc.DocName = d.DocName;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+
+                }
+                return true;
             }
             return false;
         }
-        //public static bool AddExclusivityPerson(ExclusivityPersonDTO epDTO)
-        //{
-        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-        //    {
-        //        db.Exclusivitys.Add(ExclusivityPersonDTO.ToDAL(epDTO));
-        //        db.SaveChanges();
-        //        return true;
-        //    }
-        //    return false;
-        //}
+       
         public static bool DeleteProperty(int id)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -118,7 +111,8 @@ namespace Bl
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                List<getAllProperties_Result> pro =(from p in  db.getAllProperties() where p.status==true select p).ToList();//.OrderBy(p=>p.City.CityName).OrderBy(p =>p.Street.StreetName)
+                List<getAllProperties_Result> pro =(from p in  db.getAllProperties() select p).
+                   OrderBy(p => p.CityID).OrderBy(p => p.StreetID).ToList();
                 return ConvertListToDTO(pro);
             }
         }
@@ -130,22 +124,22 @@ namespace Bl
                 return new PropertyDTO(property);
             }
         }
-        public static RentalDTO GetRentalByPropertyID(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Rental rental = db.Rentals.FirstOrDefault(r => r.PropertyID == id);
-                return new RentalDTO(rental);
-            }
-        }
-        public static RentalDTO GetRentalBySubPropertyID(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Rental rental = db.Rentals.FirstOrDefault(r => r.SubPropertyID == id);
-                return new RentalDTO(rental);
-            }
-        }
+        //public static RentalDTO GetRentalByPropertyID(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        Rental rental = db.Rentals.FirstOrDefault(r => r.PropertyID == id);
+        //        return new RentalDTO(rental);
+        //    }
+        //}
+        //public static RentalDTO GetRentalBySubPropertyID(int id)
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        Rental rental = db.Rentals.FirstOrDefault(r => r.SubPropertyID == id);
+        //        return new RentalDTO(rental);
+        //    }
+        //}
         public static bool AddExclusivityPerson(string name)
         {
             ExclusivityPersonDTO epDTO = new ExclusivityPersonDTO();
@@ -215,36 +209,22 @@ namespace Bl
                 List<StreetDTO> streetDTOs = new List<StreetDTO>();
                 foreach (getStreets_Result street in streets)
                 {
-                   
-                    Street s = new Street();
-                    s.CityId = street.CityId;
-                    s.StreetID = street.StreetID;
-                    s.StreetName = street.StreetName;
-                    streetDTOs.Add(new StreetDTO(s));
+                    streetDTOs.Add(new StreetDTO(street));
                 }
               
                 return streetDTOs;
             }
                 return null;
         }
-        public static StreetDTO GetStreetByID(int id)
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Street street= db.Streets.Find(id);
-                return new StreetDTO(street);
-            }
-            return null;
-        }
-        //public static List<PropertyDTO> AdvancedSearch(Nullable<int> propertyID, string owner, string cityName, string streetName, string number, Nullable<int> apartmentNum, Nullable<double> roomsNum, Nullable<double> size, Nullable<int> floor, Nullable<bool> isDivided, Nullable<double> managmentPayment, Nullable<bool> isPaid, Nullable<bool> isExclusivity, string exclusivity, Nullable<bool> isWarranty, Nullable<bool> isRented)
+        //public static StreetDTO GetStreetByID(int id)
         //{
-        //    List<Property> pro = PropertyDAL.AdvancedSearch(propertyID, owner, cityName, streetName, number, apartmentNum, roomsNum, size, floor, isDivided, managmentPayment, isPaid, isExclusivity, exclusivity, isWarranty, isRented);
-        //    List<PropertyDTO> prodto = new List<PropertyDTO>();
-        //    foreach (Property p in pro)
-        //        prodto.Add(new PropertyDTO(p));
-        //    return prodto;
-
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        Street street= db.Streets.Find(id);
+        //        return new StreetDTO(street);
+        //    }
+        //    return null;
         //}
-
+        
     }
 }

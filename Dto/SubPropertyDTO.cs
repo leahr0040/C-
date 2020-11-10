@@ -27,7 +27,17 @@ namespace Dto
             this.IsRented = sp.IsRented;
             this.Size = sp.Size;
             this.RoomsNum = sp.RoomsNum;
-            status = true;
+            status = sp.status;
+        }
+        public SubPropertyDTO(getAllSubProperties_Result sp)
+        {
+            this.SubPropertyID = sp.SubPropertyID;
+            this.PropertyID = sp.PropertyID;
+            this.num = sp.num;
+            this.IsRented = sp.IsRented;
+            this.Size = sp.Size;
+            this.RoomsNum = sp.RoomsNum;
+            status = sp.status;
         }
         public static SubProperty ToDal(SubPropertyDTO sp)
         {

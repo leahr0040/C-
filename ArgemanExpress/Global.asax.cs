@@ -18,9 +18,9 @@ namespace ArgemanExpress
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Bl.TaskBL.RunPrepareDaily(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 6, 0, 0));//קריאה לפונקציה שתעיר פונקציה כל יום ב 6:00
-         //  Bl.TaskBL.schedule_Timer(DateTime.Now.AddSeconds(30));
-         // Bl.RentalBL.schedule_Timer(DateTime.Now.AddMinutes(20));
+            Bl.TaskBL.RunPrepareDaily(new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 19, 40, 0));//קריאה לפונקציה שתעיר פונקציה כל יום ב 6:00
+           Bl.TaskBL.setMonthly(DateTime.Now.AddMinutes(5));
+         Bl.RentalBL.setYearly(DateTime.Now.AddMinutes(20));
             //Console.ReadLine();
         }
     }

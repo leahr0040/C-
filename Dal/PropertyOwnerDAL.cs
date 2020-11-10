@@ -22,63 +22,46 @@ namespace Dal
             return 0;
         }
 
-        
-        public static bool DeletePropertyOwner(PropertiesOwner po)//צריך לבדוק כי לא אמורים למחוק לגמרי אלא להעביר לארכיון
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                db.PropertiesOwners.Remove(po);
-                db.SaveChanges();
-                return true;
-            }
-            return false;
-        }
+
         public static List<PropertiesOwner> Search(string OwnerFirstName, string OwnerLastName, string Phone, string Email)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertiesOwner> po;
-                po = (from p in db.PropertiesOwners where p.status == true select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+                po = (from p in db.PropertiesOwners where p.status == true select p).ToList();
                 if (OwnerFirstName != null)
-                    po = (from p in po where p.OwnerFirstName!=null && p.OwnerFirstName.Contains(OwnerFirstName) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+                    po = (from p in po where p.OwnerFirstName != null && p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
                 if (OwnerLastName != null)
-                    po = (from p in po where p.OwnerLastName!=null && p.OwnerLastName.Contains(OwnerLastName) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+                    po = (from p in po where p.OwnerLastName != null && p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
                 if (Phone != null)
-                    po = (from p in po where p.Phone!=null && p.Phone.Contains(Phone) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+                    po = (from p in po where p.Phone != null && p.Phone.Contains(Phone) select p).ToList();
                 if (Email != null)
-                    po = (from p in po where p.Email!=null && p.Email.Contains(Email) select p).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
-
-                    po = (from p in po where p.OwnerFirstName!=null && p.OwnerFirstName.Contains(OwnerFirstName) select p).ToList();
-                if (OwnerLastName != null)
-                    po = (from p in po where p.OwnerLastName!=null && p.OwnerLastName.Contains(OwnerLastName) select p).ToList();
-                if (Phone != null)
-                    po = (from p in po where p.Phone!=null && p.Phone.Contains(Phone) select p).ToList();
-                if (Email != null)
-                    po = (from p in po where p.Email!=null && p.Email.Contains(Email) select p).ToList();
+                    po = (from p in po where p.Email != null && p.Email.Contains(Email) select p).ToList();
+                po = po.OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
                 return po;
             }
             return null;
         }
-        public static List<Property> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<Property> properties = (from r in db.Properties where r.OwnerID == id select r).ToList();
-                return properties;
-            }
-            return null;
-        }
+        //public static List<Property> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        List<Property> properties = (from r in db.Properties where r.OwnerID == id select r).ToList();
+        //        return properties;
+        //    }
+        //    return null;
+        //}
 
-        public static List<Rental> getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
-        {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<Rental> rentals = new List<Rental>();
-                foreach (Property p in getPropertiesbyOwnerID(id))
-                    rentals.Add((from r in db.Rentals where r.PropertyID == p.PropertyID select r).FirstOrDefault());
-                return rentals;
-            }
-            return null;
-        }
+        //public static List<Rental> getRentalsbyOwnerID(int id)//פרטי השכרה לפי איידי
+        //{
+        //    using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+        //    {
+        //        List<Rental> rentals = new List<Rental>();
+        //        foreach (Property p in getPropertiesbyOwnerID(id))
+        //            rentals.Add((from r in db.Rentals where r.PropertyID == p.PropertyID select r).FirstOrDefault());
+        //        return rentals;
+        //    }
+        //    return null;
+        //}
     }
 }

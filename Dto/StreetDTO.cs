@@ -21,6 +21,12 @@ namespace Dto
             StreetName = s.StreetName;
             CityId = s.CityId;
         }
+        public StreetDTO(getStreets_Result s)
+        {
+            StreetID = s.StreetID;
+            StreetName = s.StreetName;
+            CityId = s.CityId;
+        }
         public static Street ToDAL(StreetDTO sDTO)
         {
             return new Street

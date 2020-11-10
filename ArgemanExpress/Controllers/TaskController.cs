@@ -10,7 +10,6 @@ using Dto;
 namespace ArgemanExpress.Controllers
 {   [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/task")]
-    //[Authorize(Roles =]
     public class TaskController : ApiController
     {
         [HttpPost]
@@ -57,17 +56,23 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.GetTimePassedTasks());
         }
+        [Route("GetNotClassificatedTasks")]
+        public IHttpActionResult GetNotClassificatedTasks()
+        {
+            return Ok(Bl.TaskBL.GetNotClassificatedTasks());
+        }
+        
         [Route("GetAllarchivesTasks")]
         public IHttpActionResult GetAllarchivesTasks()
         {
             return Ok(Bl.TaskBL.GetAllarchivesTasks());
         }
-        [HttpPost]
-        [Route("gettypename")]
-        public IHttpActionResult gettypename(IdDto id)
-        {
-            return Ok(Bl.TaskBL.GetTypeName(id.id));
-        }
+        //[HttpPost]
+        //[Route("gettypename")]
+        //public IHttpActionResult gettypename(IdDto id)
+        //{
+        //    return Ok(Bl.TaskBL.GetTypeName(id.id));
+        //}
         [Route("GetAllClassificationTypes")]
         public IHttpActionResult GetAllClassificationTypes()
         {
@@ -83,12 +88,12 @@ namespace ArgemanExpress.Controllers
         {
             return Ok(Bl.TaskBL.AddTaskType(str.name));
         }
-        [HttpPost]
-        [Route("GetTaskId")]
-        public IHttpActionResult GetTaskId([FromBody]IdDto i)
-        {
-            return Ok(Bl.TaskBL.ReturnTaskbyid(i.id));
-        }
+        //[HttpPost]
+        //[Route("GetTaskId")]
+        //public IHttpActionResult GetTaskId([FromBody]IdDto i)
+        //{
+        //    return Ok(Bl.TaskBL.ReturnTaskbyid(i.id));
+        //}
 
     }
 }

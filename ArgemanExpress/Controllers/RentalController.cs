@@ -27,8 +27,8 @@ namespace ArgemanExpress.Controllers
 
         }
         [HttpPost]
-        [Route("AddRental")]
-        public IHttpActionResult AddRental([FromBody]IdDto id)
+        [Route("DeleteRental")]
+        public IHttpActionResult DeleteRental([FromBody]IdDto id)
         {
             bool b = Bl.RentalBL.DeleteRental(id.id);
             if (b)
@@ -49,7 +49,7 @@ namespace ArgemanExpress.Controllers
         [Route("Search")]
         public IHttpActionResult Search(DtoRent rd)
         {
-            return Ok(Bl.RentalBL.Search(rd.PropertyID, rd.User,rd.Owner,rd.EnteryDate,rd.EndDate));
+            return Ok(Bl.RentalBL.Search(rd.PropertyID,rd.Owner, rd.User, rd.EnteryDate,rd.EndDate));
         }
         [HttpGet]
         [Route("GetAllRentals")]
