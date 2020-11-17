@@ -15,9 +15,16 @@ namespace Bl
             Random rand = new Random();//הגרלה לא תקינה
            int i= rand.Next(100000,999999);
             User u = UserDTO.ToDal(ud);
-            ud.UserName = ud.FirstName.Substring(0,3) + ud.LastName.Substring(0,3);
-            ud.Password = ud.UserName.Substring(1,3) + i.ToString();//יותר לפי firstname
-            //if (ud.SMS==null||ud.SMS==" ")
+            if (ud.Email != null)
+            {
+                ud.UserName = ud.Email;
+                ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+            }//יותר לפי firstname
+            else
+            {
+                ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
+                ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
+            }
             Mailsend.Mailnewuser(ud);
            // else
            //sms
@@ -61,8 +68,16 @@ namespace Bl
                 Random rand = new Random();//הגרלה לא תקינה
                int i= rand.Next(100000, 999999);
                 //User u = UserDTO.ToDal(ud);
-                ud.UserName = ud.FirstName.Substring(1,4) + ud.LastName.Substring(1,4);
-                ud.Password = ud.UserName.Substring(1, 3) + i.ToString();//יותר לפי firstname
+                if (ud.Email != null)
+                {
+                    ud.UserName = ud.Email;
+                    ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+                }//יותר לפי firstname
+                else
+                {
+                    ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
+                    ud.Password = ud.UserName.Substring(2,5) + i.ToString();
+                }
                 Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
@@ -82,8 +97,16 @@ namespace Bl
                 {
                     Random rand = new Random();//הגרלה לא תקינה
                     int i = rand.Next(100000, 999999);
-                    ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
-                    ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
+                    if (ud.Email != null)
+                    {
+                        ud.UserName = ud.Email;
+                        ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+                    }//יותר לפי firstname
+                    else
+                    {
+                        ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
+                        ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
+                    }
                 }
                 u.FirstName = ud.FirstName;
                 u.LastName = ud.LastName;

@@ -11,9 +11,10 @@ namespace Dal
 {
     using System;
     
-    public partial class sp_helpdiagramdefinition_Result
+    public partial class getAllStreets_Result
     {
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int StreetID { get; set; }
+        public string StreetName { get; set; }
+        public Nullable<int> CityId { get; set; }
     }
 }

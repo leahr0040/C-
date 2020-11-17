@@ -129,16 +129,6 @@
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_SubProperties" FromRole="SubProperties" ToRole="Rentals" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_SubProperties" FromRole="SubProperties" ToRole="Tasks" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="Task">
     <Key>
       <PropertyRef Name="TaskID" />
@@ -194,6 +184,22 @@
     <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
     <NavigationProperty Name="UserRole" Relationship="Self.FK_Users_UserRoles" FromRole="Users" ToRole="UserRoles" />
+  </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
   <Association Name="FK_Properties_Citi">
     <End Role="Cities" Type="Self.City" Multiplicity="1" />
@@ -398,11 +404,11 @@
     <EntitySet Name="Rentals" EntityType="Self.Rental" />
     <EntitySet Name="Streets" EntityType="Self.Street" />
     <EntitySet Name="SubProperties" EntityType="Self.SubProperty" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="Tasks" EntityType="Self.Task" />
     <EntitySet Name="TaskTypes" EntityType="Self.TaskType" />
     <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
     <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
     <AssociationSet Name="FK_Properties_Citi" Association="Self.FK_Properties_Citi">
       <End Role="Cities" EntitySet="Cities" />
       <End Role="Properties" EntitySet="Properties" />
@@ -467,63 +473,17 @@
       <End Role="UserRoles" EntitySet="UserRoles" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ArgamanExpressModel.sp_helpdiagramdefinition_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ArgamanExpressModel.sp_helpdiagrams_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
-    <FunctionImport Name="getStreets" ReturnType="Collection(ArgamanExpressModel.getStreets_Result)" />
     <FunctionImport Name="getAllCities" ReturnType="Collection(ArgamanExpressModel.getAllCities_Result)" />
     <FunctionImport Name="getAllDocuments" ReturnType="Collection(ArgamanExpressModel.getAllDocuments_Result)" />
     <FunctionImport Name="getAllProperties" ReturnType="Collection(ArgamanExpressModel.getAllProperties_Result)" />
     <FunctionImport Name="getAllPropertiesOwners" ReturnType="Collection(ArgamanExpressModel.getAllPropertiesOwners_Result)" />
     <FunctionImport Name="getAllRentals" ReturnType="Collection(ArgamanExpressModel.getAllRentals_Result)" />
+    <FunctionImport Name="getAllStreets" ReturnType="Collection(ArgamanExpressModel.getAllStreets_Result)" />
+    <FunctionImport Name="getAllSubProperties" ReturnType="Collection(ArgamanExpressModel.getAllSubProperties_Result)" />
     <FunctionImport Name="getAllTasks" ReturnType="Collection(ArgamanExpressModel.getAllTasks_Result)" />
     <FunctionImport Name="getAllUsers" ReturnType="Collection(ArgamanExpressModel.getAllUsers_Result)" />
-    <FunctionImport Name="getAllSubProperties" ReturnType="Collection(ArgamanExpressModel.getAllSubProperties_Result)" />
-    <FunctionImport Name="getProperties" ReturnType="Collection(ArgamanExpressModel.getProperties_Result)" />
+    <FunctionImport Name="getStreets" ReturnType="Collection(ArgamanExpressModel.getStreets_Result)" />
   </EntityContainer>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="getStreets_Result">
-    <Property Type="Int32" Name="StreetID" Nullable="false" />
-    <Property Type="String" Name="StreetName" Nullable="true" />
-    <Property Type="Int32" Name="CityId" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="getAllCities_Result">
     <Property Type="Int32" Name="CityId" Nullable="false" />
     <Property Type="String" Name="CityName" Nullable="true" />
@@ -574,6 +534,20 @@
     <Property Type="Boolean" Name="ContactRenew" Nullable="true" />
     <Property Type="Boolean" Name="status" Nullable="true" />
   </ComplexType>
+  <ComplexType Name="getAllStreets_Result">
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="StreetName" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllSubProperties_Result">
+    <Property Type="Int32" Name="SubPropertyID" Nullable="false" />
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="num" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="false" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="getAllTasks_Result">
     <Property Type="Int32" Name="TaskID" Nullable="false" />
     <Property Type="Int32" Name="TaskTypeId" Nullable="false" />
@@ -601,32 +575,9 @@
     <Property Type="String" Name="LastName" Nullable="true" />
     <Property Type="Boolean" Name="status" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="getAllSubProperties_Result">
-    <Property Type="Int32" Name="SubPropertyID" Nullable="false" />
-    <Property Type="Int32" Name="PropertyID" Nullable="false" />
-    <Property Type="Int32" Name="num" Nullable="false" />
-    <Property Type="Boolean" Name="IsRented" Nullable="false" />
-    <Property Type="Double" Name="Size" Nullable="true" />
-    <Property Type="Double" Name="RoomsNum" Nullable="true" />
-    <Property Type="Boolean" Name="status" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="getProperties_Result">
-    <Property Type="Int32" Name="PropertyID" Nullable="false" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-    <Property Type="Int32" Name="CityID" Nullable="false" />
+  <ComplexType Name="getStreets_Result">
     <Property Type="Int32" Name="StreetID" Nullable="false" />
-    <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
-    <Property Type="Double" Name="Size" Nullable="true" />
-    <Property Type="Int32" Name="Floor" Nullable="true" />
-    <Property Type="Boolean" Name="IsDivided" Nullable="false" />
-    <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
-    <Property Type="Boolean" Name="IsPaid" Nullable="false" />
-    <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
-    <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
-    <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
-    <Property Type="Boolean" Name="IsRented" Nullable="true" />
-    <Property Type="Double" Name="RoomsNum" Nullable="true" />
-    <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
-    <Property Type="Boolean" Name="status" Nullable="true" />
+    <Property Type="String" Name="StreetName" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
   </ComplexType>
 </Schema>
