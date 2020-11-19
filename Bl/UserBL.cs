@@ -13,7 +13,7 @@ namespace Bl
         public static bool AddUser(UserDTO ud)
         {
             Random rand = new Random();//הגרלה לא תקינה
-           int i= rand.Next(100000,999999);
+            int i = rand.Next(100000, 999999);
             User u = UserDTO.ToDal(ud);
             if (ud.Email != null)
             {
@@ -26,10 +26,10 @@ namespace Bl
                 ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
             }
             Mailsend.Mailnewuser(ud);
-           // else
-           //sms
-            int id= UserDAL.AddUser(u);
-            if (id != 0 && ud.Dock!=null)
+            // else
+            //sms
+            int id = UserDAL.AddUser(u);
+            if (id != 0 && ud.Dock != null)
             {
                 Document doc = new Document();
                 doc.DocCoding = ud.Dock;
@@ -53,20 +53,22 @@ namespace Bl
             }
             return false;
         }
-        static ArgamanExpressEntities db = new ArgamanExpressEntities();
 
         public static List<PropertyDTO> Return_Details_user(string userNam, string Passwor)
         {
-            int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
-             return RenterBL.getPropertiesbyRenterID(u);
-        } 
-       
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
+                return RenterBL.getPropertiesbyRenterID(u);
+            }
+        }
+
         public static bool UpdatePassword(UserDTO ud)//שינוי סיסמה 
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Random rand = new Random();//הגרלה לא תקינה
-               int i= rand.Next(100000, 999999);
+                int i = rand.Next(100000, 999999);
                 //User u = UserDTO.ToDal(ud);
                 if (ud.Email != null)
                 {
@@ -76,22 +78,22 @@ namespace Bl
                 else
                 {
                     ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
-                    ud.Password = ud.UserName.Substring(2,5) + i.ToString();
+                    ud.Password = ud.UserName.Substring(2, 5) + i.ToString();
                 }
                 Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
             }
         }
-       
-        
-         public static bool UpdateUser(UserDTO ud)
+
+
+        public static bool UpdateUser(UserDTO ud)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 bool b = false;
                 User u = db.Users.Find(ud.UserID);
-                if ((u.Email!= ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
+                if ((u.Email != ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
                     b = true;
                 if ((ud.UserName == null) || (ud.Password == null) || (ud.UserName == ""))
                 {
@@ -122,7 +124,7 @@ namespace Bl
                 return true;
                 //return false;
             }
-            }
+        }
         public static List<UserDTO> GetAllRenters()
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
@@ -139,11 +141,21 @@ namespace Bl
         //}
         public static UserDTO Haveuserforpassword(string userNam, string Passwor)
         {
-            User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
-           if(u!=null)
-            return new UserDTO(u);
-            return null;
-                
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+
+                    User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
+                    if (u != null)
+                        return new UserDTO(u);
+
+                    return null;
+                }
+            }
+
+
+            catch { return null; }
         }
         public static bool MailToAllUser()
         {
@@ -152,11 +164,11 @@ namespace Bl
                 List<UserDTO> u = GetAllRenters();
                 int x = u.Count;
                 int i = 0;
-                
+
                 while (i < x)
                 {
-                    if(u[i].Email!=string.Empty && u[i].Email!=null)
-                    Mailsend.Mailnewuser(u[i]);
+                    if (u[i].Email != string.Empty && u[i].Email != null)
+                        Mailsend.Mailnewuser(u[i]);
                     i++;
                 }
                 return true;
@@ -164,26 +176,28 @@ namespace Bl
             }
             catch { return false; }
         }
-        public static bool Forgotpassword(string username,string mail)
+        public static bool Forgotpassword(string username, string mail)
         {
             //פונקצייה חיפוש עפי מייל קיים
             //Mailsend.Mailforgotpasword()
-            User u = (from a in db.Users where username == a.UserName && mail == a.Email select a).FirstOrDefault();
-           
-                
-                    if (u!=null)
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                Random rand = new Random();
-                int i = rand.Next(100000, 999999);
-                u.Password = u.UserName.Substring(0,2) + i.ToString();
-                db.SaveChanges();
-                Mailsend.Mailforgotpasword(u);     
-                return true;
-            }
-            return false;
+                User u = (from a in db.Users where username == a.UserName && mail == a.Email select a).FirstOrDefault();
 
+
+                if (u != null)
+                {
+                    Random rand = new Random();
+                    int i = rand.Next(100000, 999999);
+                    u.Password = u.UserName.Substring(0, 2) + i.ToString();
+                    db.SaveChanges();
+                    Mailsend.Mailforgotpasword(u);
+                    return true;
+                }
+                return false;
+            }
         }
 
-    
-}
+
+    }
 }
