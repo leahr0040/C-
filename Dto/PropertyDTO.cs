@@ -96,8 +96,10 @@ namespace Dto
                 ExclusivityID = dd.ExclusivityID,
                 IsWarranty = dd.IsWarranty,
                 RoomsNum = dd.RoomsNum,
-                ApartmentNum = dd.ApartmentNum
-            };
+                ApartmentNum = dd.ApartmentNum,
+                 status = dd.status
+
+        };
 
         }
         //public int OwnerID { get; set; }

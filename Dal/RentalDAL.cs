@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Dal
 {
@@ -10,17 +11,24 @@ namespace Dal
     {
         public static int AddRental(Rental r)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 r.status = true;
                 db.Rentals.Add(r);
                 db.SaveChanges();
                 return db.Rentals.Max(i => i.RentalID);
+            }}
+
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addRentalEror " + e.Message);
+                return 0;
             }
-            return 0;
         }
         public static List<Rental> Search(Nullable<int> propertyID, string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Rental> rentals;
@@ -40,8 +48,12 @@ namespace Dal
                     rentals = (from r in rentals where r.EndDate <= endDate select r).ToList();
                 rentals = rentals.OrderBy(r => r.EndDate).ToList();
                 return rentals;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("searchRentalEror " + e.Message);
+                return null;
             }
-            return null;
         }
     }
 }

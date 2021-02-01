@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Dal
 {
@@ -10,17 +11,23 @@ namespace Dal
     {
         public static int AddSubProperty(SubProperty sp)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 sp.status = true;
                 db.SubProperties.Add(sp);
                 db.SaveChanges();
                 return db.SubProperties.Max(i => i.SubPropertyID);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addSubPropertyEror " + e.Message);
+                return 0;
             }
-            return 0;
         }
         public static List<SubProperty> Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<SubProperty> sp = new List<SubProperty>();
@@ -35,6 +42,11 @@ namespace Dal
                     sp = (from s in sp where s.RoomsNum >= RoomsNum select s).ToList();
                 sp = sp.OrderBy(spr => spr.IsRented).ToList();
                 return sp;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("searchSubPropertyEror " + e.Message);
+                return null;
             }
         }
     }

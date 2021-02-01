@@ -1,0 +1,583 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ArgamanExpressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_Citi" FromRole="Cities" ToRole="Properties" />
+    <NavigationProperty Name="Streets" Relationship="Self.FK_Street_Citi" FromRole="Cities" ToRole="Streets" />
+  </EntityType>
+  <EntityType Name="Classification">
+    <Key>
+      <PropertyRef Name="ClassificationID" />
+    </Key>
+    <Property Name="ClassificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassificationName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Classifications" FromRole="Classifications" ToRole="Tasks" />
+    <NavigationProperty Name="Tasks1" Relationship="Self.FK_Tasks_Classifications_client" FromRole="Classifications" ToRole="Tasks" />
+  </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="DocID" />
+    </Key>
+    <Property Name="DocID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocUser" Type="Int32" Nullable="false" />
+    <Property Name="DocCoding" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="type" Type="Int32" />
+    <Property Name="DocName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Exclusivity">
+    <Key>
+      <PropertyRef Name="ExclusivityID" />
+    </Key>
+    <Property Name="ExclusivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExclusivityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_Exclusivitys" FromRole="Exclusivitys" ToRole="Properties" />
+  </EntityType>
+  <EntityType Name="PaymentType">
+    <Key>
+      <PropertyRef Name="PaymentTypeID" />
+    </Key>
+    <Property Name="PaymentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PaymentTypeName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_PaymentTypes" FromRole="PaymentTypes" ToRole="Rentals" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="PropertyID" />
+    </Key>
+    <Property Name="PropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="StreetID" Type="Int32" Nullable="false" />
+    <Property Name="Number" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Size" Type="Double" />
+    <Property Name="Floor" Type="Int32" />
+    <Property Name="IsDivided" Type="Boolean" Nullable="false" />
+    <Property Name="ManagmentPayment" Type="Double" />
+    <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+    <Property Name="IsExclusivity" Type="Boolean" Nullable="false" />
+    <Property Name="ExclusivityID" Type="Int32" />
+    <Property Name="IsWarranty" Type="Boolean" Nullable="false" />
+    <Property Name="IsRented" Type="Boolean" />
+    <Property Name="RoomsNum" Type="Double" />
+    <Property Name="ApartmentNum" Type="Int32" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Properties_Citi" FromRole="Properties" ToRole="Cities" />
+    <NavigationProperty Name="Exclusivity" Relationship="Self.FK_Properties_Exclusivitys" FromRole="Properties" ToRole="Exclusivitys" />
+    <NavigationProperty Name="PropertiesOwner" Relationship="Self.FK_Properties_PropertiesOwners" FromRole="Properties" ToRole="PropertiesOwners" />
+    <NavigationProperty Name="Street" Relationship="Self.FK_Properties_Stree" FromRole="Properties" ToRole="Streets" />
+    <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Properties" FromRole="Properties" ToRole="Rentals" />
+    <NavigationProperty Name="SubProperties" Relationship="Self.FK_SubProperties_Properties" FromRole="Properties" ToRole="SubProperties" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_Properties" FromRole="Properties" ToRole="Tasks" />
+  </EntityType>
+  <EntityType Name="PropertiesOwner">
+    <Key>
+      <PropertyRef Name="OwnerID" />
+    </Key>
+    <Property Name="OwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OwnerFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OwnerLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_PropertiesOwners" FromRole="PropertiesOwners" ToRole="Properties" />
+  </EntityType>
+  <EntityType Name="Rental">
+    <Key>
+      <PropertyRef Name="RentalID" />
+    </Key>
+    <Property Name="RentalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyID" Type="Int32" Nullable="false" />
+    <Property Name="SubPropertyID" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="RentPayment" Type="Double" />
+    <Property Name="PaymentTypeID" Type="Int32" />
+    <Property Name="EnteryDate" Type="DateTime" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="ContactRenew" Type="Boolean" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="PaymentType" Relationship="Self.FK_Rentals_PaymentTypes" FromRole="Rentals" ToRole="PaymentTypes" />
+    <NavigationProperty Name="Property" Relationship="Self.FK_Rentals_Properties" FromRole="Rentals" ToRole="Properties" />
+    <NavigationProperty Name="SubProperty" Relationship="Self.FK_Rentals_SubProperties" FromRole="Rentals" ToRole="SubProperties" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Rentals_Users" FromRole="Rentals" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="StreetID" />
+    </Key>
+    <Property Name="StreetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StreetName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CityId" Type="Int32" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Street_Citi" FromRole="Streets" ToRole="Cities" />
+    <NavigationProperty Name="Properties" Relationship="Self.FK_Properties_Stree" FromRole="Streets" ToRole="Properties" />
+  </EntityType>
+  <EntityType Name="SubProperty">
+    <Key>
+      <PropertyRef Name="SubPropertyID" />
+    </Key>
+    <Property Name="SubPropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PropertyID" Type="Int32" Nullable="false" />
+    <Property Name="num" Type="Int32" Nullable="false" />
+    <Property Name="IsRented" Type="Boolean" Nullable="false" />
+    <Property Name="Size" Type="Double" />
+    <Property Name="RoomsNum" Type="Double" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Property" Relationship="Self.FK_SubProperties_Properties" FromRole="SubProperties" ToRole="Properties" />
+    <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_SubProperties" FromRole="SubProperties" ToRole="Rentals" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_SubProperties" FromRole="SubProperties" ToRole="Tasks" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="TaskID" />
+    </Key>
+    <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PropertyID" Type="Int32" />
+    <Property Name="SubPropertyID" Type="Int32" />
+    <Property Name="ClassificationID" Type="Int32" />
+    <Property Name="ClientClassificationID" Type="Int32" />
+    <Property Name="ReportDate" Type="DateTime" Precision="3" />
+    <Property Name="DateForHandling" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsHandled" Type="Boolean" />
+    <Property Name="HandlingDate" Type="DateTime" Precision="3" />
+    <Property Name="HandlingWay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Classification" Relationship="Self.FK_Tasks_Classifications" FromRole="Tasks" ToRole="Classifications" />
+    <NavigationProperty Name="Classification1" Relationship="Self.FK_Tasks_Classifications_client" FromRole="Tasks" ToRole="Classifications" />
+    <NavigationProperty Name="Property" Relationship="Self.FK_Tasks_Properties" FromRole="Tasks" ToRole="Properties" />
+    <NavigationProperty Name="SubProperty" Relationship="Self.FK_Tasks_SubProperties" FromRole="Tasks" ToRole="SubProperties" />
+    <NavigationProperty Name="TaskType" Relationship="Self.FK_Tasks_TaskTypes" FromRole="Tasks" ToRole="TaskTypes" />
+  </EntityType>
+  <EntityType Name="TaskType">
+    <Key>
+      <PropertyRef Name="TaskTypeId" />
+    </Key>
+    <Property Name="TaskTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskTypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tasks" Relationship="Self.FK_Tasks_TaskTypes" FromRole="TaskTypes" ToRole="Tasks" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_UserRoles" FromRole="UserRoles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SMS" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK_Users_UserRoles" FromRole="Users" ToRole="UserRoles" />
+  </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="FK_Properties_Citi">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Street_Citi">
+    <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Streets" Type="Self.Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="Streets">
+        <PropertyRef Name="CityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Classifications">
+    <End Role="Classifications" Type="Self.Classification" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classifications">
+        <PropertyRef Name="ClassificationID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="ClassificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Classifications_client">
+    <End Role="Classifications" Type="Self.Classification" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Classifications">
+        <PropertyRef Name="ClassificationID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="ClientClassificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Exclusivitys">
+    <End Role="Exclusivitys" Type="Self.Exclusivity" Multiplicity="0..1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exclusivitys">
+        <PropertyRef Name="ExclusivityID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="ExclusivityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_PaymentTypes">
+    <End Role="PaymentTypes" Type="Self.PaymentType" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentTypes">
+        <PropertyRef Name="PaymentTypeID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="PaymentTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_PropertiesOwners">
+    <End Role="PropertiesOwners" Type="Self.PropertiesOwner" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PropertiesOwners">
+        <PropertyRef Name="OwnerID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Properties_Stree">
+    <End Role="Streets" Type="Self.Street" Multiplicity="1" />
+    <End Role="Properties" Type="Self.Property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Streets">
+        <PropertyRef Name="StreetID" />
+      </Principal>
+      <Dependent Role="Properties">
+        <PropertyRef Name="StreetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_Properties">
+    <End Role="Properties" Type="Self.Property" Multiplicity="1" />
+    <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubProperties_Properties">
+    <End Role="Properties" Type="Self.Property" Multiplicity="1" />
+    <End Role="SubProperties" Type="Self.SubProperty" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="SubProperties">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_Properties">
+    <End Role="Properties" Type="Self.Property" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Properties">
+        <PropertyRef Name="PropertyID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="PropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_SubProperties">
+    <End Role="SubProperties" Type="Self.SubProperty" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubProperties">
+        <PropertyRef Name="SubPropertyID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="SubPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rentals_Users">
+    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Rentals" Type="Self.Rental" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Rentals">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_SubProperties">
+    <End Role="SubProperties" Type="Self.SubProperty" Multiplicity="0..1" />
+    <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubProperties">
+        <PropertyRef Name="SubPropertyID" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="SubPropertyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tasks_TaskTypes">
+    <End Role="TaskTypes" Type="Self.TaskType" Multiplicity="1" />
+    <End Role="Tasks" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskTypes">
+        <PropertyRef Name="TaskTypeId" />
+      </Principal>
+      <Dependent Role="Tasks">
+        <PropertyRef Name="TaskTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_UserRoles">
+    <End Role="UserRoles" Type="Self.UserRole" Multiplicity="1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ArgamanExpressEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Classifications" EntityType="Self.Classification" />
+    <EntitySet Name="Documents" EntityType="Self.Document" />
+    <EntitySet Name="Exclusivitys" EntityType="Self.Exclusivity" />
+    <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
+    <EntitySet Name="Properties" EntityType="Self.Property" />
+    <EntitySet Name="PropertiesOwners" EntityType="Self.PropertiesOwner" />
+    <EntitySet Name="Rentals" EntityType="Self.Rental" />
+    <EntitySet Name="Streets" EntityType="Self.Street" />
+    <EntitySet Name="SubProperties" EntityType="Self.SubProperty" />
+    <EntitySet Name="Tasks" EntityType="Self.Task" />
+    <EntitySet Name="TaskTypes" EntityType="Self.TaskType" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+    <AssociationSet Name="FK_Properties_Citi" Association="Self.FK_Properties_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Street_Citi" Association="Self.FK_Street_Citi">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Streets" EntitySet="Streets" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Classifications" Association="Self.FK_Tasks_Classifications">
+      <End Role="Classifications" EntitySet="Classifications" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Classifications_client" Association="Self.FK_Tasks_Classifications_client">
+      <End Role="Classifications" EntitySet="Classifications" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Exclusivitys" Association="Self.FK_Properties_Exclusivitys">
+      <End Role="Exclusivitys" EntitySet="Exclusivitys" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_PaymentTypes" Association="Self.FK_Rentals_PaymentTypes">
+      <End Role="PaymentTypes" EntitySet="PaymentTypes" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_PropertiesOwners" Association="Self.FK_Properties_PropertiesOwners">
+      <End Role="PropertiesOwners" EntitySet="PropertiesOwners" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Properties_Stree" Association="Self.FK_Properties_Stree">
+      <End Role="Streets" EntitySet="Streets" />
+      <End Role="Properties" EntitySet="Properties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_Properties" Association="Self.FK_Rentals_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubProperties_Properties" Association="Self.FK_SubProperties_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="SubProperties" EntitySet="SubProperties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_Properties" Association="Self.FK_Tasks_Properties">
+      <End Role="Properties" EntitySet="Properties" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_SubProperties" Association="Self.FK_Rentals_SubProperties">
+      <End Role="SubProperties" EntitySet="SubProperties" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rentals_Users" Association="Self.FK_Rentals_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rentals" EntitySet="Rentals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_SubProperties" Association="Self.FK_Tasks_SubProperties">
+      <End Role="SubProperties" EntitySet="SubProperties" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tasks_TaskTypes" Association="Self.FK_Tasks_TaskTypes">
+      <End Role="TaskTypes" EntitySet="TaskTypes" />
+      <End Role="Tasks" EntitySet="Tasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_UserRoles" Association="Self.FK_Users_UserRoles">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <FunctionImport Name="getAllCities" ReturnType="Collection(ArgamanExpressModel.getAllCities_Result)" />
+    <FunctionImport Name="getAllDocuments" ReturnType="Collection(ArgamanExpressModel.getAllDocuments_Result)" />
+    <FunctionImport Name="getAllProperties" ReturnType="Collection(ArgamanExpressModel.getAllProperties_Result)" />
+    <FunctionImport Name="getAllPropertiesOwners" ReturnType="Collection(ArgamanExpressModel.getAllPropertiesOwners_Result)" />
+    <FunctionImport Name="getAllRentals" ReturnType="Collection(ArgamanExpressModel.getAllRentals_Result)" />
+    <FunctionImport Name="getAllStreets" ReturnType="Collection(ArgamanExpressModel.getAllStreets_Result)" />
+    <FunctionImport Name="getAllSubProperties" ReturnType="Collection(ArgamanExpressModel.getAllSubProperties_Result)" />
+    <FunctionImport Name="getAllTasks" ReturnType="Collection(ArgamanExpressModel.getAllTasks_Result)" />
+    <FunctionImport Name="getAllUsers" ReturnType="Collection(ArgamanExpressModel.getAllUsers_Result)" />
+    <FunctionImport Name="getStreets" ReturnType="Collection(ArgamanExpressModel.getStreets_Result)" />
+  </EntityContainer>
+  <ComplexType Name="getAllCities_Result">
+    <Property Type="Int32" Name="CityId" Nullable="false" />
+    <Property Type="String" Name="CityName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllDocuments_Result">
+    <Property Type="Int32" Name="DocID" Nullable="false" />
+    <Property Type="Int32" Name="DocUser" Nullable="false" />
+    <Property Type="String" Name="DocCoding" Nullable="false" />
+    <Property Type="Int32" Name="type" Nullable="true" />
+    <Property Type="String" Name="DocName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllProperties_Result">
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+    <Property Type="Int32" Name="CityID" Nullable="false" />
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="Number" Nullable="false" MaxLength="5" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Int32" Name="Floor" Nullable="true" />
+    <Property Type="Boolean" Name="IsDivided" Nullable="false" />
+    <Property Type="Double" Name="ManagmentPayment" Nullable="true" />
+    <Property Type="Boolean" Name="IsPaid" Nullable="false" />
+    <Property Type="Boolean" Name="IsExclusivity" Nullable="false" />
+    <Property Type="Int32" Name="ExclusivityID" Nullable="true" />
+    <Property Type="Boolean" Name="IsWarranty" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Int32" Name="ApartmentNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllPropertiesOwners_Result">
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+    <Property Type="String" Name="OwnerFirstName" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Email" Nullable="true" />
+    <Property Type="String" Name="OwnerLastName" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllRentals_Result">
+    <Property Type="Int32" Name="RentalID" Nullable="false" />
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+    <Property Type="Int32" Name="UserID" Nullable="true" />
+    <Property Type="Double" Name="RentPayment" Nullable="true" />
+    <Property Type="Int32" Name="PaymentTypeID" Nullable="true" />
+    <Property Type="DateTime" Name="EnteryDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="ContactRenew" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllStreets_Result">
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="StreetName" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllSubProperties_Result">
+    <Property Type="Int32" Name="SubPropertyID" Nullable="false" />
+    <Property Type="Int32" Name="PropertyID" Nullable="false" />
+    <Property Type="Int32" Name="num" Nullable="false" />
+    <Property Type="Boolean" Name="IsRented" Nullable="false" />
+    <Property Type="Double" Name="Size" Nullable="true" />
+    <Property Type="Double" Name="RoomsNum" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllTasks_Result">
+    <Property Type="Int32" Name="TaskID" Nullable="false" />
+    <Property Type="Int32" Name="TaskTypeId" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="true" />
+    <Property Type="Int32" Name="PropertyID" Nullable="true" />
+    <Property Type="Int32" Name="SubPropertyID" Nullable="true" />
+    <Property Type="Int32" Name="ClassificationID" Nullable="true" />
+    <Property Type="Int32" Name="ClientClassificationID" Nullable="true" />
+    <Property Type="DateTime" Name="ReportDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="DateForHandling" Nullable="false" Precision="23" />
+    <Property Type="Boolean" Name="IsHandled" Nullable="true" />
+    <Property Type="DateTime" Name="HandlingDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="HandlingWay" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getAllUsers_Result">
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" />
+    <Property Type="String" Name="SMS" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="Email" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="RoleID" Nullable="false" />
+    <Property Type="String" Name="UserName" Nullable="true" />
+    <Property Type="String" Name="Password" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="LastName" Nullable="true" />
+    <Property Type="Boolean" Name="status" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="getStreets_Result">
+    <Property Type="Int32" Name="StreetID" Nullable="false" />
+    <Property Type="String" Name="StreetName" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+  </ComplexType>
+</Schema>

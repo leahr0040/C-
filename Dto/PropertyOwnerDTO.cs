@@ -48,7 +48,8 @@ namespace Dto
                 OwnerFirstName = po.OwnerFirstName,
                 OwnerLastName = po.OwnerLastName,
                 Phone = po.Phone,
-                Email = po.Email
+                Email = po.Email,
+                status=po.status
 
             };
         }

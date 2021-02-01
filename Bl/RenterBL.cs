@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dal;
 using Dto;
+using System.Diagnostics;
 
 
 namespace Bl
@@ -52,25 +53,35 @@ namespace Bl
         }
         public static List<UserDTO> ConvertListToDTO(List<User> renters)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<UserDTO> udto = new List<UserDTO>();
                 foreach (User u in renters)
                     udto.Add(new UserDTO(u));
                 return udto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<UserDTO> ConvertListToDTO(List<getAllUsers_Result> renters)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<UserDTO> udto = new List<UserDTO>();
                 foreach (getAllUsers_Result u in renters)
                     udto.Add(new UserDTO(u));
                 return udto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
@@ -79,10 +90,16 @@ namespace Bl
         }
         public static List<UserDTO> GetAllRenters()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID==3  select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return ConvertListToDTO(renters);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllRentersEror " + e.Message);
+                return null;
             }
         }
         //public static UserDTO GetRenterByID(int id)

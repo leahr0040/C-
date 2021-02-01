@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="ArgamanExpressEntities-Web.config Connection String" description="ArgamanExpressEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Model1.csdl|res://*/Model1.ssdl|res://*/Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=argamandb.database.windows.net;initial catalog=ArgamanExpress;persist security info=True;user id=es211860663;password=Arg1234567;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\אסתר\ אליאב\\Desktop\\אתר\ בסיעתא\ דישמייא\\c-\\ArgemanExpress\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='ArgamanExpressEntities']/@connectionString" />
+  </parameter>
+</parameters>

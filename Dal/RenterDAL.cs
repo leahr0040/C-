@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Dal
 {
@@ -10,6 +11,7 @@ namespace Dal
     {
         public static List<User> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<User> users = (from u in db.Users where u.RoleID == 3 && u.status == true select u).ToList();
@@ -25,29 +27,43 @@ namespace Dal
                     users = (from u in users where u.Phone!=null && u.Phone.Contains(Phone) select u).ToList();
                 users = users.OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
                 return users;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addRenterEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<Rental> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Rental> rentals = (from r in db.Rentals where r.UserID == id select r).ToList();
                 return rentals;
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getRentalsbyRenterIDEror " + e.Message);
+                return null;
             }
-            return null;
         }
 
         public static List<Property> getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Property> properties = new List<Property>();
                 foreach (Rental r in getRentalsbyRenterID(id))
                     properties.Add((from p in db.Properties where r.PropertyID == p.PropertyID select p).FirstOrDefault());
                 return properties;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getPropertiesbyRenterIDEror " + e.Message);
+                return null;
             }
-            return null;
         }
     }
 }

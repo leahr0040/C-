@@ -76,7 +76,8 @@ namespace Dto
                 DateForHandling = t.DateForHandling,
                 IsHandled = t.IsHandled,
                 HandlingDate = t.HandlingDate,
-                HandlingWay = t.HandlingWay
+                HandlingWay = t.HandlingWay,
+                status=t.status
             };
         }
     }

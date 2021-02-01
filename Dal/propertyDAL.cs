@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 
 namespace Dal
 {
     public class PropertyDAL
     {
+        
         public static int AddProperty(Property pe)
         {
+            try{
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Properties.Add(pe);
@@ -19,12 +22,18 @@ namespace Dal
 
                 return db.Properties.Max(i => i.PropertyID);
             }
-            return 0;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addPropertyEror " + e.Message);
+                return 0;
+            }
 
         }
 
         public static List<Property> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Property> pro;
@@ -42,12 +51,18 @@ namespace Dal
                 pro = pro.OrderBy(p => p.City.CityName).OrderBy(p => p.Street.StreetName).ToList();
                 return pro;
             }
-            return null;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("searchPropertyEror " + e.Message);
+                return null;
+            }
         }
 
 
         public static bool AddCity(City c)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
 
@@ -55,29 +70,45 @@ namespace Dal
                 db.Cities.Add(c);
                 db.SaveChanges();
                 return true;
+            } 
             }
-            return false;
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addCityEror " + e.Message);
+                return false;
+            }
         }
         public static bool AddStreet(Street s)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 s.StreetID = db.Streets.Count() + 1;
                 db.Streets.Add(s);
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addStreetEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static bool AddExclusivityPerson(Exclusivity e)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Exclusivitys.Add(e);
                 db.SaveChanges();
                 return true;
             }
-            return false;
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceInformation("AddExclusivityPersonEror " + ex.Message);
+                return false;
+            }
         }
     }
 }

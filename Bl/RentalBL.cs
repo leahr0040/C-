@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Dal;
 using Dto;
+using System.Diagnostics;
 
 namespace Bl
 {
@@ -36,6 +37,7 @@ namespace Bl
         }
         public static bool DeleteRental(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 
@@ -44,11 +46,16 @@ namespace Bl
                 p.status = false;
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deleteRentalEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static bool UpdateRental(RentalDTO rd)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Rental r = db.Rentals.Find(rd.RentalID);
@@ -83,30 +90,44 @@ namespace Bl
                 }
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("updateRentalEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static List<RentalDTO> ConvertListToDTO(List<Rental> rentals)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<RentalDTO> redto = new List<RentalDTO>();
                 foreach (Rental r in rentals)
                     redto.Add(new RentalDTO(r));
                 return redto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<RentalDTO> ConvertListToDTO(List<getAllRentals_Result> rentals)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<RentalDTO> redto = new List<RentalDTO>();
                 foreach (getAllRentals_Result r in rentals)
                     redto.Add(new RentalDTO(r));
                 return redto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<RentalDTO> Search(Nullable<int> propertyID, string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
@@ -116,15 +137,22 @@ namespace Bl
         }
         public static List<RentalDTO> GetAllRentals()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<getAllRentals_Result> pro = (from r in db.getAllRentals()select r).OrderBy(r => r.EndDate).ToList();
 
                 return ConvertListToDTO(pro);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllRentalEror " + e.Message);
+                return null;
             }
         }
         public static List<PaymentTypeDTO> GetAllPaymentTypes()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PaymentType> ptypes = (from pt in db.PaymentTypes select pt).OrderBy(pt => pt.PaymentTypeName).ToList();
@@ -134,13 +162,17 @@ namespace Bl
                     ptdto.Add(new PaymentTypeDTO(ptype));
                 }
                 return ptdto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getallPaymentTypesRentalEror " + e.Message);
+                return null;
             }
-            return null;
         }
         static CancellationTokenSource ctSource;
         public static void setYearly(DateTime date)//מקבלת תאריך מדויק
         {
-
+            try {
             ctSource = new CancellationTokenSource();
             var dateNow = DateTime.Now;
             // TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
@@ -154,10 +186,17 @@ namespace Bl
 
                 setYearly(date);//קריאה חוזרת לפונקציה...
             }, ctSource.Token);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("setYearlyEror " + e.Message);
+                
+            }
         }
         //    static System.Timers.Timer timer;
         public static void DeleteAllNotUsedRentals()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 foreach (Rental rental in db.Rentals)
@@ -167,6 +206,12 @@ namespace Bl
                 }
                 db.SaveChanges();
 
+            }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deleteallNotusedRentalEror " + e.Message);
+                
             }
         }
         //    public static void schedule_Timer(DateTime scheduledTime)

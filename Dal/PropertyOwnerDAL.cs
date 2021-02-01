@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 
 namespace Dal
@@ -11,6 +12,7 @@ namespace Dal
     {
         public static int AddPropertyOwner(PropertiesOwner po)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 po.status = true;
@@ -19,12 +21,18 @@ namespace Dal
                 return db.PropertiesOwners.Max(i => i.OwnerID);
                 //return (from p in db.PropertiesOwners where p.OwnerFirstName==po.OwnerFirstName && p.OwnerLastName==po.OwnerLastName && p.Phone==po.Phone && p.Email==po.Email select p.OwnerID).FirstOrDefault();
             }
-            return 0;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addPropertyOwnerEror " + e.Message);
+                return 0;
+            }
         }
 
 
         public static List<PropertiesOwner> Search(string OwnerFirstName, string OwnerLastName, string Phone, string Email)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertiesOwner> po;
@@ -39,8 +47,12 @@ namespace Dal
                     po = (from p in po where p.Email != null && p.Email.Contains(Email) select p).ToList();
                 po = po.OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
                 return po;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("searchPropertyOwnerEror " + e.Message);
+                return null;
             }
-            return null;
         }
         //public static List<Property> getPropertiesbyOwnerID(int id)//דירות שמשכיר לפי איידי
         //{

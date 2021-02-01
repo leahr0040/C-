@@ -1005,3 +1005,5 @@ C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Argem
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\ArgemanExpress\obj\Debug\ArgemanExpress.csproj.CopyComplete
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\ArgemanExpress\obj\Debug\ArgemanExpress.dll
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\ArgemanExpress\obj\Debug\ArgemanExpress.pdb
+C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\ArgemanExpress\bin\Serilog.dll
+C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\ArgemanExpress\bin\Serilog.xml

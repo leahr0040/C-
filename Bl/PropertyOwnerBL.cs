@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dal;
 using Dto;
+using System.Diagnostics;
+
 
 namespace Bl
 {
@@ -33,17 +35,23 @@ namespace Bl
         }
         public static bool DeletePropertyOwner(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 PropertiesOwner p = db.PropertiesOwners.Find(id);
                 p.status = false;
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deletePropertyOwnerEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static bool UpdatePropertyOwner(PropertyOwnerDTO po)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 PropertiesOwner pro = db.PropertiesOwners.Find(po.OwnerID);
@@ -63,31 +71,45 @@ namespace Bl
                 }
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("updatePropertyOwnerEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static List<PropertyOwnerDTO> ConvertListToDTO(List<PropertiesOwner> po)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertyOwnerDTO> podto = new List<PropertyOwnerDTO>();
                 foreach (PropertiesOwner p in po)
                     podto.Add(new PropertyOwnerDTO(p));
                 return podto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOOwnersEror " + e.Message);
+                return null;
             }
-            return null;
         }
 
         public static List<PropertyOwnerDTO> ConvertListToDTO(List<getAllPropertiesOwners_Result> po)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertyOwnerDTO> podto = new List<PropertyOwnerDTO>();
                 foreach (getAllPropertiesOwners_Result p in po)
                     podto.Add(new PropertyOwnerDTO(p));
                 return podto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOOwnersEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<PropertyOwnerDTO> Search(string OwnerFirstName, string OwnerLastName, string Phone, string Email)
         {
@@ -98,10 +120,16 @@ namespace Bl
         }
         public static List<PropertyOwnerDTO> getAllOwners()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<getAllPropertiesOwners_Result> owners =(from o in db.getAllPropertiesOwners() select o).OrderBy(o => o.OwnerFirstName).OrderBy(o =>o.OwnerLastName).ToList();
                return ConvertListToDTO(owners);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllOwnersEror " + e.Message);
+                return null;
             }
         }
         //public static PropertyOwnerDTO GetOwnerByID(int id)

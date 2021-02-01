@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ArgamanExpressModelStoreContainer" CdmEntityContainer="ArgamanExpressEntities">
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.City">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Classifications">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Classification">
+        <MappingFragment StoreEntitySet="Classifications">
+          <ScalarProperty Name="ClassificationID" ColumnName="ClassificationID" />
+          <ScalarProperty Name="ClassificationName" ColumnName="ClassificationName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Document">
+        <MappingFragment StoreEntitySet="Documents">
+          <ScalarProperty Name="DocID" ColumnName="DocID" />
+          <ScalarProperty Name="DocUser" ColumnName="DocUser" />
+          <ScalarProperty Name="DocCoding" ColumnName="DocCoding" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="DocName" ColumnName="DocName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exclusivitys">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Exclusivity">
+        <MappingFragment StoreEntitySet="Exclusivitys">
+          <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
+          <ScalarProperty Name="ExclusivityName" ColumnName="ExclusivityName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentTypes">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.PaymentType">
+        <MappingFragment StoreEntitySet="PaymentTypes">
+          <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+          <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Properties">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Property">
+        <MappingFragment StoreEntitySet="Properties">
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Floor" ColumnName="Floor" />
+          <ScalarProperty Name="IsDivided" ColumnName="IsDivided" />
+          <ScalarProperty Name="ManagmentPayment" ColumnName="ManagmentPayment" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="IsExclusivity" ColumnName="IsExclusivity" />
+          <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
+          <ScalarProperty Name="IsWarranty" ColumnName="IsWarranty" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="ApartmentNum" ColumnName="ApartmentNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PropertiesOwners">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.PropertiesOwner">
+        <MappingFragment StoreEntitySet="PropertiesOwners">
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="OwnerFirstName" ColumnName="OwnerFirstName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OwnerLastName" ColumnName="OwnerLastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rentals">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Rental">
+        <MappingFragment StoreEntitySet="Rentals">
+          <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RentPayment" ColumnName="RentPayment" />
+          <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+          <ScalarProperty Name="EnteryDate" ColumnName="EnteryDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ContactRenew" ColumnName="ContactRenew" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Streets">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Street">
+        <MappingFragment StoreEntitySet="Streets">
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SubProperties">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.SubProperty">
+        <MappingFragment StoreEntitySet="SubProperties">
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.Task">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+          <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="ClassificationID" ColumnName="ClassificationID" />
+          <ScalarProperty Name="ClientClassificationID" ColumnName="ClientClassificationID" />
+          <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+          <ScalarProperty Name="DateForHandling" ColumnName="DateForHandling" />
+          <ScalarProperty Name="IsHandled" ColumnName="IsHandled" />
+          <ScalarProperty Name="HandlingDate" ColumnName="HandlingDate" />
+          <ScalarProperty Name="HandlingWay" ColumnName="HandlingWay" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaskTypes">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.TaskType">
+        <MappingFragment StoreEntitySet="TaskTypes">
+          <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+          <ScalarProperty Name="TaskTypeName" ColumnName="TaskTypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SMS" ColumnName="SMS" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="database_firewall_rules">
+      <EntityTypeMapping TypeName="ArgamanExpressModel.database_firewall_rules">
+        <MappingFragment StoreEntitySet="database_firewall_rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="getAllCities" FunctionName="ArgamanExpressModel.Store.getAllCities">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllCities_Result">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllDocuments" FunctionName="ArgamanExpressModel.Store.getAllDocuments">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllDocuments_Result">
+          <ScalarProperty Name="DocID" ColumnName="DocID" />
+          <ScalarProperty Name="DocUser" ColumnName="DocUser" />
+          <ScalarProperty Name="DocCoding" ColumnName="DocCoding" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="DocName" ColumnName="DocName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllProperties" FunctionName="ArgamanExpressModel.Store.getAllProperties">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllProperties_Result">
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Floor" ColumnName="Floor" />
+          <ScalarProperty Name="IsDivided" ColumnName="IsDivided" />
+          <ScalarProperty Name="ManagmentPayment" ColumnName="ManagmentPayment" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="IsExclusivity" ColumnName="IsExclusivity" />
+          <ScalarProperty Name="ExclusivityID" ColumnName="ExclusivityID" />
+          <ScalarProperty Name="IsWarranty" ColumnName="IsWarranty" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="ApartmentNum" ColumnName="ApartmentNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllPropertiesOwners" FunctionName="ArgamanExpressModel.Store.getAllPropertiesOwners">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllPropertiesOwners_Result">
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="OwnerFirstName" ColumnName="OwnerFirstName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="OwnerLastName" ColumnName="OwnerLastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllRentals" FunctionName="ArgamanExpressModel.Store.getAllRentals">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllRentals_Result">
+          <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="RentPayment" ColumnName="RentPayment" />
+          <ScalarProperty Name="PaymentTypeID" ColumnName="PaymentTypeID" />
+          <ScalarProperty Name="EnteryDate" ColumnName="EnteryDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="ContactRenew" ColumnName="ContactRenew" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllStreets" FunctionName="ArgamanExpressModel.Store.getAllStreets">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllStreets_Result">
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllSubProperties" FunctionName="ArgamanExpressModel.Store.getAllSubProperties">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllSubProperties_Result">
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="IsRented" ColumnName="IsRented" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="RoomsNum" ColumnName="RoomsNum" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllTasks" FunctionName="ArgamanExpressModel.Store.getAllTasks">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllTasks_Result">
+          <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+          <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+          <ScalarProperty Name="SubPropertyID" ColumnName="SubPropertyID" />
+          <ScalarProperty Name="ClassificationID" ColumnName="ClassificationID" />
+          <ScalarProperty Name="ClientClassificationID" ColumnName="ClientClassificationID" />
+          <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+          <ScalarProperty Name="DateForHandling" ColumnName="DateForHandling" />
+          <ScalarProperty Name="IsHandled" ColumnName="IsHandled" />
+          <ScalarProperty Name="HandlingDate" ColumnName="HandlingDate" />
+          <ScalarProperty Name="HandlingWay" ColumnName="HandlingWay" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getAllUsers" FunctionName="ArgamanExpressModel.Store.getAllUsers">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getAllUsers_Result">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SMS" ColumnName="SMS" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="getStreets" FunctionName="ArgamanExpressModel.Store.getStreets">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ArgamanExpressModel.getStreets_Result">
+          <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+          <ScalarProperty Name="StreetName" ColumnName="StreetName" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

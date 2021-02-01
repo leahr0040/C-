@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dal;
 using Dto;
+using System.Diagnostics;
 
 namespace Bl
 {
@@ -14,6 +15,7 @@ namespace Bl
         {
             Random rand = new Random();//הגרלה לא תקינה
             int i = rand.Next(100000, 999999);
+
             User u = UserDTO.ToDal(ud);
             if (ud.Email != null)
             {
@@ -22,8 +24,10 @@ namespace Bl
             }//יותר לפי firstname
             else
             {
-                ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
-                ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
+                int x = rand.Next(1000000, 9999999);
+
+                ud.UserName = x.ToString();
+                ud.Password = i.ToString();
             }
             Mailsend.Mailnewuser(ud);
             // else
@@ -43,6 +47,7 @@ namespace Bl
         }
         public static bool DeleteUser(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 User t = db.Users.Find(id);
@@ -50,21 +55,32 @@ namespace Bl
 
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("DeleteUserEror " + e.Message);
+                return false;
             }
-            return false;
         }
 
         public static List<PropertyDTO> Return_Details_user(string userNam, string Passwor)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
                 return RenterBL.getPropertiesbyRenterID(u);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("detailsUsers " + e.Message);
+                return null;
             }
         }
 
         public static bool UpdatePassword(UserDTO ud)//שינוי סיסמה 
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Random rand = new Random();//הגרלה לא תקינה
@@ -83,12 +99,18 @@ namespace Bl
                 Mailsend.Mailnewuser(ud);
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("updatepasswordUsersEror " + e.Message);
+                return false;
             }
         }
 
 
         public static bool UpdateUser(UserDTO ud)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 bool b = false;
@@ -123,15 +145,26 @@ namespace Bl
                 db.SaveChanges();
                 return true;
                 //return false;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("UpdateUsers " + e.Message);
+                return false;
             }
         }
         public static List<UserDTO> GetAllRenters()
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<User> renters = (from r in db.Users where r.status == true select r).ToList();
                 return RenterBL.ConvertListToDTO(renters);
 
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllRenrers " + e.Message);
+                return null;
             }
         }
         //public static List<PropertyDTO> Return_Details_use(string userNam,string Passwor)
@@ -146,43 +179,47 @@ namespace Bl
                 using (ArgamanExpressEntities db = new ArgamanExpressEntities())
                 {
 
-                    User u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
+                    getAllUsers_Result u = (from a in db.getAllUsers() where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
                     if (u != null)
                         return new UserDTO(u);
 
                     return null;
                 }
             }
-
-
-            catch { return null; }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("haveuserFropasswordUsers " + e.Message);
+                return null;
+            }
         }
         public static bool MailToAllUser()
         {
             try
             {
                 List<UserDTO> u = GetAllRenters();
-                int x = u.Count;
-                int i = 0;
-
-                while (i < x)
+                foreach (UserDTO user in u)
                 {
-                    if (u[i].Email != string.Empty && u[i].Email != null)
-                        Mailsend.Mailnewuser(u[i]);
-                    i++;
+                    if (user.Email != "" && user.Email != null && user.status==true)
+                        Mailsend.Mailnewuser(user);
                 }
+                
                 return true;
 
             }
-            catch { return false; }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("mailforAllUsers " + e.Message);
+                return false;
+            }
         }
         public static bool Forgotpassword(string username, string mail)
         {
             //פונקצייה חיפוש עפי מייל קיים
             //Mailsend.Mailforgotpasword()
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                User u = (from a in db.Users where username == a.UserName && mail == a.Email select a).FirstOrDefault();
+                getAllUsers_Result u = (from a in db.getAllUsers() where username == a.UserName && mail == a.Email select a).FirstOrDefault();
 
 
                 if (u != null)
@@ -194,6 +231,12 @@ namespace Bl
                     Mailsend.Mailforgotpasword(u);
                     return true;
                 }
+                return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("forgotPasswordUsers " + e.Message);
                 return false;
             }
         }

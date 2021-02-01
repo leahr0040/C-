@@ -64,7 +64,8 @@ namespace Dto
                 Phone = u.Phone,
                 RoleID = u.RoleID,
                 UserName = u.UserName,
-                Password = u.Password
+                Password = u.Password,
+                status=u.status
             };
         }
         public UserDTO(getAllUsers_Result u)

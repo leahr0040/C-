@@ -6,7 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
+
 using Dto;
+using Microsoft.Build.Framework;
+using Serilog;
+
 namespace ArgemanExpress.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -50,6 +54,8 @@ namespace ArgemanExpress.Controllers
         [Route("GetAllProperties")]
         public IHttpActionResult GetAllProperties()
         {
+            System.Diagnostics.Trace.TraceInformation("come in GetAllProperties controller");
+
             return Ok(Bl.PropertyBL.GetAllProperties());
         }
         [HttpPost]
@@ -70,6 +76,20 @@ namespace ArgemanExpress.Controllers
         //{
         //    return Ok(Bl.PropertyBL.GetRentalBySubPropertyID(id.id));
         //}
+        [HttpGet]
+        [Route("hello")]
+        public IHttpActionResult hello()
+        {
+             //Log.Logger = new LoggerConfiguration()
+             //  .MinimumLevel.Debug()
+             //  .WriteTo.File(AppDomain.CurrentDomain.BaseDirectory + "\\logs\\logs--" + string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}", DateTime.Now) + ".log", outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {Message}{NewLine}{Exception}", shared: true)
+             //  .CreateLogger();
+            System.Diagnostics.Trace.WriteLine("My message!");
+            System.Diagnostics.Trace.TraceInformation("My message!");
+
+            return Ok("hello");
+           
+        }
         [HttpPost]
         [Route("AddCity")]// לבדוק איך קוראים בר
         public IHttpActionResult AddCity([FromBody]NameDto name)

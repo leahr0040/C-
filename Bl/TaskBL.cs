@@ -10,6 +10,7 @@ using System.Data.Entity.Core.Objects;
 using Dal;
 using Dto;
 using System.Data.Entity;
+using System.Diagnostics;
 
 namespace Bl
 {
@@ -38,17 +39,23 @@ namespace Bl
         }
         public static bool DeleteTask(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Dal.Task t = db.Tasks.Find(id);
                 t.status = false;
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("DeleteTask " + e.Message);
+                return false;
             }
-            return false;
         }
         public static bool UpdateTask(TaskDTO td)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Dal.Task t = db.Tasks.Find(td.TaskID);
@@ -82,8 +89,12 @@ namespace Bl
                 }
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("UpdateTaskEror " + e.Message);
+                return false;
             }
-            return false;
         }
         public static bool SetClassification(int id, int classificationId)
         {
@@ -97,8 +108,9 @@ namespace Bl
                     return true;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Trace.TraceInformation("setclassifTaskEror " + e.Message);
                 return false;
             }
         }
@@ -106,6 +118,7 @@ namespace Bl
         static CancellationTokenSource m_ctSource;
         public static void RunPrepareDaily(DateTime date)//מקבלת תאריך מדויק
         {
+            try { 
             m_ctSource = new CancellationTokenSource();
             var dateNow = DateTime.Now;
             TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
@@ -118,7 +131,12 @@ namespace Bl
                 DailySet();//קריאה לפונקציה המבוקשת
                 Addtask2();
                 RunPrepareDaily(date);//קריאה חוזרת לפונקציה...
-            }, m_ctSource.Token);
+            }, m_ctSource.Token);}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("runPrepareDailyEror " + e.Message);
+                
+            }
         }
         public static bool DailySet()
         {
@@ -142,14 +160,16 @@ namespace Bl
                 }
                
             }
-            catch
+            catch (Exception e)
             {
+                Trace.TraceInformation("DailySetTaskEror " + e.Message);
                 return false;
             }
         }
 
         public static void setMonthly(DateTime date)//מקבלת תאריך מדויק
         {
+            try { 
             CancellationTokenSource ctSource;
             ctSource = new CancellationTokenSource();
             var dateNow = DateTime.Now;
@@ -167,6 +187,12 @@ namespace Bl
 
                 setMonthly(date);//קריאה חוזרת לפונקציה...
             }, ctSource.Token);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("setMonthlyTaskEror " + e.Message);
+                
+            }
         }
         //        static System.Timers.Timer timer;
         //        public static void schedule_Timer(DateTime scheduledTime)
@@ -185,6 +211,7 @@ namespace Bl
         //        }
         public static void DeleteAllNotUsedTasks()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 foreach (Dal.Task task in db.Tasks)
@@ -193,10 +220,16 @@ namespace Bl
                         db.Tasks.Remove(task);
                 }
                 db.SaveChanges();
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("DeleteAllNotUsedTaskEror " + e.Message);
+                
             }
         }
         public static void Addtask2()
         {
+            try { 
             ; /*= new TaskDTO();*/
             List<RentalDTO> pro = Bl.RentalBL.GetAllRentals();
             int x = pro.Count;
@@ -209,6 +242,12 @@ namespace Bl
                     
                 }
                 i++;
+            }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addTask2Eror " + e.Message);
+                
             }
         }
         public static bool AddRenewTask(int propertyID, int? subpropertyID)
@@ -238,26 +277,36 @@ namespace Bl
 
         public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<TaskDTO> tdto = new List<TaskDTO>();
                 foreach (Dal.Task t in tasks)
                     tdto.Add(new TaskDTO(t));
                 return tdto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
+                return null;
             }
-            return null;
         }
 
         public static List<TaskDTO> ConvertListToDTO(List<getAllTasks_Result> tasks)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<TaskDTO> tdto = new List<TaskDTO>();
                 foreach (getAllTasks_Result t in tasks)
                     tdto.Add(new TaskDTO(t));
                 return tdto;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<TaskDTO> Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
         {
@@ -266,34 +315,58 @@ namespace Bl
         }
         public static List<TaskDTO> GetAllTasks()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<getAllTasks_Result> tasks = (from t in db.getAllTasks() select t).OrderBy(t => t.ClassificationID).OrderBy(t => t.DateForHandling).ToList();
                 return ConvertListToDTO(tasks);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllTaskEror " + e.Message);
+                return null;
             }
         }
         public static List<TaskDTO> GetAllarchivesTasks()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Dal.Task> tasks = (from t in db.Tasks where t.status == false select t).OrderBy(t => t.DateForHandling).ToList();
                 return ConvertListToDTO(tasks);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getArchiveTaskEror " + e.Message);
+                return null;
             }
         }
         public static List<TaskDTO> GetTimePassedTasks()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Dal.Task> tasks = (from t in db.Tasks where t.status == true && t.IsHandled == false && t.DateForHandling < DateTime.Today select t).ToList();
                 return ConvertListToDTO(tasks);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getTimePassedTaskEror " + e.Message);
+                return null;
             }
         }
         public static List<TaskDTO> GetNotClassificatedTasks()
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Dal.Task> tasks = (from t in db.Tasks where (t.status == true && t.ClassificationID == 0 ||  t.ClassificationID == null) select t).ToList();
                 return ConvertListToDTO(tasks);
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getnotClassifTaskEror " + e.Message);
+                return null;
             }
         }
         //public static string GetTypeName(int id)
@@ -307,6 +380,7 @@ namespace Bl
 
         public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Classification> classifications = db.Classifications.ToList();
@@ -315,11 +389,16 @@ namespace Bl
                     taskClassifications.Add(new TaskClassificationDTO(classif));
                 return taskClassifications;
 
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllClassifTaskEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<TaskTypeDTO> GetAllTaskTypes()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<TaskType> taskTypes = db.TaskTypes.ToList();
@@ -328,11 +407,16 @@ namespace Bl
                     typesDTO.Add(new TaskTypeDTO(type));
                 return typesDTO;
 
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllTaskTypesEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static bool AddTaskType(string name)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 TaskType taskType = new TaskType();
@@ -340,8 +424,12 @@ namespace Bl
                 db.TaskTypes.Add(taskType);
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addTaskTypeEror " + e.Message);
+                return false;
             }
-            return false;
         }
         //public static TaskDTO ReturnTaskbyid(int id)
         //{

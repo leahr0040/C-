@@ -48,7 +48,8 @@ namespace Dto
                 num = sp.num,
                 IsRented = sp.IsRented,
                 Size = sp.Size,
-                RoomsNum = sp.RoomsNum
+                RoomsNum = sp.RoomsNum,
+                status=sp.status
             };
         }
     }

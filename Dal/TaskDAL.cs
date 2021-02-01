@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Dal
 {
@@ -10,6 +11,7 @@ namespace Dal
     {
         public static int AddTask(Task t)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 
@@ -18,11 +20,16 @@ namespace Dal
                 db.Tasks.Add(t);
                 db.SaveChanges();
                 return db.Tasks.Max(i => i.TaskID);
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("addTaskEror " + e.Message);
+                return 0;
             }
-            return 0;
         }
         public static List<Task> Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, Nullable<System.DateTime> DateForHandling, Nullable<bool> IsHandled)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Task> tasks = (from t in db.Tasks where t.status == true select t).ToList();
@@ -36,8 +43,12 @@ namespace Dal
                     tasks = (from t in tasks where t.IsHandled == IsHandled select t).ToList();
                 tasks = tasks.OrderBy(t => t.ClassificationID).OrderBy(t => t.DateForHandling).ToList();
                 return tasks;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("searchTaskEror " + e.Message);
+                return null;
             }
-            return null;
         }
     }
 }

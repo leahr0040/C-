@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dto;
 using Dal;
+using System.Diagnostics;
+
 namespace Bl
 {
     public class PropertyBL
@@ -34,17 +36,23 @@ namespace Bl
        
         public static bool DeleteProperty(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Property p = db.Properties.Find(id);
                 p.status = false;
                 db.SaveChanges();
                 return true;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deletePropertyEror " + e.Message);
+                return false;
             }
-            return false;
         }
             public static bool UpdateProperty(PropertyDTO pd)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Property p = db.Properties.Find(pd.PropertyID);
@@ -77,22 +85,35 @@ namespace Bl
                 db.SaveChanges();
                 return true;
             }
-            return false;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("UpdatePropertyEror " + e.Message);
+                return false;
+            }
         }
         public static List<PropertyDTO> ConvertListToDTO(List<Property> pro)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertyDTO> prodto = new List<PropertyDTO>();
                 foreach (Property p in pro)
                     prodto.Add(new PropertyDTO(p));
                 return prodto;
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("PropertyConvertListToDTOEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static List<PropertyDTO> ConvertListToDTO(List<getAllProperties_Result> pro)
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            System.Diagnostics.Trace.TraceInformation("ConvertListToDTO");
+            try
+            {
+                 using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<PropertyDTO> prodto = new List<PropertyDTO>();
                 foreach (getAllProperties_Result p in pro)
@@ -100,6 +121,14 @@ namespace Bl
                 return prodto;
             }
             return null;
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Trace.TraceInformation("convertListToDtoProperty"+ e.Message +" 109");
+
+                return null;
+            }
+           
         }
         public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
@@ -109,19 +138,39 @@ namespace Bl
         }
         public static List<PropertyDTO> GetAllProperties()
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            System.Diagnostics.Trace.TraceInformation("come in GetAllProperties BLL");
+            try
+            {  
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
+                System.Diagnostics.Trace.TraceInformation("117");
+
                 List<getAllProperties_Result> pro =(from p in  db.getAllProperties() select p).
                    OrderBy(p => p.CityID).OrderBy(p => p.StreetID).ToList();
                 return ConvertListToDTO(pro);
             }
+
+            }catch(Exception e)
+
+            {
+                System.Diagnostics.Trace.TraceInformation("getAllPropertiesEror"+e.Message);
+                return new List<PropertyDTO>();
+
+            }
+
         }
         public static PropertyDTO GetPropertyByID(int id)
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 Property property = db.Properties.Find(id);
                 return new PropertyDTO(property);
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getPropertyByIDEror " + e.Message);
+                return null;
             }
         }
         //public static RentalDTO GetRentalByPropertyID(int id)
@@ -148,6 +197,7 @@ namespace Bl
         }
         public static List<ExclusivityPersonDTO> GetAllExclusivityPoeple()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<Exclusivity> ex = db.Exclusivitys.ToList();
@@ -157,8 +207,12 @@ namespace Bl
                     exDTOs.Add(new ExclusivityPersonDTO(e));
                 }
                 return exDTOs;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("GetAllExclusivityPoepleEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static bool AddCity(string name)
         {
@@ -168,6 +222,7 @@ namespace Bl
         }
         public static List<CityDTO> GetAllCities()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 List<getAllCities_Result> cities = db.getAllCities().OrderBy(i=>i.CityName).ToList();
@@ -177,8 +232,12 @@ namespace Bl
                     cityDTOs.Add(new CityDTO(city));
                 }
                 return cityDTOs;
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("GetAllCitiesEror " + e.Message);
+                return null;
             }
-            return null;
         }
         public static bool AddStreet(StreetDTO sDTO)
         {
@@ -186,6 +245,7 @@ namespace Bl
         }
         public static List<StreetDTO> GetStreetsByCityID(int id)
         {
+            try {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 City city = db.Cities.Find(id);
@@ -195,12 +255,17 @@ namespace Bl
                     streetDTOs.Add(new StreetDTO(street));
                 }
                 return streetDTOs;
+            } }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("GetStreetbyCityIDEror " + e.Message);
+                return null;
             }
-            return null;
         }
        
             public static List<StreetDTO> GetAllStreets()
         {
+            try { 
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
                 db.Database.CommandTimeout=300;
@@ -213,8 +278,12 @@ namespace Bl
                 }
               
                 return streetDTOs;
-            }
+            }}
+            catch (Exception e)
+            {
+                Trace.TraceInformation("GetAllStreetsEror " + e.Message);
                 return null;
+            }
         }
         //public static StreetDTO GetStreetByID(int id)
         //{

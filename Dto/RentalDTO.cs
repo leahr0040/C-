@@ -65,7 +65,8 @@ namespace Dto
                 PaymentTypeID = r.PaymentTypeID,
                 EnteryDate = r.EnteryDate,
                 EndDate = r.EndDate,
-                ContactRenew = r.ContactRenew
+                ContactRenew = r.ContactRenew,
+                status=r.status
             };
         }
     }
