@@ -22,12 +22,7 @@ namespace Bl
             {
                 if (ud.Dock != null)
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = ud.Dock;
-                    doc.DocUser = id;
-                    doc.type = 4;
-                    doc.DocName = ud.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    DocumentBL.AddUserDocuments(new DocumentDTO( id,ud.Dock,4,ud.DocName));
                 }
                 return true;
             }
@@ -41,61 +36,23 @@ namespace Bl
         {
             if ( ud.Dock != null)
             {
-                Document doc = new Document();
-                doc.DocCoding = ud.Dock;
-                doc.DocUser = ud.UserID;
-                doc.type = 4;
-                doc.DocName = ud.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                DocumentBL.AddUserDocuments(new DocumentDTO( ud.UserID,ud.Dock,4,ud.DocName));
                 
             }
             return UserBL.UpdateUser(ud);
         }
-        public static List<UserDTO> ConvertListToDTO(List<User> renters)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<UserDTO> udto = new List<UserDTO>();
-                foreach (User u in renters)
-                    udto.Add(new UserDTO(u));
-                return udto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
-                return null;
-            }
-        }
-        public static List<UserDTO> ConvertListToDTO(List<getAllUsers_Result> renters)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<UserDTO> udto = new List<UserDTO>();
-                foreach (getAllUsers_Result u in renters)
-                    udto.Add(new UserDTO(u));
-                return udto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
-                return null;
-            }
-        }
+        
         public static List<UserDTO> Search(string FirstName, string LastName, string SMS, string Email, string Phone)
         {
             List<User> users = RenterDAL.Search(FirstName,LastName,SMS, Email, Phone);
-            return ConvertListToDTO(users);
+            return UserDTO. ConvertListToDTO(users);
         }
         public static List<UserDTO> GetAllRenters()
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID==3  select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
-                return ConvertListToDTO(renters);
-            }}
+            List<getAllUsers_Result> renters = RenterDAL.GetAllRenters();
+                return UserDTO.ConvertListToDTO(renters);
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getAllRentersEror " + e.Message);
@@ -119,7 +76,7 @@ namespace Bl
         public static List<PropertyDTO> getPropertiesbyRenterID(int id)//דירות ששוכר לפי איידי
         {
             List<Property> properties = RenterDAL.getPropertiesbyRenterID(id);
-            return Bl.PropertyBL.ConvertListToDTO(properties);
+            return PropertyDTO.ConvertListToDTO(properties);
             
         }
     }

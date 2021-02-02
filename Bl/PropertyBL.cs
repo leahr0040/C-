@@ -27,149 +27,69 @@ namespace Bl
                     doc.type = 1;
                     doc.DocName = d.DocName;
                     DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-
                 }
                 return true;
             }
             return false;
         }
-       
+
         public static bool DeleteProperty(int id)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Property p = db.Properties.Find(id);
-                p.status = false;
-                db.SaveChanges();
-                return true;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("deletePropertyEror " + e.Message);
-                return false;
-            }
+            return PropertyDAL.DeleteProperty(id);
         }
-            public static bool UpdateProperty(PropertyDTO pd)
+        public static bool UpdateProperty(PropertyDTO pd)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                Property p = db.Properties.Find(pd.PropertyID);
-               
-                p.OwnerID = pd.OwnerID;
-                p.CityID = pd.CityID;
-                p.StreetID = pd.StreetID;
-                p.Number = pd.Number;
-                p.Size = pd.Size;
-                p.Floor = pd.Floor;
-                p.IsDivided = pd.IsDivided;
-                p.ManagmentPayment = pd.ManagmentPayment;
-                p.IsPaid = pd.IsPaid;
-                p.IsExclusivity = pd.IsExclusivity;
-                p.ExclusivityID = pd.ExclusivityID;
-                p.IsWarranty = pd.IsWarranty;
-                p.IsRented = pd.IsRented;
-                p.RoomsNum = pd.RoomsNum;
-                p.ApartmentNum = pd.ApartmentNum;
-                if (pd.Dock != null)
-                {
-                    Document doc = new Document();
-                    doc.DocCoding = pd.Dock;
-                    doc.DocUser = pd.PropertyID;
-                    doc.type = 1;
-                    doc.DocName = pd.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-
-                }
-                db.SaveChanges();
-                return true;
-            }
-            }
-            catch (Exception e)
-            {
-                Trace.TraceInformation("UpdatePropertyEror " + e.Message);
-                return false;
-            }
-        }
-        public static List<PropertyDTO> ConvertListToDTO(List<Property> pro)
-        {
-            try {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<PropertyDTO> prodto = new List<PropertyDTO>();
-                foreach (Property p in pro)
-                    prodto.Add(new PropertyDTO(p));
-                return prodto;
-            } }
-            catch (Exception e)
-            {
-                Trace.TraceInformation("PropertyConvertListToDTOEror " + e.Message);
-                return null;
-            }
-        }
-        public static List<PropertyDTO> ConvertListToDTO(List<getAllProperties_Result> pro)
-        {
-            System.Diagnostics.Trace.TraceInformation("ConvertListToDTO");
             try
             {
-                 using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<PropertyDTO> prodto = new List<PropertyDTO>();
-                foreach (getAllProperties_Result p in pro)
-                    prodto.Add(new PropertyDTO(p));
-                return prodto;
-            }
-            return null;
-            }
-            catch(Exception e)
-            {
-                System.Diagnostics.Trace.TraceInformation("convertListToDtoProperty"+ e.Message +" 109");
+                
+                if (pd.Dock != null)
+                {
+                    DocumentBL.AddUserDocuments(new DocumentDTO(pd.PropertyID, pd.Dock, 1, pd.DocName));
+                }
 
-                return null;
+                return PropertyDAL.UpdateProperty(PropertyDTO.Todal(pd));
             }
-           
+            catch (Exception e)
+            {
+                Trace.TraceInformation("UpdatePropertyblEror " + e.Message);
+                return false;
+            }
         }
+
         public static List<PropertyDTO> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
 
             List<Property> pro = PropertyDAL.Search(cityName, streetName, number, floor, isRented);
-            return ConvertListToDTO(pro);
+            return PropertyDTO.ConvertListToDTO(pro);
         }
         public static List<PropertyDTO> GetAllProperties()
         {
-            System.Diagnostics.Trace.TraceInformation("come in GetAllProperties BLL");
+           
             try
-            {  
-                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
             {
-                System.Diagnostics.Trace.TraceInformation("117");
 
-                List<getAllProperties_Result> pro =(from p in  db.getAllProperties() select p).
-                   OrderBy(p => p.CityID).OrderBy(p => p.StreetID).ToList();
-                return ConvertListToDTO(pro);
+                List<getAllProperties_Result> pro = PropertyDAL.GetAllProperties();
+                    return PropertyDTO.ConvertListToDTO(pro);
+                
             }
-
-            }catch(Exception e)
+            catch (Exception e)
 
             {
-                System.Diagnostics.Trace.TraceInformation("getAllPropertiesEror"+e.Message);
+                System.Diagnostics.Trace.TraceInformation("getAllPropertiesEror" + e.Message);
                 return new List<PropertyDTO>();
 
             }
-
         }
         public static PropertyDTO GetPropertyByID(int id)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                Property property = db.Properties.Find(id);
-                return new PropertyDTO(property);
-            }}
+                    Property property = PropertyDAL.GetPropertyByID(id);
+                    return new PropertyDTO(property);
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getPropertyByIDEror " + e.Message);
+                Trace.TraceInformation("getPropertyByIDblEror " + e.Message);
                 return null;
             }
         }
@@ -197,17 +117,17 @@ namespace Bl
         }
         public static List<ExclusivityPersonDTO> GetAllExclusivityPoeple()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Exclusivity> ex = db.Exclusivitys.ToList();
+
+                List<Exclusivity> ex = PropertyDAL.GetAllExclusivityPoeple();
                 List<ExclusivityPersonDTO> exDTOs = new List<ExclusivityPersonDTO>();
                 foreach (Exclusivity e in ex)
                 {
                     exDTOs.Add(new ExclusivityPersonDTO(e));
                 }
                 return exDTOs;
-            }}
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("GetAllExclusivityPoepleEror " + e.Message);
@@ -222,20 +142,19 @@ namespace Bl
         }
         public static List<CityDTO> GetAllCities()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<getAllCities_Result> cities = db.getAllCities().OrderBy(i=>i.CityName).ToList();
+                List<getAllCities_Result> cities = PropertyDAL.GetAllCities();
                 List<CityDTO> cityDTOs = new List<CityDTO>();
                 foreach (getAllCities_Result city in cities)
                 {
                     cityDTOs.Add(new CityDTO(city));
                 }
                 return cityDTOs;
-            }}
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("GetAllCitiesEror " + e.Message);
+                Trace.TraceInformation("GetAllCitiesblEror " + e.Message);
                 return null;
             }
         }
@@ -245,40 +164,40 @@ namespace Bl
         }
         public static List<StreetDTO> GetStreetsByCityID(int id)
         {
-            try {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                City city = db.Cities.Find(id);
-                List<StreetDTO> streetDTOs = new List<StreetDTO>();
-                foreach (Street street in city.Streets)
-                {
-                    streetDTOs.Add(new StreetDTO(street));
-                }
-                return streetDTOs;
-            } }
+               
+                    List<Street> streets = PropertyDAL.GetStreetsByCityID(id);
+                    List<StreetDTO> streetDTOs = new List<StreetDTO>();
+                    foreach (Street street in streets)
+                    {
+                        streetDTOs.Add(new StreetDTO(street));
+                    }
+                    return streetDTOs;
+                
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("GetStreetbyCityIDEror " + e.Message);
                 return null;
             }
         }
-       
-            public static List<StreetDTO> GetAllStreets()
+
+        public static List<StreetDTO> GetAllStreets()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                db.Database.CommandTimeout=300;
-                List< getStreets_Result> streets = db.getStreets().ToList();
-                
+
+                List<getStreets_Result> streets = PropertyDAL.GetAllStreets();
+
                 List<StreetDTO> streetDTOs = new List<StreetDTO>();
                 foreach (getStreets_Result street in streets)
                 {
                     streetDTOs.Add(new StreetDTO(street));
                 }
-              
+
                 return streetDTOs;
-            }}
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("GetAllStreetsEror " + e.Message);
@@ -294,6 +213,6 @@ namespace Bl
         //    }
         //    return null;
         //}
-        
+
     }
 }

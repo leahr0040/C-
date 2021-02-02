@@ -10,11 +10,11 @@ using Dal;
 
 namespace Bl
 {
-   public  class DocumentBL
+    public class DocumentBL
     {
         public static bool AddUserDocuments(DocumentDTO doc)
         {
-            
+
             Document d = DocumentDTO.ToDAL(doc);
             return DocumentDAL.AddUserDocuments(d);
         }
@@ -23,43 +23,43 @@ namespace Bl
             Document d = DocumentDTO.ToDAL(doc);
             return DocumentDAL.DeleteUserDocuments(d);
         }
-        public static List<DocumentDTO> GetUserDocuments(int id,int type)
+        public static List<DocumentDTO> GetUserDocuments(int id, int type)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Document> documents = (from d in db.Documents where d.DocUser == id && d.type==type select d).ToList();
-                List<DocumentDTO> docks = new List<DocumentDTO>();
-                foreach (Document document in documents)
-                {
-                    docks.Add(new DocumentDTO(document));
-                }
-                return docks;
-                }
+               
+                    List<Document> documents = DocumentDAL.GetUserDocuments(id, type);
+                    List<DocumentDTO> docks = new List<DocumentDTO>();
+                    foreach (Document document in documents)
+                    {
+                        docks.Add(new DocumentDTO(document));
+                    }
+                    return docks;
             }
             catch (Exception e)
             {
-                Trace.TraceInformation("getUserDocumentsEror " + e.Message);
+                Trace.TraceInformation("getUserDocumentsblEror " + e.Message);
                 return null;
             }
 
         }
         public static List<DocumentDTO> GetAllDocuments()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<getAllDocuments_Result> documents = (from d in db.getAllDocuments() select d).ToList();
-                List<DocumentDTO> docks = new List<DocumentDTO>();
-                foreach (getAllDocuments_Result document in documents)
                 {
-                    docks.Add(new DocumentDTO(document));
+                    List<getAllDocuments_Result> documents = DocumentDAL.GetAllDocuments();
+                    List<DocumentDTO> docks = new List<DocumentDTO>();
+                    foreach (getAllDocuments_Result document in documents)
+                    {
+                        docks.Add(new DocumentDTO(document));
+                    }
+                    return docks;
                 }
-                return docks;
-            }}
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getDocumentsEror " + e.Message);
+                Trace.TraceInformation("getDocumentsblEror " + e.Message);
                 return null;
             }
 

@@ -15,10 +15,7 @@ namespace Bl
     {
         public static void Mailnewuser(UserDTO ud)
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-
-                try
+             try
                 {
                     MailMessage mail = new MailMessage();
                     SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -46,13 +43,12 @@ namespace Bl
                 {
                     throw e;
                 }
-            }
+            
 
         }
         public static void Mailforgotpasword(getAllUsers_Result ud)
         {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
+           
                 try
                 {
                     MailMessage mail = new MailMessage();
@@ -81,7 +77,6 @@ namespace Bl
                 {
                     throw e;
                 }
-            }
 
         }
 

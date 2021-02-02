@@ -15,7 +15,6 @@ namespace Bl
         {
             Random rand = new Random();//הגרלה לא תקינה
             int i = rand.Next(100000, 999999);
-
             User u = UserDTO.ToDal(ud);
             if (ud.Email != null)
             {
@@ -35,71 +34,68 @@ namespace Bl
             int id = UserDAL.AddUser(u);
             if (id != 0 && ud.Dock != null)
             {
-                Document doc = new Document();
-                doc.DocCoding = ud.Dock;
-                doc.DocUser = id;
-                doc.type = 7;
-                doc.DocName = ud.DocName;
-                DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                DocumentBL.AddUserDocuments(new DocumentDTO(id, ud.Dock, 7, ud.DocName));
                 return true;
             }
             return false;
         }
         public static bool DeleteUser(int id)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                User t = db.Users.Find(id);
-                t.status = false;
+                return UserDAL.DeleteUser(id);
 
-                db.SaveChanges();
-                return true;
-            }}
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("DeleteUserEror " + e.Message);
+                Trace.TraceInformation("DeleteUserblEror " + e.Message);
                 return false;
             }
         }
 
-        public static List<PropertyDTO> Return_Details_user(string userNam, string Passwor)
+        public static List<PropertyDTO> Return_Details_user(string userName, string password)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
-                return RenterBL.getPropertiesbyRenterID(u);
-            }}
+
+                int u = UserDAL.Return_Details_user(userName, password);
+                if (u != 0)
+                    return RenterBL.getPropertiesbyRenterID(u);
+                return null;
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("detailsUsers " + e.Message);
+                Trace.TraceInformation("detailsblUsers " + e.Message);
                 return null;
             }
         }
 
         public static bool UpdatePassword(UserDTO ud)//שינוי סיסמה 
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
+
                 Random rand = new Random();//הגרלה לא תקינה
+                string userName = "";
+                string password = "";
                 int i = rand.Next(100000, 999999);
                 //User u = UserDTO.ToDal(ud);
                 if (ud.Email != null)
                 {
-                    ud.UserName = ud.Email;
-                    ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+                    userName = ud.Email;
+                    password = ud.Email.Substring(0, 2) + i.ToString();
                 }//יותר לפי firstname
                 else
                 {
-                    ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
-                    ud.Password = ud.UserName.Substring(2, 5) + i.ToString();
+                    userName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
+                    password = ud.UserName.Substring(2, 5) + i.ToString();
                 }
-                Mailsend.Mailnewuser(ud);
-                db.SaveChanges();
+                User u = UserDAL.UpdatePassword(ud.UserID, userName, password);
+                if (u == null)
+                    return false;
+                Mailsend.Mailnewuser(new UserDTO(u));
                 return true;
-            }}
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("updatepasswordUsersEror " + e.Message);
@@ -110,42 +106,16 @@ namespace Bl
 
         public static bool UpdateUser(UserDTO ud)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                bool b = false;
-                User u = db.Users.Find(ud.UserID);
-                if ((u.Email != ud.Email) || (u.UserName != ud.UserName) || (u.Password != ud.Password))
-                    b = true;
-                if ((ud.UserName == null) || (ud.Password == null) || (ud.UserName == ""))
-                {
-                    Random rand = new Random();//הגרלה לא תקינה
-                    int i = rand.Next(100000, 999999);
-                    if (ud.Email != null)
-                    {
-                        ud.UserName = ud.Email;
-                        ud.Password = ud.Email.Substring(0, 2) + i.ToString();
-                    }//יותר לפי firstname
-                    else
-                    {
-                        ud.UserName = ud.FirstName.Substring(1, 4) + ud.LastName.Substring(1, 4);
-                        ud.Password = ud.UserName.Substring(1, 3) + i.ToString();
-                    }
-                }
-                u.FirstName = ud.FirstName;
-                u.LastName = ud.LastName;
-                u.SMS = ud.SMS;
-                u.Email = ud.Email;
-                u.Phone = ud.Phone;
-                u.RoleID = ud.RoleID;
-                u.UserName = ud.UserName;
-                u.Password = ud.Password;
-                if (b == true)//עוד בלי אופציית SMS
-                    Mailsend.Mailnewuser(ud);
-                db.SaveChanges();
+                User u = UserDAL.UpdateUser(UserDTO.ToDal(ud));
+                if (u == null)
+                    return false;
+                if (u.Email != ud.Email || u.UserName != ud.UserName || u.Password != ud.Password)
+                    Mailsend.Mailnewuser(new UserDTO(u));
                 return true;
-                //return false;
-            }}
+
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("UpdateUsers " + e.Message);
@@ -154,16 +124,14 @@ namespace Bl
         }
         public static List<UserDTO> GetAllRenters()
         {
-            try {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<User> renters = (from r in db.Users where r.status == true select r).ToList();
-                return RenterBL.ConvertListToDTO(renters);
-
-            } }
+                 List<User> renters =UserDAL.GetAllRenters();
+                    return UserDTO.ConvertListToDTO(renters);
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getAllRenrers " + e.Message);
+                Trace.TraceInformation("getAllblRenrers " + e.Message);
                 return null;
             }
         }
@@ -172,23 +140,19 @@ namespace Bl
         //    int u = (from a in db.Users where userNam == a.UserName && Passwor == a.Password select a.UserID).FirstOrDefault();
         //    return RenterBL.getPropertiesbyRenterID(u);
         //}
-        public static UserDTO Haveuserforpassword(string userNam, string Passwor)
+        public static UserDTO Haveuserforpassword(string userName, string password)
         {
             try
             {
-                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-                {
-
-                    getAllUsers_Result u = (from a in db.getAllUsers() where userNam == a.UserName && Passwor == a.Password select a).FirstOrDefault();
+                  getAllUsers_Result u = UserDAL.Haveuserforpassword(userName,password);
                     if (u != null)
                         return new UserDTO(u);
-
                     return null;
-                }
+                
             }
             catch (Exception e)
             {
-                Trace.TraceInformation("haveuserFropasswordUsers " + e.Message);
+                Trace.TraceInformation("haveuserFropasswordUsersblErr " + e.Message);
                 return null;
             }
         }
@@ -199,10 +163,10 @@ namespace Bl
                 List<UserDTO> u = GetAllRenters();
                 foreach (UserDTO user in u)
                 {
-                    if (user.Email != "" && user.Email != null && user.status==true)
+                    if (user.Email != "" && user.Email != null && user.status == true)
                         Mailsend.Mailnewuser(user);
                 }
-                
+
                 return true;
 
             }
@@ -216,23 +180,17 @@ namespace Bl
         {
             //פונקצייה חיפוש עפי מייל קיים
             //Mailsend.Mailforgotpasword()
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                getAllUsers_Result u = (from a in db.getAllUsers() where username == a.UserName && mail == a.Email select a).FirstOrDefault();
+                getAllUsers_Result u = UserDAL.Forgotpassword(username,mail);
 
 
-                if (u != null)
-                {
-                    Random rand = new Random();
-                    int i = rand.Next(100000, 999999);
-                    u.Password = u.UserName.Substring(0, 2) + i.ToString();
-                    db.SaveChanges();
-                    Mailsend.Mailforgotpasword(u);
+                if (u == null)
+                    return false;
+                       
+                        Mailsend.Mailforgotpasword(u);
                     return true;
-                }
-                return false;
-                }
+
             }
             catch (Exception e)
             {

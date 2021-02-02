@@ -28,8 +28,45 @@ namespace Dal
                 return 0;
             }
         }
-
-
+        public static bool UpdatePropertyOwner(PropertiesOwner po)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    PropertiesOwner pro = db.PropertiesOwners.Find(po.OwnerID);
+                    pro.OwnerFirstName = po.OwnerFirstName;
+                    pro.OwnerLastName = po.OwnerLastName;
+                    pro.Phone = po.Phone;
+                    pro.Email = po.Email;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("updatePropertyOwnerEror " + e.Message);
+                return false;
+            }
+        }
+        public static bool DeletePropertyOwner(int id)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    PropertiesOwner p = db.PropertiesOwners.Find(id);
+                    p.status = false;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deletePropertyOwnerEror " + e.Message);
+                return false;
+            }
+        }
         public static List<PropertiesOwner> Search(string OwnerFirstName, string OwnerLastName, string Phone, string Email)
         {
             try { 
@@ -51,6 +88,22 @@ namespace Dal
             catch (Exception e)
             {
                 Trace.TraceInformation("searchPropertyOwnerEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<getAllPropertiesOwners_Result> getAllOwners()
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<getAllPropertiesOwners_Result> owners = (from o in db.getAllPropertiesOwners() select o).OrderBy(o => o.OwnerFirstName).OrderBy(o => o.OwnerLastName).ToList();
+                    return owners;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllOwnersEror " + e.Message);
                 return null;
             }
         }

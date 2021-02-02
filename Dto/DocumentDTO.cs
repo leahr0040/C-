@@ -26,6 +26,14 @@ namespace Dto
            this.type = d.type;
             this.DocName = d.DocName;
         }
+        public DocumentDTO(int DocUser, string DocCoding, Nullable<int> type, string DocName)
+        {
+            //this.DocID = DocID;
+            this.DocUser = DocUser;
+            this.DocCoding = DocCoding;
+            this.type = type;
+            this.DocName = DocName;
+        }
         public DocumentDTO(getAllDocuments_Result d)
         {
             this.DocID = d.DocID;
@@ -45,5 +53,16 @@ namespace Dto
                DocName=d.DocName
             };
         }
+        //public static Document ToDAL(int DocID, int DocUser, string DocCoding, Nullable<int> type, string DocName)
+        //{
+        //    return new Document
+        //    {
+        //        DocID = DocID,
+        //        DocUser = DocUser,
+        //        DocCoding = DocCoding,
+        //        type = type,
+        //        DocName = DocName
+        //    };
+        //}
     }
 }

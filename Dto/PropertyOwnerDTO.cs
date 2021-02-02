@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Dal;
 
 namespace Dto
@@ -52,6 +53,37 @@ namespace Dto
                 status=po.status
 
             };
+        }
+        public static List<PropertyOwnerDTO> ConvertListToDTO(List<PropertiesOwner> po)
+        {
+            try
+            {
+                    List<PropertyOwnerDTO> podto = new List<PropertyOwnerDTO>();
+                    foreach (PropertiesOwner p in po)
+                        podto.Add(new PropertyOwnerDTO(p));
+                    return podto;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOOwnersEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<PropertyOwnerDTO> ConvertListToDTO(List<getAllPropertiesOwners_Result> po)
+        {
+            try
+            {
+                 List<PropertyOwnerDTO> podto = new List<PropertyOwnerDTO>();
+                    foreach (getAllPropertiesOwners_Result p in po)
+                        podto.Add(new PropertyOwnerDTO(p));
+                    return podto;
+                
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOOwnersEror " + e.Message);
+                return null;
+            }
         }
     }
 }

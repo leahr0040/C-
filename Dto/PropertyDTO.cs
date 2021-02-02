@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Dal;
 
 namespace Dto
@@ -102,44 +103,39 @@ namespace Dto
         };
 
         }
-        //public int OwnerID { get; set; }
-        //public int PropertyID { get; set; }
-        //public int CityID { get; set; }
-        //public string CityName { get; set; }
-        //public int StreetID { get; set; }
-        //public string StreetName { get; set; }
-        //public string Number { get; set; }
-        //public float Size { get; set; }
-        //public int Floor { get; set; }
-        //public bool IsDivided { get; set; }
-        //public float ManagmentPayment { get; set; }
-        //public bool IsPaid { get; set; }
-        //public bool IsRented { get; set; }
-        //public bool IsExclusivity { get; set; }
-        //public int ExclusivityID { get; set; }
-        //public bool IsWarranty { get; set; }
-        //public PropertyDTO()
-        //{ }
+        public static List<PropertyDTO> ConvertListToDTO(List<Property> pro)
+        {
+            try
+            {
+                    List<PropertyDTO> prodto = new List<PropertyDTO>();
+                    foreach (Property p in pro)
+                        prodto.Add(new PropertyDTO(p));
+                    return prodto;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("PropertyConvertListToDTOEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<PropertyDTO> ConvertListToDTO(List<getAllProperties_Result> pro)
+        {
+            System.Diagnostics.Trace.TraceInformation("ConvertListToDTO");
+            try
+            {
+                
+                    List<PropertyDTO> prodto = new List<PropertyDTO>();
+                    foreach (getAllProperties_Result p in pro)
+                        prodto.Add(new PropertyDTO(p));
+                    return prodto;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.TraceInformation("convertListToDtoProperty" + e.Message + " 109");
 
-        //public PropertyDTO(Property p)
-        //{
-        //    OwnerID = p.OwnerID;
-        //    PropertyID = p.PropertyID;
-        //    CityID = p.CityID;
-        //    CityName = p.CityName;
-        //    StreetID = p.StreetID;
-        //    Number = p.Number;
-        //    Size = p.Size;
-        //    Floor = p.Floor;
-        //    IsDivided = p.IsDivided;
-        //    ManagmentPayment = p.ManagmentPayment;
-        //    IsPaid = p.IsPaid;
-        //    IsRented = p.IsRented;
-        //    IsExclusivity = p.IsExclusivity;
-        //    ExclusivityID = p.ExclusivityID;
-        //    IsWarranty = p.IsWarranty;
+                return null;
+            }
 
-        //}
-        
+        }
     }
 }

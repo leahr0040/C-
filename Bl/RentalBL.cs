@@ -21,12 +21,7 @@ namespace Bl
             {
                 if (rd.Dock != null)
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = rd.Dock;
-                    doc.DocUser = id;
-                    doc.type = 3;
-                    doc.DocName = rd.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    DocumentBL.AddUserDocuments(new DocumentDTO(id,rd.Dock,3,rd.DocName));
                 }
                 if (rd.ContactRenew == true && (rd.EndDate).Value < DateTime.Today.AddMonths(3))
                     Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
@@ -38,112 +33,64 @@ namespace Bl
         public static bool DeleteRental(int id)
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                
-                Rental p = db.Rentals.Find(id);
-                p.Property.IsRented = false;
-                p.status = false;
-                db.SaveChanges();
-                return true;
-            }}
+            
+                return RentalDAL.DeleteRental(id);
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("deleteRentalEror " + e.Message);
+                Trace.TraceInformation("deleteRentalblEror " + e.Message);
                 return false;
             }
         }
         public static bool UpdateRental(RentalDTO rd)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                Rental r = db.Rentals.Find(rd.RentalID);
-                r.PropertyID = rd.PropertyID;
-                r.SubPropertyID = rd.SubPropertyID;
-                r.UserID = rd.UserID;
-                r.RentPayment = rd.RentPayment;
-                r.PaymentTypeID = rd.PaymentTypeID;
-                r.EnteryDate = rd.EnteryDate;
-                r.EndDate = rd.EndDate;
-                if(r.ContactRenew != rd.ContactRenew)
+
+                Rental r = RentalDAL.UpdateRental(RentalDTO.ToDal(rd));
+                if (r != null)
                 {
-                    if (rd.ContactRenew == true && rd.EndDate.Value < DateTime.Today.AddMonths(3))
-                        Bl.TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
-                    else
+                    if (r.ContactRenew != rd.ContactRenew)
                     {
-                       getAllTasks_Result task= db.getAllTasks().Where(t => t.PropertyID == rd.PropertyID && t.TaskTypeId == 2 && t.status == true && t.SubPropertyID == rd.SubPropertyID).FirstOrDefault();
-                        if (task != null)
-                            Bl.TaskBL.DeleteTask(task.TaskID);
+                        if (rd.ContactRenew == true && rd.EndDate.Value < DateTime.Today.AddMonths(3))
+                            TaskBL.AddRenewTask(rd.PropertyID, rd.SubPropertyID);
+                        else
+                        {
+                            getAllTasks_Result task = TaskDAL.GetTaskForDeleteing(rd.PropertyID, 2, rd.SubPropertyID);
+                            if (task != null)
+                                TaskBL.DeleteTask(task.TaskID);
+                        }
                     }
+
+                    if (rd.Dock != null)
+                    {
+
+                        DocumentBL.AddUserDocuments(new DocumentDTO(rd.RentalID, rd.Dock, 3, rd.DocName));
+                    }
+                    return true;
                 }
-                r.ContactRenew = rd.ContactRenew;
-                
-                if (rd.Dock != null)
-                {
-                    Document doc = new Document();
-                    doc.DocCoding = rd.Dock;
-                    doc.DocUser = rd.RentalID;
-                    doc.type = 3;
-                    doc.DocName = rd.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                }
-                db.SaveChanges();
-                return true;
-            }}
+                return false;
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("updateRentalEror " + e.Message);
+                Trace.TraceInformation("updateRentalblEror " + e.Message);
                 return false;
             }
         }
-        public static List<RentalDTO> ConvertListToDTO(List<Rental> rentals)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<RentalDTO> redto = new List<RentalDTO>();
-                foreach (Rental r in rentals)
-                    redto.Add(new RentalDTO(r));
-                return redto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
-                return null;
-            }
-        }
-        public static List<RentalDTO> ConvertListToDTO(List<getAllRentals_Result> rentals)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<RentalDTO> redto = new List<RentalDTO>();
-                foreach (getAllRentals_Result r in rentals)
-                    redto.Add(new RentalDTO(r));
-                return redto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
-                return null;
-            }
-        }
+        
         public static List<RentalDTO> Search(Nullable<int> propertyID, string owner, string user, Nullable<DateTime> enteryDate, Nullable<DateTime> endDate)
         {
 
             List<Rental> rentals = RentalDAL.Search(propertyID, owner, user, enteryDate, endDate);
-            return ConvertListToDTO(rentals);
+            return RentalDTO.ConvertListToDTO(rentals);
         }
         public static List<RentalDTO> GetAllRentals()
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<getAllRentals_Result> pro = (from r in db.getAllRentals()select r).OrderBy(r => r.EndDate).ToList();
-
-                return ConvertListToDTO(pro);
-            }}
+            
+                List<getAllRentals_Result> pro = RentalDAL.GetAllRentals();
+                return RentalDTO.ConvertListToDTO(pro);
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getAllRentalEror " + e.Message);
@@ -153,19 +100,17 @@ namespace Bl
         public static List<PaymentTypeDTO> GetAllPaymentTypes()
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<PaymentType> ptypes = (from pt in db.PaymentTypes select pt).OrderBy(pt => pt.PaymentTypeName).ToList();
+            List<PaymentType> ptypes = RentalDAL.GetAllPaymentTypes();
                 List<PaymentTypeDTO> ptdto = new List<PaymentTypeDTO>();
                 foreach (PaymentType ptype in ptypes)
                 {
                     ptdto.Add(new PaymentTypeDTO(ptype));
                 }
                 return ptdto;
-            }}
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getallPaymentTypesRentalEror " + e.Message);
+                Trace.TraceInformation("getallPaymentTypesRentalblEror " + e.Message);
                 return null;
             }
         }
@@ -179,7 +124,7 @@ namespace Bl
             if (date <= dateNow)
             {//אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
                 date = date.AddYears(1);//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
-                DeleteAllNotUsedRentals();//קריאה לפונקציה המבוקשת
+               RentalDAL.DeleteAllNotUsedRentals();//קריאה לפונקציה המבוקשת
             }                                                   //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
             System.Threading.Tasks.Task.Delay(1000 * 60 * 60 * 24 * 20).ContinueWith((x) =>
             {
@@ -194,26 +139,7 @@ namespace Bl
             }
         }
         //    static System.Timers.Timer timer;
-        public static void DeleteAllNotUsedRentals()
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                foreach (Rental rental in db.Rentals)
-                {
-                    if (rental.status == false)
-                        db.Rentals.Remove(rental);
-                }
-                db.SaveChanges();
-
-            }
-            }
-            catch (Exception e)
-            {
-                Trace.TraceInformation("deleteallNotusedRentalEror " + e.Message);
-                
-            }
-        }
+        
         //    public static void schedule_Timer(DateTime scheduledTime)
         //    {
 

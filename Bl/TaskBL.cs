@@ -25,13 +25,7 @@ namespace Bl
             {
                 if (td.Dock != null)
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = td.Dock;
-                    doc.DocUser = id;
-                    doc.type = 6;
-                    doc.DocName = td.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-
+                    DocumentBL.AddUserDocuments(new DocumentDTO(id, td.Dock, 6, td.DocName));
                 }
                 return true;
             }
@@ -39,60 +33,32 @@ namespace Bl
         }
         public static bool DeleteTask(int id)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                Dal.Task t = db.Tasks.Find(id);
-                t.status = false;
-                db.SaveChanges();
-                return true;
-            }}
+                return TaskDAL.DeleteTask(id);
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("DeleteTask " + e.Message);
+                Trace.TraceInformation("DeleteTaskbl " + e.Message);
                 return false;
             }
         }
         public static bool UpdateTask(TaskDTO td)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                Dal.Task t = db.Tasks.Find(td.TaskID);
 
-
-                t.TaskTypeId = td.TaskTypeId;
-                t.Description = td.Description;
-                t.PropertyID = td.PropertyID;
-                t.SubPropertyID = td.SubPropertyID;
-                t.ClassificationID = td.ClassificationID;
-                t.ClientClassificationID = td.ClientClassificationID;
-                t.ReportDate = td.ReportDate;
-                t.DateForHandling = td.DateForHandling;
-                t.IsHandled = td.IsHandled;
-                if (td.IsHandled == true)
-                    t.status = false;
-                else
-                    t.status = true;
-
-                t.HandlingDate = td.HandlingDate;
-                t.HandlingWay = td.HandlingWay;
                 if (td.Dock != null)
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = td.Dock;
-                    doc.DocUser = td.TaskID;
-                    doc.type = 6;
-                    doc.DocName = td.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
-                    return true;
+                    DocumentBL.AddUserDocuments(new DocumentDTO(td.TaskID, td.Dock, 6, td.DocName));
+
                 }
-                db.SaveChanges();
-                return true;
-            }}
+                return TaskDAL.UpdateTask(TaskDTO.ToDal(td));
+
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("UpdateTaskEror " + e.Message);
+                Trace.TraceInformation("UpdateTaskblEror " + e.Message);
                 return false;
             }
         }
@@ -100,13 +66,7 @@ namespace Bl
         {
             try
             {
-                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-                {
-                    Dal.Task task = db.Tasks.Find(id);
-                    task.ClassificationID = classificationId;
-                    db.SaveChanges();
-                    return true;
-                }
+                return TaskDAL.SetClassification(id, classificationId);
             }
             catch (Exception e)
             {
@@ -118,31 +78,33 @@ namespace Bl
         static CancellationTokenSource m_ctSource;
         public static void RunPrepareDaily(DateTime date)//מקבלת תאריך מדויק
         {
-            try { 
-            m_ctSource = new CancellationTokenSource();
-            var dateNow = DateTime.Now;
-            TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
-            if (date <= dateNow)       //אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
-                date = date.AddDays(1);//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
-            ts = date - dateNow;
-            //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
-            System.Threading.Tasks.Task.Delay(ts).ContinueWith((x) =>
+            try
             {
-                DailySet();//קריאה לפונקציה המבוקשת
+                m_ctSource = new CancellationTokenSource();
+                var dateNow = DateTime.Now;
+                TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
+                if (date <= dateNow)       //אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
+                    date = date.AddDays(1);//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
+                ts = date - dateNow;
+                //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
+                System.Threading.Tasks.Task.Delay(ts).ContinueWith((x) =>
+                {
+                    DailySet();//קריאה לפונקציה המבוקשת
                 Addtask2();
-                RunPrepareDaily(date);//קריאה חוזרת לפונקציה...
-            }, m_ctSource.Token);}
+                    RunPrepareDaily(date);//קריאה חוזרת לפונקציה...
+            }, m_ctSource.Token);
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("runPrepareDailyEror " + e.Message);
-                
+
             }
         }
         public static bool DailySet()
         {
             try
             {
-                
+
                 using (ArgamanExpressEntities db = new ArgamanExpressEntities())
                 {
                     foreach (Dal.Task task in db.Tasks)
@@ -158,7 +120,7 @@ namespace Bl
                     db.SaveChanges();
                     return true;
                 }
-               
+
             }
             catch (Exception e)
             {
@@ -169,29 +131,30 @@ namespace Bl
 
         public static void setMonthly(DateTime date)//מקבלת תאריך מדויק
         {
-            try { 
-            CancellationTokenSource ctSource;
-            ctSource = new CancellationTokenSource();
-            var dateNow = DateTime.Now;
-            // TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
-            if (date <= dateNow)
-            {//אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
-                date = date.AddMonths(1);
-                DeleteAllNotUsedTasks();//קריאה לפונקציה המבוקשת
-
-            }//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
-             // ts = date - dateNow;
-             //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
-            System.Threading.Tasks.Task.Delay(1000 * 60 * 60 * 24 * 5).ContinueWith((x) =>
+            try
             {
+                CancellationTokenSource ctSource;
+                ctSource = new CancellationTokenSource();
+                var dateNow = DateTime.Now;
+                // TimeSpan ts;//אובייקט שמייצג את מרווח הזמן שנותר עד להפעלת התהליך
+                if (date <= dateNow)
+                {//אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
+                    date = date.AddMonths(1);
+                    TaskDAL.DeleteAllNotUsedTasks();//קריאה לפונקציה המבוקשת
 
-                setMonthly(date);//קריאה חוזרת לפונקציה...
+                }//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
+                 // ts = date - dateNow;
+                 //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
+                System.Threading.Tasks.Task.Delay(1000 * 60 * 60 * 24 * 5).ContinueWith((x) =>
+                {
+
+                    setMonthly(date);//קריאה חוזרת לפונקציה...
             }, ctSource.Token);
             }
             catch (Exception e)
             {
                 Trace.TraceInformation("setMonthlyTaskEror " + e.Message);
-                
+
             }
         }
         //        static System.Timers.Timer timer;
@@ -209,45 +172,27 @@ namespace Bl
         //            timer.Elapsed += new ElapsedEventHandler(DeleteAllNotUsedTasks);
         //            timer.Start();
         //        }
-        public static void DeleteAllNotUsedTasks()
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                foreach (Dal.Task task in db.Tasks)
-                {
-                    if (task.status == false)
-                        db.Tasks.Remove(task);
-                }
-                db.SaveChanges();
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("DeleteAllNotUsedTaskEror " + e.Message);
-                
-            }
-        }
+        
         public static void Addtask2()
         {
-            try { 
-            ; /*= new TaskDTO();*/
-            List<RentalDTO> pro = Bl.RentalBL.GetAllRentals();
-            int x = pro.Count;
-            int i = 0;
-            while (i != x)
+            try
             {
-                if ((pro[i].EndDate).Value == DateTime.Today.AddMonths(3))
+                ; /*= new TaskDTO();*/
+                List<RentalDTO> pro = RentalBL.GetAllRentals();
+                foreach (RentalDTO rental in pro)
                 {
-                    AddRenewTask(pro[i].PropertyID, pro[i].SubPropertyID);
-                    
+                    if ((rental.EndDate).Value == DateTime.Today.AddMonths(3))
+                    {
+                        AddRenewTask(rental.PropertyID, rental.SubPropertyID);
+
+                    }
                 }
-                i++;
-            }
+                
             }
             catch (Exception e)
             {
                 Trace.TraceInformation("addTask2Eror " + e.Message);
-                
+
             }
         }
         public static bool AddRenewTask(int propertyID, int? subpropertyID)
@@ -275,94 +220,65 @@ namespace Bl
 
         }
 
-        public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<TaskDTO> tdto = new List<TaskDTO>();
-                foreach (Dal.Task t in tasks)
-                    tdto.Add(new TaskDTO(t));
-                return tdto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
-                return null;
-            }
-        }
-
-        public static List<TaskDTO> ConvertListToDTO(List<getAllTasks_Result> tasks)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<TaskDTO> tdto = new List<TaskDTO>();
-                foreach (getAllTasks_Result t in tasks)
-                    tdto.Add(new TaskDTO(t));
-                return tdto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
-                return null;
-            }
-        }
+        
         public static List<TaskDTO> Search(Nullable<int> TaskTypeId, Nullable<int> ClassificationID, System.DateTime DateForHandling, Nullable<bool> IsHandled)
         {
             List<Dal.Task> tasks = TaskDAL.Search(TaskTypeId, ClassificationID, DateForHandling, IsHandled);
-            return ConvertListToDTO(tasks);
+            return TaskDTO. ConvertListToDTO(tasks);
         }
         public static List<TaskDTO> GetAllTasks()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<getAllTasks_Result> tasks = (from t in db.getAllTasks() select t).OrderBy(t => t.ClassificationID).OrderBy(t => t.DateForHandling).ToList();
-                return ConvertListToDTO(tasks);
-            }}
+                
+                    List<getAllTasks_Result> tasks = TaskDAL.GetAllTasks();
+                    return TaskDTO.ConvertListToDTO(tasks);
+               
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getAllTaskEror " + e.Message);
+                Trace.TraceInformation("getAllTaskblEror " + e.Message);
                 return null;
             }
         }
         public static List<TaskDTO> GetAllarchivesTasks()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where t.status == false select t).OrderBy(t => t.DateForHandling).ToList();
-                return ConvertListToDTO(tasks);
-            }}
+               
+                    List<getAllTasks_Result> tasks = TaskDAL.GetAllarchivesTasks();
+                    return TaskDTO.ConvertListToDTO(tasks);
+                
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getArchiveTaskEror " + e.Message);
+                Trace.TraceInformation("getArchiveTaskblEror " + e.Message);
                 return null;
             }
         }
         public static List<TaskDTO> GetTimePassedTasks()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where t.status == true && t.IsHandled == false && t.DateForHandling < DateTime.Today select t).ToList();
-                return ConvertListToDTO(tasks);
-            }}
+                    List<getAllTasks_Result> tasks = TaskDAL.GetTimePassedTasks();
+                    return TaskDTO.ConvertListToDTO(tasks);
+                
+            }
             catch (Exception e)
             {
-                Trace.TraceInformation("getTimePassedTaskEror " + e.Message);
+                Trace.TraceInformation("getTimePassedTaskblEror " + e.Message);
                 return null;
             }
         }
         public static List<TaskDTO> GetNotClassificatedTasks()
         {
-            try {
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Dal.Task> tasks = (from t in db.Tasks where (t.status == true && t.ClassificationID == 0 ||  t.ClassificationID == null) select t).ToList();
-                return ConvertListToDTO(tasks);
-            } }
+               
+                    List<getAllTasks_Result> tasks = TaskDAL.GetNotClassificatedTasks();
+                    return TaskDTO. ConvertListToDTO(tasks);
+                
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getnotClassifTaskEror " + e.Message);
@@ -380,16 +296,15 @@ namespace Bl
 
         public static List<TaskClassificationDTO> GetAllClassificationTypes()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<Classification> classifications = db.Classifications.ToList();
-                List<TaskClassificationDTO> taskClassifications = new List<TaskClassificationDTO>();
-                foreach (Classification classif in classifications)
-                    taskClassifications.Add(new TaskClassificationDTO(classif));
-                return taskClassifications;
-
-            }}
+               
+                    List<Classification> classifications =TaskDAL.GetAllClassificationTypes();
+                    List<TaskClassificationDTO> taskClassifications = new List<TaskClassificationDTO>();
+                    foreach (Classification classif in classifications)
+                        taskClassifications.Add(new TaskClassificationDTO(classif));
+                    return taskClassifications;
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getAllClassifTaskEror " + e.Message);
@@ -398,16 +313,14 @@ namespace Bl
         }
         public static List<TaskTypeDTO> GetAllTaskTypes()
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                List<TaskType> taskTypes = db.TaskTypes.ToList();
-                List<TaskTypeDTO> typesDTO = new List<TaskTypeDTO>();
-                foreach (TaskType type in taskTypes)
-                    typesDTO.Add(new TaskTypeDTO(type));
-                return typesDTO;
-
-            }}
+                    List<TaskType> taskTypes = TaskDAL.GetAllTaskTypes();
+                    List<TaskTypeDTO> typesDTO = new List<TaskTypeDTO>();
+                    foreach (TaskType type in taskTypes)
+                        typesDTO.Add(new TaskTypeDTO(type));
+                    return typesDTO;
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getAllTaskTypesEror " + e.Message);
@@ -416,15 +329,10 @@ namespace Bl
         }
         public static bool AddTaskType(string name)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            try
             {
-                TaskType taskType = new TaskType();
-                taskType.TaskTypeName = name;
-                db.TaskTypes.Add(taskType);
-                db.SaveChanges();
-                return true;
-            }}
+                return TaskDAL.AddTaskType(name);
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("addTaskTypeEror " + e.Message);

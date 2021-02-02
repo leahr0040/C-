@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Dal;
 
 namespace Dto
@@ -68,6 +69,42 @@ namespace Dto
                 ContactRenew = r.ContactRenew,
                 status=r.status
             };
+        }
+        public static List<RentalDTO> ConvertListToDTO(List<Rental> rentals)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<RentalDTO> redto = new List<RentalDTO>();
+                    foreach (Rental r in rentals)
+                        redto.Add(new RentalDTO(r));
+                    return redto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<RentalDTO> ConvertListToDTO(List<getAllRentals_Result> rentals)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<RentalDTO> redto = new List<RentalDTO>();
+                    foreach (getAllRentals_Result r in rentals)
+                        redto.Add(new RentalDTO(r));
+                    return redto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTORentalEror " + e.Message);
+                return null;
+            }
         }
     }
 }

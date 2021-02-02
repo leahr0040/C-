@@ -21,12 +21,7 @@ namespace Bl
                 if (spd.Dock != null)
 
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = spd.Dock;
-                    doc.DocUser = id;
-                    doc.type = 5;
-                    doc.DocName = spd.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    DocumentBL.AddUserDocuments(new DocumentDTO(id,spd.Dock,5,spd.DocName));
 
                 }
                 return true;
@@ -35,14 +30,9 @@ namespace Bl
         }
         public static bool DeleteSubProperty(int id)
         {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                SubProperty p =db.SubProperties.Find(id);
-                p.status = false;
-                db.SaveChanges();
-                return true;
-            }}
+            try {
+                return SubPropertyDAL.DeleteSubProperty(id);
+                    }
             catch (Exception e)
             {
                 Trace.TraceInformation("deleteSubPropertyEror " + e.Message);
@@ -52,65 +42,36 @@ namespace Bl
         public static bool UpdateSubProperty(SubPropertyDTO spd)
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                SubProperty sp = db.SubProperties.Find(spd.SubPropertyID);
-
-
-                sp.num = spd.num;
-                sp.IsRented = spd.IsRented;
-                sp.Size = spd.Size;
-                sp.RoomsNum = spd.RoomsNum;
+           
+               
                 if (spd.Dock != null)
                 {
-                    Document doc = new Document();
-                    doc.DocCoding = spd.Dock;
-                    doc.DocUser = spd.SubPropertyID;
-                    doc.type = 5;
-                    doc.DocName = spd.DocName;
-                    DocumentBL.AddUserDocuments(new DocumentDTO(doc));
+                    DocumentBL.AddUserDocuments(new DocumentDTO(spd.SubPropertyID,spd.Dock, 5 ,spd.DocName));
                
                 }
-                db.SaveChanges();
-                return true;
-            }}
+               
+                return SubPropertyDAL.UpdateSubProperty(SubPropertyDTO.ToDal(spd));
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("updateSubPropertyEror " + e.Message);
                 return false;
             }
         }
-        public static List<SubPropertyDTO> ConvertListToDTO(List<SubProperty> subProperties)
-        {
-            try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<SubPropertyDTO> spdto = new List<SubPropertyDTO>();
-                foreach (SubProperty sp in subProperties)
-                    spdto.Add(new SubPropertyDTO(sp));
-                return spdto;
-            }}
-            catch (Exception e)
-            {
-                Trace.TraceInformation("convertListToDTOSubPropertyEror " + e.Message);
-                return null;
-            }
-        }
+       
 
 
         public static List<SubPropertyDTO> Search(SubPropertyDTO sd)
         {
             List<SubProperty> subProperties = SubPropertyDAL.Search(sd.PropertyID,sd.num,sd.Size,sd.RoomsNum);
-            return ConvertListToDTO(subProperties);
+            return SubPropertyDTO. ConvertListToDTO(subProperties);
         }
         public static List<SubPropertyDTO> GetAllSubProperties()
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                List<SubProperty> subProperties =(from sp in db.SubProperties  select sp).OrderBy(sp =>sp.IsRented).ToList();
-                return ConvertListToDTO(subProperties);
-            }}
+             List<SubProperty> subProperties =SubPropertyDAL.GetAllSubProperties();
+                return SubPropertyDTO.ConvertListToDTO(subProperties);
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getAllSubPropertyEror " + e.Message);
@@ -120,11 +81,10 @@ namespace Bl
         public static SubPropertyDTO GetSubPropertyByID(int id)
         {
             try { 
-            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-            {
-                SubProperty subProperty = db.SubProperties.Find(id);
+            
+                SubProperty subProperty = SubPropertyDAL.GetSubPropertyByID(id);
                 return new SubPropertyDTO(subProperty);
-            }}
+            }
             catch (Exception e)
             {
                 Trace.TraceInformation("getSubPropertyByIDEror " + e.Message);

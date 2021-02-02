@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Dal;
 
 namespace Dto
@@ -79,6 +80,43 @@ namespace Dto
                 HandlingWay = t.HandlingWay,
                 status=t.status
             };
+        }
+        public static List<TaskDTO> ConvertListToDTO(List<Dal.Task> tasks)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<TaskDTO> tdto = new List<TaskDTO>();
+                    foreach (Dal.Task t in tasks)
+                        tdto.Add(new TaskDTO(t));
+                    return tdto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
+                return null;
+            }
+        }
+
+        public static List<TaskDTO> ConvertListToDTO(List<getAllTasks_Result> tasks)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<TaskDTO> tdto = new List<TaskDTO>();
+                    foreach (getAllTasks_Result t in tasks)
+                        tdto.Add(new TaskDTO(t));
+                    return tdto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDTOsTaskEror " + e.Message);
+                return null;
+            }
         }
     }
 }

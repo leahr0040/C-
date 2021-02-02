@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dal;
+using System.Diagnostics;
 
 namespace Dto
 {
@@ -65,7 +66,7 @@ namespace Dto
                 RoleID = u.RoleID,
                 UserName = u.UserName,
                 Password = u.Password,
-                status=u.status
+                status = u.status
             };
         }
         public UserDTO(getAllUsers_Result u)
@@ -82,8 +83,44 @@ namespace Dto
             this.status = u.status;
         }
 
-    }
 
+        public static List<UserDTO> ConvertListToDTO(List<User> renters)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<UserDTO> udto = new List<UserDTO>();
+                    foreach (User u in renters)
+                        udto.Add(new UserDTO(u));
+                    return udto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<UserDTO> ConvertListToDTO(List<getAllUsers_Result> renters)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<UserDTO> udto = new List<UserDTO>();
+                    foreach (getAllUsers_Result u in renters)
+                        udto.Add(new UserDTO(u));
+                    return udto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("ConvertListToDtoRentersEror " + e.Message);
+                return null;
+            }
+        }
+    }
     public class IdDto
     {
         public int id { set; get; }

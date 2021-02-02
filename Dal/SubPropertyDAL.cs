@@ -25,6 +25,45 @@ namespace Dal
                 return 0;
             }
         }
+        public static bool DeleteSubProperty(int id)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    SubProperty p = db.SubProperties.Find(id);
+                    p.status = false;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("deleteSubPropertyEror " + e.Message);
+                return false;
+            }
+        }
+        public static bool UpdateSubProperty(SubProperty spd)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    SubProperty sp = db.SubProperties.Find(spd.SubPropertyID);
+                    sp.num = spd.num;
+                    sp.IsRented = spd.IsRented;
+                    sp.Size = spd.Size;
+                    sp.RoomsNum = spd.RoomsNum;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("updateSubPropertyEror " + e.Message);
+                return false;
+            }
+        }
         public static List<SubProperty> Search(Nullable<int> PropertyID, Nullable<int> num, Nullable<double> Size, Nullable<double> RoomsNum)
         {
             try { 
@@ -46,6 +85,38 @@ namespace Dal
             catch (Exception e)
             {
                 Trace.TraceInformation("searchSubPropertyEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<SubProperty> GetAllSubProperties()
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<SubProperty> subProperties = (from sp in db.SubProperties select sp).OrderBy(sp => sp.IsRented).ToList();
+                    return subProperties;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllSubPropertyEror " + e.Message);
+                return null;
+            }
+        }
+        public static SubProperty GetSubPropertyByID(int id)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    SubProperty subProperty = db.SubProperties.Find(id);
+                    return subProperty;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getSubPropertyByIDEror " + e.Message);
                 return null;
             }
         }

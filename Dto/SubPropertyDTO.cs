@@ -52,5 +52,23 @@ namespace Dto
                 status=sp.status
             };
         }
+        public static List<SubPropertyDTO> ConvertListToDTO(List<SubProperty> subProperties)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<SubPropertyDTO> spdto = new List<SubPropertyDTO>();
+                    foreach (SubProperty sp in subProperties)
+                        spdto.Add(new SubPropertyDTO(sp));
+                    return spdto;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("convertListToDTOSubPropertyEror " + e.Message);
+                return null;
+            }
+        }
     }
 }

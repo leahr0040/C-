@@ -40,5 +40,38 @@ namespace Dal
                 return false;
             }
         }
+        public static List<Document> GetUserDocuments(int id, int type)
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<Document> documents = (from d in db.Documents where d.DocUser == id && d.type == type select d).ToList();
+                    return documents;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getUserDocumentsEror " + e.Message);
+                return null;
+            }
+        }
+        public static List<getAllDocuments_Result> GetAllDocuments()
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    List<getAllDocuments_Result> documents = (from d in db.getAllDocuments() select d).ToList();
+                    return documents;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getDocumentsEror " + e.Message);
+                return null;
+            }
+
+        }
     }
 }

@@ -34,6 +34,23 @@ namespace Dal
                 return null;
             }
         }
+        public static List<getAllUsers_Result> GetAllRenters()
+        {
+            try
+            {
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+
+                    List<getAllUsers_Result> renters = (from r in db.getAllUsers() where r.RoleID == 3 select r).OrderBy(r => r.FirstName).OrderBy(r => r.LastName).ToList();
+                    return renters;
+                }
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("getAllRentersEror " + e.Message);
+                return null;
+            }
+        }
         public static List<Rental> getRentalsbyRenterID(int id)//פרטי השכרה לפי איידי
         {
             try {
