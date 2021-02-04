@@ -86,11 +86,11 @@ namespace Bl
                 if (date <= dateNow)       //אם התאריך המבוקש עבר כבר-מקדם אותו למועד הבא
                     date = date.AddDays(1);//במקרה שלנו- קידום התאריך ביום(יכול להיות גם הוספת דקות/שעות)
                 ts = date - dateNow;
-                //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ב... threadהפעלת ה 
+                //שימתין את פרק הזמן שנקבע, ואח"כ יקרא לפונקציה שרצינו שתופעל פעם ביום... threadהפעלת ה 
                 System.Threading.Tasks.Task.Delay(ts).ContinueWith((x) =>
                 {
-                    DailySet();//קריאה לפונקציה המבוקשת
-                Addtask2();
+                    TaskDAL.DailySet();
+                    Addtask();
                     RunPrepareDaily(date);//קריאה חוזרת לפונקציה...
             }, m_ctSource.Token);
             }
@@ -100,34 +100,7 @@ namespace Bl
 
             }
         }
-        public static bool DailySet()
-        {
-            try
-            {
-
-                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
-                {
-                    foreach (Dal.Task task in db.Tasks)
-                    {
-                        if (task.IsHandled != true && task.ClassificationID != null)
-                        {
-                            if (task.DateForHandling.Date <= DateTime.Now.Date || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 30))
-                                task.ClassificationID = 1;
-                            else if (task.ClassificationID != 1 && ((task.DateForHandling.Date - DateTime.Now.Date).Days <= 7 || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60)))
-                                task.ClassificationID = 2;
-                        }
-                    }
-                    db.SaveChanges();
-                    return true;
-                }
-
-            }
-            catch (Exception e)
-            {
-                Trace.TraceInformation("DailySetTaskEror " + e.Message);
-                return false;
-            }
-        }
+       
 
         public static void setMonthly(DateTime date)//מקבלת תאריך מדויק
         {
@@ -173,11 +146,10 @@ namespace Bl
         //            timer.Start();
         //        }
         
-        public static void Addtask2()
+        public static void Addtask()
         {
             try
             {
-                ; /*= new TaskDTO();*/
                 List<RentalDTO> pro = RentalBL.GetAllRentals();
                 foreach (RentalDTO rental in pro)
                 {

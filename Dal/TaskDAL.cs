@@ -118,6 +118,34 @@ namespace Dal
             }
             
         }
+        public static bool DailySet()
+        {
+            try
+            {
+
+                using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+                {
+                    foreach (Dal.Task task in db.Tasks)
+                    {
+                        if (task.IsHandled != true && task.ClassificationID != null)
+                        {
+                            if (task.DateForHandling.Date <= DateTime.Now.Date || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 30))
+                                task.ClassificationID = 1;
+                            else if (task.ClassificationID != 1 && ((task.DateForHandling.Date - DateTime.Now.Date).Days <= 7 || (task.TaskTypeId != 1 && task.TaskTypeId != 4 && (task.DateForHandling.Date - DateTime.Now.Date).Days <= 60)))
+                                task.ClassificationID = 2;
+                        }
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("DailySetTaskEror " + e.Message);
+                return false;
+            }
+        }
         public static bool SetClassification(int id, int classificationId)
         {
             try

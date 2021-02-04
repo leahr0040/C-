@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using Dto;
 using Dal;
+using System.Diagnostics;
 using System.IO;
 
 namespace Bl
@@ -15,68 +16,66 @@ namespace Bl
     {
         public static void Mailnewuser(UserDTO ud)
         {
-             try
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-
-                    mail.From = new MailAddress("argamanexpress@gmail.com");
-                    mail.To.Add(ud.Email);
-                    // mail.Bcc.Add(mail1);
-                    mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
-                    mail.IsBodyHtml = true;
-
-                    string ht = @"<html>
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("argamanexpress@gmail.com");
+                mail.To.Add(ud.Email);
+                // mail.Bcc.Add(mail1);
+                mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
+                mail.IsBodyHtml = true;
+                string ht = @"<html>
                     <body style='color:blueviolet;font-size:150%'>
           <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'> ברוכים הבאים " + ud.FirstName + " " + ud.LastName + @" </a><br/>שם המשתמש שלך: " + ud.UserName + @"<br/>הסיסמה שלך: " + ud.Password + @"
                 <br/><a href='http://ArgamanExpress.co.il/'>כניסה לאתר</a></body></html>";
+                mail.Body = ht;
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("Mailnewuser " + e.Message);
 
-                    // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
-                    mail.Body = ht;
-                    SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
-                    SmtpServer.EnableSsl = true;
-
-                    SmtpServer.Send(mail);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            
-
+            }
         }
+
+
+
         public static void Mailforgotpasword(getAllUsers_Result ud)
         {
-           
-                try
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                    mail.From = new MailAddress("argamanexpress@gmail.com");
-                    mail.To.Add(ud.Email);
-                    // mail.Bcc.Add(mail1);
-                    mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
-                    mail.IsBodyHtml = true;
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                    string ht = @"<html>
+                mail.From = new MailAddress("argamanexpress@gmail.com");
+                mail.To.Add(ud.Email);
+                // mail.Bcc.Add(mail1);
+                mail.Subject = "כניסת משתמש לאתר ארגמן אקספרס";
+                mail.IsBodyHtml = true;
+
+                string ht = @"<html>
                     <body style='color:blueviolet;font-size:150%'>
           <a style='font-size:120%;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;text-align:left'> ברוכים הבאים" + ud.FirstName + " " + ud.LastName + @" </a><br/>הסיסמה שלך: " + ud.Password + @"
                 <br/><a href='http://ArgamanExpress.co.il/'>כניסה לאתר</a></body></html>";
 
-                    // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
-                    mail.Body = ht;
-                    SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
-                    SmtpServer.EnableSsl = true;
+                // < input type = 'date' id = 'date1' onchange = 'document.getElementById('link').href+=document.getElementById('date1').value' >
+                mail.Body = ht;
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("argamanexpress", "es211860663");
+                SmtpServer.EnableSsl = true;
 
-                    SmtpServer.Send(mail);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+                SmtpServer.Send(mail);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceInformation("Mailforgotpasword " + e.Message);
+
+            }
 
         }
 
