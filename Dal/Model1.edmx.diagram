@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="74345d4e53a84b268599fa56e4144d08" Name="Diagram1">
-        <EntityTypeShape EntityType="ArgamanExpressModel.City" Width="1.5" PointX="6.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Classification" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Document" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Exclusivity" Width="1.5" PointX="6.125" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.PaymentType" Width="1.5" PointX="4.125" PointY="8.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Property" Width="1.5" PointX="4.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.PropertiesOwner" Width="1.5" PointX="8.125" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Rental" Width="1.5" PointX="2.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Street" Width="1.5" PointX="8.125" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.SubProperty" Width="1.5" PointX="4.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.Task" Width="1.5" PointX="2.375" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArgamanExpressModel.TaskType" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.City" Width="1.5" PointX="7" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Classification" Width="1.5" PointX="1.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Document" Width="1.5" PointX="8.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Exclusivity" Width="1.5" PointX="7.125" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.PaymentType" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Property" Width="1.5" PointX="5.375" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.PropertiesOwner" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Rental" Width="1.5" PointX="2.125" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Street" Width="1.5" PointX="8.625" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.SubProperty" Width="1.5" PointX="5.25" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.Task" Width="1.5" PointX="3.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ArgamanExpressModel.TaskType" Width="1.5" PointX="1.5" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ArgamanExpressModel.UserRole" Width="1.5" PointX="0.5" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ArgamanExpressModel.User" Width="1.5" PointX="0.5" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ArgamanExpressModel.database_firewall_rules" Width="1.5" PointX="1.625" PointY="17" IsExpanded="true" />
