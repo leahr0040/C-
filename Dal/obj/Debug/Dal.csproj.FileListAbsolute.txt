@@ -118,3 +118,15 @@ C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dal\o
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dal\obj\Debug\Dal.csproj.CopyComplete
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dal\obj\Debug\Dal.dll
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dal\obj\Debug\Dal.pdb
+C:\Users\user\Desktop\c-\Dal\bin\Debug\Dal.dll.config
+C:\Users\user\Desktop\c-\Dal\bin\Debug\Dal.dll
+C:\Users\user\Desktop\c-\Dal\bin\Debug\Dal.pdb
+C:\Users\user\Desktop\c-\Dal\bin\Debug\EntityFramework.dll
+C:\Users\user\Desktop\c-\Dal\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Desktop\c-\Dal\bin\Debug\EntityFramework.xml
+C:\Users\user\Desktop\c-\Dal\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Desktop\c-\Dal\obj\Debug\Dal.csprojAssemblyReference.cache
+C:\Users\user\Desktop\c-\Dal\obj\Debug\Dal.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\c-\Dal\obj\Debug\Dal.csproj.CopyComplete
+C:\Users\user\Desktop\c-\Dal\obj\Debug\Dal.dll
+C:\Users\user\Desktop\c-\Dal\obj\Debug\Dal.pdb

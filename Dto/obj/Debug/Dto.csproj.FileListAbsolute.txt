@@ -148,3 +148,18 @@ C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dto\o
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dto\obj\Debug\Dto.csproj.CopyComplete
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dto\obj\Debug\Dto.dll
 C:\Users\אסתר אליאב\Desktop\אתר בסיעתא דישמייא\c-\Dto\obj\Debug\Dto.pdb
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dto.dll.config
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dto.dll
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dto.pdb
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dal.dll
+C:\Users\user\Desktop\c-\Dto\bin\Debug\EntityFramework.dll
+C:\Users\user\Desktop\c-\Dto\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dal.pdb
+C:\Users\user\Desktop\c-\Dto\bin\Debug\Dal.dll.config
+C:\Users\user\Desktop\c-\Dto\bin\Debug\EntityFramework.xml
+C:\Users\user\Desktop\c-\Dto\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Desktop\c-\Dto\obj\Debug\Dto.csprojAssemblyReference.cache
+C:\Users\user\Desktop\c-\Dto\obj\Debug\Dto.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\c-\Dto\obj\Debug\Dto.csproj.CopyComplete
+C:\Users\user\Desktop\c-\Dto\obj\Debug\Dto.dll
+C:\Users\user\Desktop\c-\Dto\obj\Debug\Dto.pdb

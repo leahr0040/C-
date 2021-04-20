@@ -22,7 +22,43 @@ namespace Dal
             return 0;
 
         }
-
+        public static bool DeleteProperty(int id)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Property p = db.Properties.Find(id);
+                p.status = false;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+            public static bool UpdateProperty(Property pd)
+        {
+            using (ArgamanExpressEntities db = new ArgamanExpressEntities())
+            {
+                Property p = db.Properties.Find(pd.PropertyID);
+               
+                p.OwnerID = pd.OwnerID;
+                p.CityID = pd.CityID;
+                p.StreetID = pd.StreetID;
+                p.Number = pd.Number;
+                p.Size = pd.Size;
+                p.Floor = pd.Floor;
+                p.IsDivided = pd.IsDivided;
+                p.ManagmentPayment = pd.ManagmentPayment;
+                p.IsPaid = pd.IsPaid;
+                p.IsExclusivity = pd.IsExclusivity;
+                p.ExclusivityID = pd.ExclusivityID;
+                p.IsWarranty = pd.IsWarranty;
+                p.IsRented = pd.IsRented;
+                p.RoomsNum = pd.RoomsNum;
+                p.ApartmentNum = pd.ApartmentNum;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public static List<Property> Search(string cityName, string streetName, string number, Nullable<int> floor, Nullable<bool> isRented)
         {
             using (ArgamanExpressEntities db = new ArgamanExpressEntities())
