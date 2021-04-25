@@ -18,7 +18,7 @@ namespace ArgemanExpress.Controllers
         [Route("AddRenter")]
         public IHttpActionResult AddRenter([FromBody]UserDTO rd)
         {
-            bool b = Bl.RenterBL.AddRenter(rd);
+            bool b = Bl.UserBL.AddUser(rd);
             if (b)
                 return Ok();
             return BadRequest();

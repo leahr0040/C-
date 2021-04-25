@@ -13,13 +13,17 @@ namespace Bl
     {
         public static bool AddUser(UserDTO ud)
         {
+            try { 
             Random rand = new Random();//הגרלה לא תקינה
             int i = rand.Next(100000, 999999);
             User u = UserDTO.ToDal(ud);
             if (ud.Email != null)
             {
+                    if(ud.UserName==null || ud.UserName == "")
                 ud.UserName = ud.Email;
-                ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+                    if (ud.Password == null || ud.Password == "")
+                        ud.Password = ud.Email.Substring(0, 2) + i.ToString();
+                
             }//יותר לפי firstname
             else
             {
@@ -28,16 +32,31 @@ namespace Bl
                 ud.UserName = x.ToString();
                 ud.Password = i.ToString();
             }
-            Mailsend.Mailnewuser(ud);
+           
             // else
             //sms
             int id = UserDAL.AddUser(u);
-            if (id != 0 && ud.Dock != null)
-            {
-                DocumentBL.AddUserDocuments(new DocumentDTO(id, ud.Dock, 7, ud.DocName));
-                return true;
+                if (id != 0)
+                {
+                    if (ud.Email != null && ud.Email != "")
+                        Mailsend.Mailnewuser(ud);
+
+                    if (ud.Dock != null)
+                    {
+                        DocumentBL.AddUserDocuments(new DocumentDTO(id, ud.Dock, 3, ud.DocName));
+
+                    }
+                    return true;
+                }
+                else
+                    return false;
             }
-            return false;
+            catch(Exception e)
+            {
+                Trace.TraceInformation("AddUserblEror " + e.Message);
+                return false;
+            }
+            
         }
         public static bool DeleteUser(int id)
         {

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-
 namespace Dal
 {
     public class PropertyDAL
@@ -129,7 +128,7 @@ namespace Dal
 
             {
                 System.Diagnostics.Trace.TraceInformation("getAllPropertiesEror" + e.Message);
-                return new List<PropertyDTO>();
+                return new List<getAllProperties_Result>();//
 
             }
         }
